@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stranger Things: Max, La Fugitiva</title>
-    <style>
+    <title>Max, la fugitiva</title>
+<style>
         @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
 
         :root {
@@ -16,6 +16,7 @@
             --st-text: #e0e0e0;
         }
 
+        /* --- AJUSTES BASE --- */
         body {
             background-color: var(--st-black);
             color: var(--st-text);
@@ -23,19 +24,21 @@
             margin: 0;
             display: flex;
             flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            overflow-x: hidden; /* Evita que se mueva a los lados */
+            overflow-y: auto;   /* Permite bajar y subir */
         }
 
         /* --- BANNER SUPERIOR (INVENTARIO) --- */
         #top-inventory-banner {
-            height: 60px;
+            min-height: 60px;
             background: #000;
             border-bottom: 2px solid var(--st-red);
             display: flex;
             align-items: center;
-            padding: 0 20px;
+            padding: 10px 20px;
             gap: 15px;
+            flex-wrap: wrap; /* Para que en móvil los items bajen de fila si no caben */
         }
 
         .backpack-icon { font-size: 1.5em; margin-right: 10px; }
@@ -48,8 +51,12 @@
             color: var(--st-red);
         }
 
-        /* --- DISTRIBUCIÓN --- */
-        #game-layout { display: flex; flex-grow: 1; overflow: hidden; }
+        /* --- DISTRIBUCIÓN RESPONSIVA --- */
+        #game-layout { 
+            display: flex; 
+            flex-direction: row; /* Horizontal por defecto (PC) */
+            flex-grow: 1;
+        }
 
         #sidebar {
             width: 260px;
@@ -58,8 +65,19 @@
             padding: 20px;
             display: flex;
             flex-direction: column;
+            flex-shrink: 0; /* Evita que se aplaste en PC */
         }
 
+        /* --- ÁREA DE JUEGO --- */
+        #main-content {
+            flex-grow: 1; 
+            padding: 30px; 
+            background: linear-gradient(180deg, #121212 0%, #050505 100%);
+            position: relative;
+            min-height: 400px;
+        }
+
+        /* --- ELEMENTOS INTERNOS --- */
         #max-portrait {
             width: 150px; height: 150px;
             border: 2px solid var(--st-red);
@@ -76,15 +94,14 @@
 
         .stat-value { color: var(--st-red); font-weight: bold; }
 
-        /* --- ÁREA DE JUEGO --- */
-        #main-content {
-            flex-grow: 1; padding: 40px; overflow-y: auto;
-            background: linear-gradient(180deg, #121212 0%, #050505 100%);
-            position: relative;
+        .controls { 
+            margin-bottom: 20px;
+            display: flex; 
+            gap: 10px; 
+            justify-content: flex-end;
         }
 
-        .controls { position: absolute; top: 15px; right: 25px; display: flex; gap: 20px; z-index: 100; }
-        .ctrl-icon { cursor: pointer; opacity: 0.7; font-size: 0.9em; border: 1px solid var(--st-red); padding: 5px 10px; }
+        .ctrl-icon { cursor: pointer; opacity: 0.7; font-size: 0.8em; border: 1px solid var(--st-red); padding: 5px 10px; }
         .ctrl-icon:hover { opacity: 1; background: var(--st-red); color: #000; }
 
         .choice-btn {
@@ -92,18 +109,50 @@
             background: rgba(0,0,0,0.7); color: var(--st-text);
             border: 1px solid var(--st-red); cursor: pointer;
             text-align: left; font-family: inherit;
+            font-size: 1em;
         }
 
         .choice-btn:hover:not(:disabled) { background: var(--st-red); color: #000; }
 
-        #dice-zone { 
-            text-align: center; height: 50px; font-size: 1.2em; 
-            font-weight: bold; margin-bottom: 20px;
-        }
-
+        #dice-zone { text-align: center; min-height: 30px; font-size: 1.2em; font-weight: bold; margin-bottom: 20px; }
         .stress-hearts { color: var(--st-red); font-size: 1.1em; }
         .screen { display: none; }
         .active { display: block; }
+
+        /* --- MEDIA QUERY PARA MÓVILES (TELÉFONOS Y TABLETS) --- */
+        @media (max-width: 768px) {
+            #game-layout {
+                flex-direction: column; /* Apila Sidebar sobre Main Content */
+            }
+
+            #sidebar {
+                width: 100%; /* Ocupa todo el ancho */
+                border-right: none;
+                border-bottom: 2px solid var(--st-red);
+                box-sizing: border-box;
+                padding: 15px;
+            }
+
+            #max-portrait {
+                width: 100px; height: 100px; /* Más pequeño en móvil */
+                margin-bottom: 10px;
+            }
+
+            #main-content {
+                padding: 20px;
+                overflow-y: visible; /* Deja que el body maneje el scroll */
+            }
+
+            .controls {
+                position: static; /* Ya no flota sobre el texto */
+                justify-content: center;
+                margin-top: 10px;
+            }
+
+            h2, p {
+                font-size: 1.1em; /* Texto un poco más grande para lectura fácil */
+            }
+        }
 
         .result-success { color: var(--st-green) !important; text-shadow: 0 0 10px var(--st-green); }
         .result-fail { color: var(--st-red) !important; text-shadow: 0 0 10px var(--st-red); }
@@ -129,7 +178,8 @@
                 <div class="stat-row"><span>😠 TEMPLE</span><span id="stat-tem" class="stat-value"></span></div>
                 <div class="stat-row"><span>🔧 MECÁNICA</span><span id="stat-mec" class="stat-value"></span></div>
                 <div class="stat-row"><span>🎯 PRECISIÓN</span><span id="stat-pre" class="stat-value"></span></div>
-                <div class="stat-row"><span>👁️ INSTINTO</span><span id="stat-ins" class="stat-value"></span></div>
+                <div class="stat-row"><span>🧠 INSTINTO</span><span id="stat-ins" class="stat-value"></span></div>
+                <div class="stat-row"><span>👁️ PERCEPCION</span><span id="stat-per" class="stat-value"></span></div>
             </div>
         </div>
 
@@ -150,19 +200,25 @@
                 <div id="choices-box"></div>
             </div>
 
-            <div id="over-screen" class="screen" style="text-align: center;">
-                <h1 style="font-size: 4em; color: var(--st-red); margin-top: 100px;">ELIMINADA</h1>
-                <button class="choice-btn" style="width: 250px; margin: 20px auto; text-align: center;" onclick="location.reload()">VOLVER AL INICIO</button>
-            </div>
+
+<div id="over-screen" class="screen" style="text-align: center;">
+    <h1 style="font-size: 4em; color: var(--st-red); margin-top: 100px;">GAME OVER</h1>
+    <button class="choice-btn" style="width: 250px; margin: 20px auto; text-align: center;" onclick="window.location.href = window.location.pathname;">VOLVER AL INICIO</button>
+</div>
+
+
+
+
+
         </div>
     </div>
 
 <script>
-    const MAX_HP = 8;
+    const MAX_HP = 10;
     let state = {
         hp: MAX_HP,
         inventory: [],
-        skills: { agilidad: 2, temple: 1, mecanica: 0, precision: 1, instinto: 1 },
+        skills: { agilidad: 2, temple: 1, mecanica: 0, precision: 1, instinto: 1, percepcion: 0 },
         currentNode: 'prologo'
     };
 
@@ -209,7 +265,9 @@
         document.getElementById('stat-tem').innerText = format(state.skills.temple);
         document.getElementById('stat-mec').innerText = format(state.skills.mecanica);
         document.getElementById('stat-pre').innerText = format(state.skills.precision);
+        document.getElementById('stat-per').innerText = format(state.skills.percepcion);
         document.getElementById('stat-ins').innerText = format(state.skills.instinto);
+
 
         const invContainer = document.getElementById('items-slots-container');
         invContainer.innerHTML = "";
@@ -284,159 +342,817 @@
     }
 //************************************************************************************************************************************************
 const storyNodes = {
+    // ==========================================
+    // PRÓLOGO
+    // ==========================================
+
+    "inicio": {
+        text: "<strong>STRANGER THINGS: MAX, LA FUGITIVA</strong><br><br>Bienvenida a Hawkins. ¿Estás lista para sobrevivir?",
+        choices: [
+            { text: "Comenzar la aventura", next: "prologo" } // Asegúrate de que apunte a tu primer capítulo
+        ]
+    },
+
+
     "prologo": {
-        text: "<strong>PRÓLOGO: LA ESTACIÓN DE SAN DIEGO</strong><br><br>El piso de la estación de autobuses está invadido por colillas de cigarrillos. El edificio luce un pálido color gris, como un almacén lleno de volantes arrugados. Es casi medianoche. Estoy apoyada contra una pared de casilleros; uno de ellos chorrea algo pegajoso que ya se ha adherido a mis zapatos.<br><br>Miro el bar de la esquina, donde hombres delgados fuman frente a ceniceros. Todo aquí se siente como un final, no como un principio. Mi tabla de skate es lo único que me pertenece realmente. Estoy a punto de dejar atrás el océano por el asfalto de Indiana.",
+        text: "<strong>PRÓLOGO: LA ESTACIÓN DE AUTOBUSES. </strong><br><br>El piso de la estación de autobuses de San Diego está prácticamente invadido por colillas de cigarrillos. Ahora sólo luce un pálido color gris, como un almacén lleno de volantes arrugados y errabundos. Es casi medianoche. Estoy apoyada contra una pared de casilleros, uno de ellos chorrea algo pegajoso que ya se ha adherido a mis zapatos. <br><br>Todo ordinario, menos mi cabello: largo y rojo, lo más brillante de mí. Tengo mi boleto a Los Ángeles que pagué con un billete de veinte dólares del joyero de mamá. Quiero perderme entre la multitud, pero soy la única aquí demasiado joven para tener una licencia de conducir.",
         choices: [
-            { text: "Observar los detalles de la estación para distraerte", skill: "instinto", roll: 3, next: "prologo_detalles", fail: "prologo_nervios" },
-            { text: "Apretar tu tabla de skate y caminar hacia la salida", next: "cap1_llegada" },
-            { text: "Recordar por qué estás huyendo de California", skill: "temple", roll: 5, next: "prologo_recuerdo", fail: "prologo_nervios" }
+            { text: "Hacerte una coleta y caminar con naturalidad", skill: "temple", roll: 3, next: "prologo_2", fail: "prologo_2_nervios" },
+            { text: "Caminar rápido cerca de los casilleros ocultando tu rostro", skill: "agilidad", roll: 4, next: "prologo_2", fail: "prologo_2_nervios" },
+            { text: "Analizar el caos del lugar para buscar una ruta segura", skill: "percepcion", roll: 4, next: "prologo_2", fail: "prologo_2_nervios" }
         ]
     },
-    "prologo_detalles": {
-        text: "Me fijo en las máquinas expendedoras y en el brillo sucio del suelo. El aire huele a café rancio y desesperación. Esta capacidad de observar los detalles me ha servido para sobrevivir a Billy y Neil hasta ahora. Sé que en Hawkins tendré que mantener los ojos muy abiertos.",
-        choices: [{ text: "Salir al encuentro del Camaro", next: "cap1_llegada" }]
+    "prologo_2_nervios": {
+        text: "Intento no parecer obvia, pero la paranoia me hace tropezar levemente. Un par de hombres delgados y sin afeitar, encorvados como duendes sobre sus cervezas, me lanzan una mirada. El humo le confiere al aire un aspecto nebuloso y extraño. Sigo adelante.",
+        choices: [{ text: "Acercarte a las taquillas", next: "prologo_2" }]
     },
-    "prologo_recuerdo": {
-        text: "Pienso en Sam, mi padre. En la playa y en cómo la luz del sol nunca se sentía tan muerta como la de estos fluorescentes. Pero el recuerdo duele. Neil ha ganado; nos lleva a un lugar donde no conocemos a nadie, donde él tiene todo el control. La rabia me da fuerzas para no llorar.",
-        choices: [{ text: "Subir al coche con Billy y mamá", next: "cap1_llegada" }]
-    },
-    "prologo_nervios": {
-        text: "La humedad de la estación y el goteo de los casilleros me ponen de los nervios. Me siento pequeña y expuesta. El pánico empieza a subir por mi garganta antes de que pueda controlarlo.",
-        choices: [{ text: "Caminar rápido hacia el exterior", next: "cap1_llegada" }]
-    },
-    "cap1_llegada": {
-        text: "<strong>CAPÍTULO UNO: HAWKINS</strong><br><br>Hawkins es... verde. Un verde oscuro, húmedo y sofocante. No hay palmeras, solo árboles de hojas anchas que parecen cerrarse sobre nosotros. Billy conduce el Camaro como si quisiera atravesar el pueblo de un solo golpe. Mi madre mira por la ventana intentando encontrar algo bueno que decir, pero su silencio lo dice todo.<br><br>Pasamos por el centro. Veo el cine y el Palace Arcade. Billy frena de golpe en un semáforo y me mira por el retrovisor con esos ojos azules que parecen hielo. '¿Contenta, Maxine?', escupe con veneno. El odio entre nosotros es lo único que ha sobrevivido al viaje.",
+    "prologo_2": {
+        text: "Paso junto a las taquillas. Un par de chicas mayores con los ojos maquillados en tonos verduzcos y peinados que parecen algodón de azúcar discuten con el tipo detrás del cristal. Le faltan un dólar con cincuenta. <br><br>—¿Te parece que esto es una beneficencia? Sin dinero no hay boleto —dice el chico sarcástico. Yo acaricio el mío en el bolsillo de mi chamarra. Con mi patineta bajo el brazo, pienso en lo genial que sería bajarla y pasar zumbando entre las bancas.",
         choices: [
-            { text: "Responderle con sarcasmo para marcar terreno", skill: "temple", roll: 4, next: "cap1_sarcasmo", fail: "cap1_silencio_tenso" },
-            { text: "Mirar fijamente el Palace Arcade", skill: "instinto", roll: 3, next: "cap1_arcade_interes", fail: "cap1_silencio_tenso" },
-            { text: "Ignorarlo y centrarte en tu skate", next: "cap1_casa" }
+            { text: "Resistir el impulso de patinar para no llamar la atención", skill: "temple", roll: 4, next: "prologo_3", fail: "prologo_3" },
+            { text: "Aprovechar la discusión de las chicas para avanzar más rápido", skill: "instinto", roll: 3, next: "prologo_3", fail: "prologo_3" }
         ]
     },
-    "cap1_sarcasmo": {
-        text: "—Tan contenta como tú de estar encerrado en un coche conmigo, Billy —le digo. Él aprieta el volante hasta que sus nudillos blanquean. Me ha oído, pero Neil está en el coche de delante y Billy no se atreve a hacer nada... todavía.",
-        choices: [{ text: "Seguir el camino hacia la nueva casa", next: "cap1_casa" }]
-    },
-    "cap1_arcade_interes": {
-        text: "Mis ojos se clavan en las luces del Palace. Es el único lugar que parece tener vida propia. Veo a unos chicos entrar. Quizás allí pueda desaparecer, ser simplemente 'Max' y no la hermana de un psicópata.",
-        choices: [{ text: "Llegar a la casa", next: "cap1_casa" }]
-    },
-    "cap1_silencio_tenso": {
-        text: "Bajo la mirada. No tengo fuerzas para pelear ahora. El peso de Indiana se siente como si el cielo fuera de plomo. Billy se ríe, disfrutando de mi derrota momentánea.",
-        choices: [{ text: "Llegar a la casa", next: "cap1_casa" }]
-    },
-    "cap1_casa": {
-        text: "La casa es de madera, con un porche que cruje. Neil baja del coche y empieza a dar órdenes como si estuviéramos en un cuartel. Mi madre corre a obedecer. Yo me quedo en la acera, con mi tabla bajo el brazo, sintiendo que el aire de Hawkins está demasiado quieto. <br><br>Tengo que decidir cómo entrar en este nuevo 'hogar'.",
+    "prologo_3": {
+        text: "Ya me encuentro casi al final del vestíbulo cuando un murmullo nervioso atraviesa la multitud. Dos tipos de uniformes marrones están parados junto a las máquinas expendedoras. Oficiales de policía. <br><br>El alto tiene brazos largos como patas de araña. Iba y venía con ese andar lento y señorial que dice: 'Podré parecer un bueno para nada, pero soy yo quien tiene una insignia y el arma'. Me recuerda a mi padrastro.",
         choices: [
-            { text: "Subir a tu cuarto y encerrarte", skill: "agilidad", roll: 3, next: "cap1_cuarto", fail: "cap1_intercepcion_neil" },
-            { text: "Inspeccionar los alrededores de la casa", skill: "instinto", roll: 4, next: "cap1_alrededores", fail: "cap1_intercepcion_neil" }
+            { text: "Evaluar hacia dónde miran los policías", skill: "percepcion", roll: 5, next: "prologo_4", fail: "prologo_4_falla" },
+            { text: "Moverte sigilosamente hacia la terminal de autobuses", skill: "agilidad", roll: 4, next: "prologo_4", fail: "prologo_4_falla" }
         ]
     },
-    "cap1_cuarto": {
-        text: "Subo las escaleras antes de que nadie me hable. Mi cuarto es pequeño y huele a cerrado. Abro la ventana y miro hacia el bosque. Es extraño, hay una quietud que me inquieta. Saco mi caja de recuerdos y la escondo bajo el armario.",
-        choices: [{ text: "Mañana será el primer día de escuela...", next: "cap2_inicio" }]
+    "prologo_4_falla": {
+        text: "Mi nerviosismo es evidente. Los policías se adentran en el centro del vestíbulo y entrecierran los ojos. Parecen buscar a una niña perdida. O a una fugitiva. Aprieto el paso.",
+        choices: [{ text: "Prepararte para correr hacia el abordaje", next: "prologo_4" }]
     },
-    "cap1_intercepcion_neil": {
-        text: "Neil me detiene en la puerta. —Maxine, ayuda a tu madre con las cajas. No quiero verte holgazaneando —dice con esa calma autoritaria. El día empieza con trabajo y obediencia.",
-        choices: [{ text: "Acatar en silencio", next: "cap2_inicio" }]
+    "prologo_4": {
+        text: "Agacho la cabeza y me preparo para perderme entre la gente. Los mugrientos tipos en el bar escupen al suelo, molestos por la presencia policial. Las chicas de la taquilla actúan nerviosas, tal vez ellas también tienen un padrastro como el mío. <br><br>Estoy a punto de entrar al área de abordaje. La libertad está a un solo paso.",
+        choices: [
+            { text: "Acelerar el paso en el último tramo", skill: "agilidad", roll: 5, next: "prologo_5", fail: "prologo_5" },
+            { text: "Caminar despacio, intentando ser invisible", skill: "instinto", roll: 4, next: "prologo_5", fail: "prologo_5" }
+        ]
+    },
+    "prologo_5": {
+        text: "Alguien se aclara la garganta. De repente, una mano grande y pesada se cierra alrededor de mi brazo. Di media vuelta y levanté la mirada ante el amenazante rostro de un tercer uniformado. <br><br>Él sonríe con una sonrisa aburrida y plana. <br>—¿Maxine Mayfield? Voy a necesitar que vengas conmigo —dice con su rostro arrugado—. Hay gente en casa que está preocupada por ti.",
+        choices: [
+            { text: "Soltarse de un tirón y tratar de huir", skill: "agilidad", roll: 6, next: "cap1_1", fail: "cap1_1" },
+            { text: "Mirarlo con rabia: 'Mi nombre es Max'", skill: "temple", roll: 4, next: "cap1_1", fail: "cap1_1" },
+            { text: "Rendirse en silencio sabiendo que has perdido", next: "cap1_1" }
+        ]
     },
 
-"cap2_inicio": {
-        text: "<strong>CAPÍTULO DOS: EL RECUERDO DEL CAMPO DE MINIGOLF</strong><br><br>Mientras intento dormir en mi nueva habitación, mi mente regresa a California, a un día caluroso en el campo de minigolf. Recuerdo a mi padre, Sam, y cómo las cosas empezaron a torcerse. Fue allí donde Billy apareció por primera vez con su nueva imagen: una perforación en la oreja y una actitud desafiante. [cite: 30, 31, 32]<br><br>Neil lo observaba con esa mirada amarga que siempre tiene cuando algo no cumple sus estándares. —Llegas tarde —le dijo con frialdad. [cite: 34, 35] Billy me llamó 'Maxine', un nombre que odio, pero guardé silencio. [cite: 36] En aquel entonces, tontamente, pensé que tener un hermano cambiaría mi vida para mejor, que por fin tendría a alguien de mi lado. [cite: 40]<br><br>De vuelta al presente, el despertador suena. Es mi primer día en la escuela secundaria de Hawkins. Mamá entra con un suéter nuevo, intentando que parezca 'especial'. [cite: 82]",
+    // ==========================================
+    // CAPÍTULO UNO
+    // ==========================================
+    "cap1_1": {
+        text: "<strong>CAPÍTULO UNO: EL CIELO DE HAWKINS. </strong><br><br>El cielo está tan bajo que parece posado justo encima del centro de Hawkins. Avanzo rápido en mi patineta; el frío hace que me duelan los oídos. Aquí todo se ve pálido y gris. Hawkins, Indiana: hogar de nubes grises, chamarras acolchadas e invierno. <br><br>Pasé la tarde en el Palace Arcade, jugando Dig Dug hasta llevar mi nombre al puesto número uno. Me quedé sin monedas y la ansiedad me hizo salir. Ahora paso zumbando más allá del restaurante y un cine anticuado. El cartel anuncia <em>Terminator</em>. Me gustó esa película, Sarah Connor resultaba ser una rudísima patea traseros. Lástima que ninguna mujer que conozco sea como ella.",
         choices: [
-            { text: "Rechazar el suéter y vestir tu ropa habitual", skill: "temple", roll: 4, next: "cap2_ropa_propia", fail: "cap2_ceder_mama" },
-            { text: "Intentar hablar con mamá sobre Sam", skill: "instinto", roll: 5, next: "cap2_pregunta_sam", fail: "cap2_ceder_mama" },
-            { text: "Desayunar rápido para evitar a Neil", next: "cap2_desayuno_tenso" }
+            { text: "Aumentar la velocidad por la calle principal", skill: "agilidad", roll: 3, next: "cap1_2", fail: "cap1_2_caida" },
+            { text: "Observar las decoraciones falsas de Halloween", skill: "percepcion", roll: 4, next: "cap1_2", fail: "cap1_2_caida" }
         ]
     },
-    "cap2_ropa_propia": {
-        text: "—No voy a usar eso —le digo a mamá. Ya estoy vestida con mis jeans y mi sudadera de siempre. [cite: 80, 81] No estoy dispuesta a empezar en una escuela nueva fingiendo ser alguien que no soy. Mamá suspira y su sonrisa se desvanece, pero no insiste. Sabe que tengo el temperamento de mi padre. [cite: 83]",
-        choices: [{ text: "Bajar a la cocina", next: "cap2_desayuno_tenso" }]
+    "cap1_2_caida": {
+        text: "Me distraigo mirando las telarañas falsas y las calabazas sonrientes de los escaparates. No me doy cuenta de lo que hay en mi camino hasta que es demasiado tarde.",
+        choices: [{ text: "Intentar frenar", next: "cap1_2" }]
     },
-    "cap2_pregunta_sam": {
-        text: "—¿Has hablado con papá? —le pregunto en voz baja. El rostro de mamá se tensa. Ella mira hacia la puerta, temerosa de que Neil esté escuchando. —Max, estamos en Hawkins ahora. Es un nuevo comienzo —responde, evadiendo mi mirada. [cite: 82, 83] Entiendo el mensaje: Sam es un fantasma que no tiene permitido entrar en esta casa.",
-        choices: [{ text: "Bajar a la cocina", next: "cap2_desayuno_tenso" }]
-    },
-    "cap2_ceder_mama": {
-        text: "Mamá me mira con tanta esperanza que no puedo decirle que no. Me pongo el suéter, aunque me pica y me hace sentir como una muñeca de porcelana. —Te ves hermosa —dice ella, pero yo solo me siento ridícula. [cite: 82]",
-        choices: [{ text: "Bajar a la cocina", next: "cap2_desayuno_tenso" }]
-    },
-    "cap2_desayuno_tenso": {
-        text: "En la cocina, Neil está comiendo su hamburguesa con tenedor y cuchillo, con una precisión que me pone enferma. [cite: 93] —Respóndele a tu madre —dice sin mirarme cuando trato de ignorar sus preguntas sobre la escuela. [cite: 94] Siento una oleada de furia. —Mi nombre —digo, apretando los puños— es Max. <br><br>Neil deja de masticar y me dedica una mirada cargada de una amenaza silenciosa. —Maxine —repite, marcando cada sílaba—, te lo advierto. [cite: 95] El aire en la cocina se vuelve irrespirable.",
+    "cap1_2": {
+        text: "Algo pequeño y oscuro cruza la acera frente a mí. A la luz gris, parece un gato, algo rarísimo en el distrito financiero. Mis pies pierden su centro. Esa fracción de segundo antes de caer, el mundo se voltea de cabeza.",
         choices: [
-            { text: "Mantenerle la mirada sin parpadear", skill: "temple", roll: 6, next: "cap2_desafio_neil", fail: "cap2_castigo_limpieza" },
-            { text: "Bajar la cabeza y terminar de desayunar", next: "cap2_escuela_salida" },
-            { text: "Huir hacia el garaje buscando tu skate", skill: "agilidad", roll: 4, next: "cap2_huida_skate", fail: "cap2_castigo_limpieza" }
+            { text: "Preparar el cuerpo para recibir el impacto", skill: "temple", roll: 4, next: "cap1_3", fail: "cap1_3" },
+            { text: "Intentar rodar para salvar los codos", skill: "agilidad", roll: 5, next: "cap1_3", fail: "cap1_3" }
         ]
     },
-    "cap2_desafio_neil": {
-        text: "No aparto los ojos de los suyos. Por un segundo, veo una chispa de sorpresa en su mirada fría. Neil respira hondo, tratando de contener su temperamento. [cite: 97] —Vete a la escuela —dice finalmente—. Y no llegues tarde. —He ganado esta pequeña batalla, pero sé que el precio será alto.",
-        choices: [{ text: "Salir de la casa", next: "cap2_escuela_salida" }]
-    },
-    "cap2_huida_skate": {
-        text: "Agarro mi mochila y salgo por la puerta lateral antes de que Neil pueda reaccionar. El sonido de mis ruedas contra el asfalto de Hawkins es lo único que me devuelve la calma. Patino rápido, sintiendo el viento frío de Indiana en mi cara. [cite: 566]",
-        choices: [{ text: "Llegar a la escuela secundaria", next: "cap2_escuela_llegada" }]
-    },
-    "cap2_castigo_limpieza": {
-        text: "Neil golpea la mesa con el puño. —Ayudarás a tu madre con las cajas antes de irte. —Me paso la siguiente hora cargando peso, sintiendo cómo mis músculos se tensan. Para cuando termino, llego tarde a mi primer día. [cite: 110]",
-        choices: [{ text: "Ir a la escuela", next: "cap2_escuela_llegada" }]
-    },
-    "cap2_escuela_salida": {
-        text: "Salgo de la casa sin mirar atrás. Billy ya está en el Camaro, acelerando el motor para meterme prisa. —Sube, Maxine. No querrás que el director te reciba en la puerta —se burla. [cite: 36]",
-        choices: [{ text: "Subir al auto con Billy", next: "cap2_escuela_llegada" }]
-    },
-    "cap2_escuela_llegada": {
-        text: "La escuela secundaria de Hawkins parece un búnker de ladrillos. Al bajar del coche, noto que todo el mundo se queda mirando el Camaro... y a Billy. Él disfruta de la atención, pero yo solo quiero desaparecer. Camino hacia la entrada con mi skate bajo el brazo y veo a un grupo de cuatro chicos en bicicletas observándome. [cite: 209]<br><br>Uno de ellos, con una gorra de red, parece especialmente curioso.",
+    "cap1_3": {
+        text: "Beso el suelo con tanta fuerza que siento el rebote en la mandíbula. Mi codo atraviesa la manga del suéter y las palmas de mis manos laten en carne viva. <br><br>Una mujer delgada de cabello oscuro sale corriendo de una tienda. Se pone de rodillas a mi lado, mirándome con ojos nerviosos. <br>—Oh, tu brazo... ¿Te asustas fácilmente? —me pregunta, extrañamente.",
         choices: [
-            { text: "Pasar de largo ignorándolos por completo", next: "cap3_inicio" },
-            { text: "Hacer un truco con el skate para impresionarlos", skill: "agilidad", roll: 5, next: "cap2_truco_skate", fail: "cap3_inicio" }
+            { text: "Analizar a la mujer por su extraña pregunta", skill: "instinto", roll: 4, next: "cap1_4", fail: "cap1_4" },
+            { text: "Responderle mentalmente: 'No le temo a nada'", skill: "temple", roll: 3, next: "cap1_4", fail: "cap1_4" },
+            { text: "Ignorarla y frotarte las manos en los jeans", next: "cap1_4" }
         ]
     },
-    "cap2_truco_skate": {
-        text: "Dejo caer la tabla y hago un ollie perfecto sobre un bordillo justo delante de ellos. Escucho un murmullo de asombro. —¡Vaya! —dice el de la gorra. Sigo patinando sin mirar atrás, con una pequeña sonrisa. Al menos ya saben que no soy una chica común de Hawkins.",
-        choices: [{ text: "Entrar a clase", next: "cap3_inicio" }]
+    "cap1_4": {
+        text: "Ella sacude la suciedad de mis manos. Aclara que pregunta si 'sano fácilmente'. Antes de que pueda responder, el aire es cortado en dos por el rugido de un motor. <br><br>El Camaro azul ignora el semáforo y se detiene en la acera. Billy está recostado en el asiento del conductor. Me observa de esa manera plana, vacía y pesada, pero con un filo brillante y peligroso. Baja la ventanilla. La música de <em>Quiet Riot</em> golpea el aire. <br>—Entra —ordena.",
+        choices: [
+            { text: "Tomar tu patineta sin mostrar debilidad frente a él", skill: "temple", roll: 5, next: "cap1_5", fail: "cap1_5" },
+            { text: "Subir rápido para no alargar la humillación", skill: "agilidad", roll: 4, next: "cap1_5", fail: "cap1_5" }
+        ]
+    },
+    "cap1_5": {
+        text: "Alguna vez creí que el Camaro era genial, un auto en el que podrías robar un banco. Y pensé que tener a Billy como hermanastro cambiaría mi vida. <br><br>En el auto, recuerdo a los antiguos novios perdedores de mi madre: Donnie, Vic, Gus. Luego llegó Neil, diferente, un guardia de banco que le regalaba flores. La noche que conocimos a Billy en el minigolf, llegó tarde, con un pendiente y actitud de metalero. Neil lo miró con furia contenida. 'Saluda a Maxine', me dijo Neil. Odiaba ese nombre, pero guardé silencio.",
+        choices: [
+            { text: "Recordar la dinámica de miedo que Neil imponía", skill: "percepcion", roll: 4, next: "cap1_6", fail: "cap1_6" },
+            { text: "Recordar la fascinación inicial que sentiste por Billy", skill: "instinto", roll: 3, next: "cap1_6", fail: "cap1_6" }
+        ]
+    },
+    "cap1_6": {
+        text: "Esa misma noche jugamos Skee-Ball. Le pedí a Billy que me llamara 'Max'. Él rio con voz áspera y dijo: 'Bien, Mad Max, entonces'. Más tarde, junto al Camaro azul que parecía un monstruo de otro mundo, le dije que yo sabía conducir. <br><br>—Sólo eres una niña —se burló él, acercándose con su marcado olor a cigarrillos y laca—. Pero supongo que incluso las niñas pueden distinguir una buena carroza. <br><br>Fui lo suficientemente tonta para creer que los Hargrove estaban aquí para que todo fuera mejor. Que esto era una verdadera familia.",
+        choices: [
+            { text: "Dejar atrás el recuerdo y enfrentar el presente", next: "fin_capitulo_1" }
+        ]
+    },
+    "fin_capitulo_1": {
+        text: "El rugido del Camaro me devuelve a la realidad de Hawkins. El viaje a casa acaba de empezar. <br><br><em>(Fin del Capítulo 1)</em>",
+        choices: [
+            { text: "Continuar al Capítulo 2...", next: "cap2_1" } // O el nodo que conecte al siguiente capítulo en tu juego
+        ]
     },
 
-"cap3_inicio": {
-        text: "<strong>CAPÍTULO TRES: EL AULA DEL SR. CLARKE.</strong><br><br>Entro en la escuela secundaria de Hawkins y la sensación es asfixiante. El edificio es de un ladrillo monótono que me recuerda a una cárcel[cite: 523]. En la clase de ciencias, el Sr. Clarke me hace ponerme frente a todos. —Ah, tú debes de ser nuestra nueva estudiante de California —dice con una energía que yo no comparto[cite: 567]. <br><br>Siento las miradas. Especialmente la de cuatro chicos en la parte de atrás. El de la gorra (Lucas) y el de pelo rizado (Dustin) susurran entre ellos. El líder del grupo, Mike, me observa con una hostilidad que no entiendo. El Sr. Clarke me señala la pizarra y me pide que escriba mi nombre para que todos lo conozcan.",
+    // ==========================================
+    // CAPÍTULO DOS
+    // ==========================================
+    "cap2_1": {
+        text: "<strong>CAPÍTULO DOS: EL PRIMER DÍA. </strong><br><br>Mi primer día en la secundaria Hawkins fue un martes, para entonces el curso ya tenía más de un mes de haber dado inicio. Mamá metió la cabeza en mi habitación y me dijo que me levantara. Me dio la impresión de que tal vez tener a Billy por ahí todo el tiempo comenzaba a volverla un poco loca. <br><br>Ya estaba vestida con jeans y un suéter como el que usaba todos los días. Recordé cómo mamá intentó darme algo 'especial' para hoy, pero no estaba dispuesta a asistir a mi primer día en una nueva escuela vestida como alguien más. Saqué mi mochila y mi patineta y salí detrás de Billy. El Camaro olía como siempre, a laca para el cabello y cigarrillos.",
         choices: [
-            { text: "Escribir 'MAX' con letras grandes y desafiantes", skill: "temple", roll: 4, next: "cap3_pizarra_max" },
-            { text: "Escribir 'Maxine' para evitar más problemas", skill: "instinto", roll: 3, next: "cap3_pizarra_maxine" }
+            { text: "Subir rápido al auto para evitar problemas", skill: "agilidad", roll: 3, next: "cap2_2_viaje", fail: "cap2_2_viaje_tenso" },
+            { text: "Tomarte tu tiempo, demostrando que no le temes a Billy", skill: "temple", roll: 4, next: "cap2_2_viaje", fail: "cap2_2_viaje_tenso" }
         ]
     },
-    "cap3_pizarra_max": {
-        text: "Escribo 'MAX' en mayúsculas. El roce de la tiza contra la pizarra suena como un desafío[cite: 533]. —Nadie me llama Maxine —digo con firmeza, aunque por dentro mis manos tiemblan. Me siento en un pupitre vacío al fondo, tratando de ignorar el murmullo que se extiende por el aula. Mike Wheeler sigue mirándome como si fuera una pieza de un rompecabezas que no quiere resolver.",
+    "cap2_2_viaje_tenso": {
+        text: "Me tropiezo un poco con la patineta al subir, y Billy resopla con fastidio. En el asiento del conductor, Billy mantenía la mirada al frente. Arrancamos con un gruñido irregular.",
+        choices: [{ text: "Escuchar sus quejas", next: "cap2_2_viaje" }]
+    },
+    "cap2_2_viaje": {
+        text: "Mientras arrasamos el camino rural de dos carriles, él me culpa de que estuviéramos aquí. Dice que yo salí corriendo, pero estaba completamente equivocada; no había salido corriendo a Dios sabría dónde, estaba por ir a Los Ángeles para ver a papá. <br><br>Desde que se habían separado, papá había estado viviendo en un pequeño y asqueroso departamento en East Hollywood. Mamá odiaba cuando pasaba la noche con él porque se preocupaba por todo. Billy fue el que perdió el control con la noticia de la mudanza, golpeó todo y dejó de aparecerse a la hora de la cena.",
         choices: [
-            { text: "Ponerte los auriculares y desconectar", skill: "agilidad", roll: 4, next: "cap3_walkman" },
-            { text: "Observar qué notas se pasan los chicos", skill: "percepcion", roll: 5, next: "cap3_notas" }
+            { text: "Recordar cómo papá abría candados para calmarte", skill: "percepcion", roll: 4, next: "cap2_3_llegada", fail: "cap2_3_llegada" },
+            { text: "Ignorar a Billy y mirar por la ventana hacia el pueblo", skill: "instinto", roll: 3, next: "cap2_3_llegada", fail: "cap2_3_llegada" }
         ]
     },
-    "cap3_pizarra_maxine": {
-        text: "Escribo 'Maxine'. Es el nombre que Neil me impone, el nombre que odio, pero hoy no tengo fuerzas para otra batalla[cite: 531, 567]. Me siento rápido y bajo la cabeza. A pesar de mi intento de pasar desapercibida, noto que los chicos del fondo no dejan de observarme. Soy 'la chica de California', una intrusa en su mundo perfectamente cerrado.",
+    "cap2_3_llegada": {
+        text: "La secundaria Hawkins era un largo edificio de ladrillos, sencillo y robusto, más parecido al de una cárcel del condado que al de una escuela. Mamá había dicho a Billy que me llevara y entrara conmigo para asegurarse de que tuvieran todo listo, pero él pasó volando más allá de la puerta principal y aceleró de pronto hacia el estacionamiento del bachillerato. <br><br>—¡Hey! —lo miré y golpeé con la mano en el tablero. Él sólo me dijo que me bajara.",
         choices: [
-            { text: "Esperar a que termine la clase", next: "cap3_pasillo" }
+            { text: "Lanzarle una mirada de impaciencia profunda", skill: "temple", roll: 4, next: "cap2_4_clase", fail: "cap2_4_clase_tarde" },
+            { text: "Bajar rápidamente con tu patineta antes de que acelere", skill: "agilidad", roll: 4, next: "cap2_4_clase", fail: "cap2_4_clase_tarde" }
         ]
     },
-    "cap3_walkman": {
-        text: "Saco mi Walkman y me pongo los auriculares. No hay música, pero los chicos no lo saben. Es mi armadura contra Hawkins[cite: 528]. A través del silencio fingido, escucho a Dustin preguntar si seré yo la que batió su récord en el Arcade. 'MadMax', dicen. Así que ya lo saben.",
-        choices: [{ text: "Salir al pasillo al sonar la campana", next: "cap3_pasillo" }]
+    "cap2_4_clase_tarde": {
+        text: "Tardo demasiado en sacar mi mochila. Billy arranca de golpe y casi me hace caer. Estaba casi segura de que las mujeres de la oficina me harían guardar mi patineta. En California, la regla era que tenías que guardarla en tu casillero, pero aquí nadie parecía tener una opinión al respecto.",
+        choices: [{ text: "Caminar hacia el aula", next: "cap2_4_clase" }]
     },
-    "cap3_notas": {
-        text: "Me inclino un poco y veo cómo Lucas le pasa un papel a Mike. Logro leer algo sobre 'reemplazo'. El ambiente en este grupo es tenso, como si estuvieran guardando un luto o un secreto demasiado grande para este pueblo[cite: 547]. Mike arruga la nota y me lanza una mirada cargada de resentimiento.",
-        choices: [{ text: "Ignorarlos y salir de clase", next: "cap3_pasillo" }]
-    },
-    "cap3_pasillo": {
-        text: "La campana suena y salgo disparada hacia mi casillero. Hawkins es diferente a San Diego; aquí el aire es pesado y todo parece moverse más lento. De repente, Lucas se acerca. Intenta ser amable, pero Mike lo arrastra lejos antes de que pueda decir nada. <br><br>Mientras guardo mis libros, veo a Billy en el aparcamiento, apoyado en su Camaro, rodeado de chicas. Sé que me está vigilando. Sé que, si hago algo mal, Neil se enterará[cite: 554, 560].",
+    "cap2_4_clase": {
+        text: "Mi primera clase era Ciencias, y llegué al salón después de la campanada. A pesar de que todos ya estaban sentados, en el salón había muchos pupitres vacíos, lo que hacía que pareciera como esa parte de una historia en la que no todos han regresado tras enfrentarse con un monstruo. <br><br>El profesor me hizo pararme al frente del salón mientras él me presentaba. Es tan molesto cómo cierto tipo de adultos te llaman siempre por tu nombre completo, como si hubieras hecho algo indebido.",
         choices: [
-            { text: "Caminar hacia el Arcade para despejarte", skill: "agilidad", roll: 4, next: "cap4_inicio" },
-            { text: "Ir directamente al coche de Billy", next: "cap4_inicio" }
+            { text: "Corregirlo firmemente frente a toda la clase", skill: "temple", roll: 5, next: "cap2_5_recreo", fail: "cap2_5_recreo_aislada" },
+            { text: "Observar las caras de los alumnos mientras te presenta", skill: "percepcion", roll: 4, next: "cap2_5_recreo", fail: "cap2_5_recreo_aislada" }
+        ]
+    },
+    "cap2_5_recreo_aislada": {
+        text: "Intento corregirlo, pero mi voz apenas se escucha. Me hundo en mi asiento. En el almuerzo comí carne seca y pretzels directo de la bolsa y me senté sola en los agrietados escalones de concreto junto al gimnasio. Por primera vez desde que había dejado San Diego, me permití realmente sentir el hueco en mi pecho. Tomó un minuto reconocerlo. Soledad.",
+        choices: [{ text: "Mirar hacia el patio", next: "cap2_6_patio" }]
+    },
+    "cap2_5_recreo": {
+        text: "Cuando lo corregí, la clase me observó. Luego llegó el almuerzo. Comí carne seca y pretzels sola en los agrietados escalones de concreto junto al gimnasio. En mi hogar tenía a Ben Voss, Eddie Harris y Nate. Pasábamos los veranos y las tardes después de la escuela juntos. Aquí, lo único posible era quedarse quieta y esperar a que sonara la chicharra para salir corriendo.",
+        choices: [{ text: "Mirar hacia el patio", next: "cap2_6_patio" }]
+    },
+"cap2_6_patio": {
+        text: "Paseas de un lado a otro con tu patineta, ignorando a todos. El sonido de las ruedas contra el concreto es lo único que te hace sentir tú misma. No te das cuenta, pero desde la distancia, cuatro chicos te observan con una mezcla de curiosidad y sospecha. Especialmente uno con una gorra de camionero.",
+        choices: [
+            { text: "Continuar al Capítulo 3.", next: "cap3_1_recuerdo" }
+        ]
+    },
+
+
+    // ==========================================
+    // CAPÍTULO TRES
+    // ==========================================
+    "cap3_1_recuerdo": {
+        text: "<strong>CAPÍTULO TRES: RECUERDOS DE UNA FAMILIA ROTA. </strong><br><br>Por un segundo pensé en acercarme a ellas, pero nunca había logrado averiguar qué era lo indicado decir para hacer que una chica con una falda a cuadros fuera mi amiga. <br><br>Mi mente viaja al pasado. Mamá sólo llevaba tres semanas casada con Neil la primera vez que tuve una idea clara acerca de él. El año escolar recién había terminado y él decidió que todos iríamos a comer a Captain Spaulding’s, como una familia. Billy pasó toda la cena recostado en su silla y mirando al techo. <br><br>Mamá puso su mano sobre la mía y sugirió inscribirme en el campamento de voleibol de verano. Decía que sería una buena manera de hacer nuevas amigas.",
+        choices: [
+            { text: "Rechazar la idea secamente", skill: "temple", roll: 4, next: "cap3_2_enfrentamiento", fail: "cap3_2_sometida" },
+            { text: "Evadir la mirada de mamá en silencio", skill: "instinto", roll: 3, next: "cap3_2_enfrentamiento", fail: "cap3_2_sometida" }
+        ]
+    },
+    "cap3_2_sometida": {
+        text: "Me quedo callada, pero mi disgusto es evidente. Neil estaba comiendo su hamburguesa con queso, con tenedor y cuchillo. Dejó de masticar y se acercó, ordenándome que le respondiera a mi madre.",
+        choices: [{ text: "Escuchar a Neil", next: "cap3_2_enfrentamiento" }]
+    },
+    "cap3_2_enfrentamiento": {
+        text: "Me retorcí para alejarme, diciendo que no importaba lo que yo quisiera. Neil dijo: 'Maxine, te lo advierto'. Sintiendo una oleada de furia en mis mejillas, respondí: 'Mi nombre es Max'. <br><br>Neil respiró por la nariz, dejó su tenedor y alcanzó mi brazo. 'Si no consigues mantener esa boca bajo control, te convertirás en una triste niñita arrepentida', me dijo. Papá siempre decía que mi cerebro era rápido, pero mi boca lo era más.",
+        choices: [
+            { text: "Desafiarlo: 'Prefiero ser una triste niñita que estar en el campamento'", skill: "temple", roll: 6, next: "cap3_3_coche", fail: "cap3_3_coche" },
+            { text: "Murmurar entre dientes: 'Tú no eres mi padre'", skill: "instinto", roll: 5, next: "cap3_3_coche", fail: "cap3_3_coche" }
+        ]
+    },
+    "cap3_3_coche": {
+        text: "No lo dije lo suficientemente bajo. Neil apretó su agarre en mi brazo y me sacó de mi silla. Caminé rígidamente para salir del restaurante. En el estacionamiento, me senté en el asiento trasero del Skylark de mamá con la puerta abierta, pensando en lo mucho que odiaba a Neil. Encontré semillas de girasol y comencé a comerlas. <br><br>Billy había salido y estaba parado en el círculo amarillo pálido de la farola. Suspiró, encendió un cigarrillo insolente, tipo punk-rock, y me dijo: 'Realmente metiste la pata esta vez, ¿declararle la guerra a Neil?'.",
+        choices: [
+            { text: "Levantar el dedo de en medio hacia Billy", skill: "temple", roll: 4, next: "cap3_4_halloween", fail: "cap3_4_halloween" },
+            { text: "Ignorarlo y seguir comiendo semillas", skill: "agilidad", roll: 3, next: "cap3_4_halloween", fail: "cap3_4_halloween" }
+        ]
+    },
+    "cap3_4_halloween": {
+        text: "Fruncí el ceño y le mostré el dedo de en medio con resentimiento. De vuelta al presente en Hawkins, faltaba poco para Halloween. En el desayuno, Neil había anulado la idea de que me disfrazara diciendo que ya me estaba haciendo demasiado vieja para esas cosas. Mamá me miró con timidez pero no discutió con él. <br><br>Pero yo iba a hacerlo sólo para molestarlo. Abrí la caja marcada como 'Tesoros de Max' y comprobé que mi máscara de Michael Myers se encontraba allí. Había elegido a Michael Myers porque él no tenía debilidades, era imparable y era el tipo de monstruo al que más temía, porque era real.",
+        choices: [
+            { text: "Probarte la máscara frente al espejo", skill: "percepcion", roll: 3, next: "cap3_5_mascara", fail: "cap3_5_burlas" },
+            { text: "Esconder la máscara rápidamente en la cómoda", skill: "agilidad", roll: 4, next: "cap3_5_mascara", fail: "cap3_5_burlas" }
+        ]
+    },
+    "cap3_5_burlas": {
+        text: "Al sacar la máscara, Billy apareció en el pasillo y se recargó en el marco de la puerta. Siguió mirándome con ojos aburridos y pesados.",
+        choices: [{ text: "Enfrentar su mirada", next: "cap3_5_mascara" }]
+    },
+    "cap3_5_mascara": {
+        text: "Billy me observaba desde la puerta. —¿Qué? ¿Ahora ni siquiera tengo permitido disfrazarme? —le pregunté. <br><br>—Adelante, pero no te sorprendas cuando parezcas una bebé. Nadie en la secundaria se disfraza en Halloween. Eso es para los perdedores —dijo él. Me encogí de hombros, pero era un gesto pequeño y vacío. Volví a mi habitación y metí la máscara en la cómoda. Una cosa más que había dejado de pertenecerme.",
+        choices: [
+            { text: "Fin del Capítulo 3. Continuar...", next: "cap4_1_inicio" }
+        ]
+    },
+
+
+    // ==========================================
+    // CAPÍTULO CUATRO: EL PESO DEL PASADO
+    // ==========================================
+    "cap4_1_inicio": {
+        text: "<strong>CAPÍTULO CUATRO: EL PESO DEL PASADO. </strong><br><br>Hawkins no es como San Diego. Aquí, el aire es denso y el cielo parece siempre a punto de desplomarse. Mientras camino por los pasillos de la secundaria, siento que soy un espécimen bajo un microscopio. <br><br>Recuerdo mi última tarde en California con mi padre. Estábamos en el muelle y él me prometió que las cosas mejorarían, pero Neil y mamá tenían otros planes. Aquí, en Hawkins, la única forma de sobrevivir parece ser mantenerse en movimiento.",
+        choices: [
+            { text: "Buscar un lugar tranquilo para patinar y despejar la mente", skill: "agilidad", roll: 4, next: "cap4_2_patinaje", fail: "cap4_2_interrupcion" },
+            { text: "Observar a los demás estudiantes para entender cómo encajar", skill: "percepcion", roll: 4, next: "cap4_3_observacion", fail: "cap4_3_incómoda" }
+        ]
+    },
+    "cap4_2_patinaje": {
+        text: "Encuentras una sección vacía del estacionamiento. El asfalto está un poco agrietado, pero logras fluir con la tabla. Por un momento, el ruido de las voces de la escuela desaparece. Sientes que recuperas algo de control sobre tu vida.",
+        choices: [{ text: "Regresar a la realidad", next: "cap4_4_encuentro_raros" }]
+    },
+    "cap4_2_interrupcion": {
+        text: "Intentas patinar, pero la rueda de tu tabla se traba en una grieta profunda. Casi te vas de bruces al suelo. Algunos chicos del bachillerato se ríen al pasar en sus autos. La frustración te quema la garganta.",
+        choices: [{ text: "Levantar la tabla y seguir caminando", next: "cap4_4_encuentro_raros" }]
+    },
+    "cap4_3_observacion": {
+        text: "Te apoyas en la pared y miras. Notas que hay jerarquías claras. Los deportistas, las chicas populares y... un grupo de cuatro chicos que parecen estar en su propio mundo. Uno de ellos, el de la cámara (Lucas), parece notar que los observas.",
+        choices: [{ text: "Sostenerle la mirada con desafío", next: "cap4_4_encuentro_raros" }]
+    },
+    "cap4_3_incómoda": {
+        text: "Tratas de pasar inadvertida, pero sientes que todos te miran. El suéter que llevas parece demasiado brillante para este lugar gris. Te sientes como una intrusa en una película que ya ha empezado.",
+        choices: [{ text: "Caminar rápido hacia tu siguiente clase", next: "cap4_4_encuentro_raros" }]
+    },
+    "cap4_4_encuentro_raros": {
+        text: "De camino a la oficina, escuchas susurros. El grupo de chicos de antes está discutiendo sobre algo llamado 'el récord de Dig Dug'. Uno de ellos, Dustin, parece emocionado. Mike, el que parece el líder, se ve más serio y distante.",
+        choices: [
+            { text: "Acercarte y decirles que tú tienes el nuevo récord", skill: "temple", roll: 5, next: "cap4_5_desafio", fail: "cap4_5_ignorada" },
+            { text: "Escuchar a escondidas para obtener más información", skill: "instinto", roll: 4, next: "cap4_5_informacion", fail: "cap4_5_descubierta" }
+        ]
+    },
+    "cap4_5_desafio": {
+        text: "—'MADMAX' soy yo —les dices con frialdad. Se quedan paralizados. Dustin abre la boca, sorprendido, pero Mike entrecierra los ojos, escéptico. Has marcado tu territorio.",
+        choices: [{ text: "Avanzar hacia el Capítulo 5", next: "cap5_1_inicio" }]
+    },
+    "cap4_5_ignorada": {
+        text: "Intentas decir algo, pero Mike te corta con una mirada gélida y siguen hablando como si fueras invisible. Te das la vuelta, apretando los puños. Son solo unos niños tontos de Indiana.",
+        choices: [{ text: "Avanzar hacia el Capítulo 5", next: "cap5_1_inicio" }]
+    },
+
+"cap4_5_informacion": {
+        text: "Te quedas cerca de los casilleros, fingiendo revisar tu mochila. Escuchas a Dustin mencionar con desesperación que alguien llamado 'MADMAX' ha destrozado su récord en el Palace Arcade. Lucas parece impresionado, pero Mike insiste en que tiene que ser un error del sistema. Ahora sabes exactamente dónde golpear su orgullo.",
+        choices: [{ text: "Sonreír para tus adentros e irte", next: "cap5_1_inicio" }]
+    },
+    "cap4_5_descubierta": {
+        text: "Mientras intentas escuchar, Lucas se da la vuelta bruscamente y te pilla mirando. —¿Se te ha perdido algo? —pregunta con desconfianza. Mike te lanza una mirada de sospecha absoluta. Sientes un nudo en el estómago; empezar con mal pie con los locales no era parte del plan.",
+        choices: [{ text: "Darte la vuelta y alejarte rápido", next: "cap5_1_inicio" }]
+    },
+
+
+    // ==========================================
+    // CAPÍTULO CINCO: LA JAULA DE CRISTAL
+    // ==========================================
+    "cap5_1_inicio": {
+        text: "<strong>CAPÍTULO CINCO: LA JAULA DE CRISTAL. </strong><br><br>Llego a casa y el ambiente está cargado. Neil está en la sala, revisando unos papeles con esa expresión de superioridad que tanto odio. Billy no está, lo cual es un alivio, pero el silencio de mamá es casi peor. <br><br>Mamá me pide que la ayude a desempacar unas cajas en la cocina. Veo una de mis cajas de California, la que tiene mis cómics y mi máscara de Michael Myers.",
+        choices: [
+            { text: "Intentar hablar con mamá sobre lo que sientes", skill: "instinto", roll: 4, next: "cap5_2_charla_mama", fail: "cap5_2_silencio" },
+            { text: "Llevarte la caja a tu cuarto rápidamente", skill: "agilidad", roll: 3, next: "cap5_3_cuarto", fail: "cap5_3_intercepcion_neil" }
+        ]
+    },
+    "cap5_2_charla_mama": {
+        text: "Mamá te mira con tristeza y te pide paciencia. Dice que Neil solo quiere lo mejor para la familia. Sabes que es una mentira que se dice a sí misma para sobrevivir, pero al menos ha habido un momento de conexión.",
+        choices: [{ text: "Ir a tu habitación", next: "cap5_3_cuarto" }]
+    },
+    "cap5_2_silencio": {
+        text: "Tratas de hablar, pero las palabras se quedan en tu garganta. Ella evita el contacto visual, concentrada en guardar los platos. El muro entre ustedes parece más alto que nunca.",
+        choices: [{ text: "Ir a tu habitación", next: "cap5_3_cuarto" }]
+    },
+    "cap5_3_intercepcion_neil": {
+        text: "Neil te detiene antes de que subas las escaleras. —'Maxine, no quiero ver ese desorden en tu cuarto. Organízalo hoy mismo'. Su voz es como una lija. Asientes sin mirarlo, tragándote el odio.",
+        choices: [{ text: "Encerrarte en tu cuarto", next: "cap5_4_plan_escape" }]
+    },
+    "cap5_3_cuarto": {
+        text: "Logras llegar a tu cuarto sin incidentes. Cierras la puerta y te sientas en el suelo. Sacas la máscara de Michael Myers. Es flexible y huele a goma. Te hace sentir protegida, como si pudieras ser alguien imparable.",
+        choices: [{ text: "Planear una escapada nocturna", next: "cap5_4_plan_escape" }]
+    },
+    "cap5_4_plan_escape": {
+        text: "La noche en Hawkins es oscura y silenciosa. Necesitas aire. Miras por la ventana; hay un árbol cuyas ramas llegan cerca del techo. Podrías bajar por ahí y salir con tu patineta hacia el Arcade.",
+        choices: [
+            { text: "Escabullirte por la ventana", skill: "agilidad", roll: 5, next: "cap5_5_escape_exito", fail: "cap5_5_caida_ruidosa" },
+            { text: "Quedarte en cama y tratar de dormir", skill: "temple", roll: 4, next: "cap5_5_resignacion", fail: "cap5_5_pesadillas" }
+        ]
+    },
+    "cap5_5_escape_exito": {
+        text: "Bajas con destreza. Una vez en el suelo, te deslizas en la oscuridad. El viento en la cara te hace sentir viva por primera vez desde la mudanza. El Palace Arcade te espera.",
+        choices: [{ text: "Fin del Capítulo 5. Continuar...", next: "cap6_1_inicio" }]
+    },
+    "cap5_5_caida_ruidosa": {
+        text: "Una rama cruje y caes sobre unos arbustos. El ruido parece un disparo en el silencio de la noche. Se enciende la luz de la habitación de Neil. Tienes que esconderte rápido o volver a entrar.",
+        choices: [
+            { text: "Correr hacia la oscuridad", next: "cap5_5_escape_exito" },
+            { text: "Regresar por donde viniste", next: "cap5_5_resignacion" }
+        ]
+    },
+    "cap5_5_resignacion": {
+        text: "Decides que no vale la pena el riesgo. Te quedas mirando el techo, escuchando el motor del Camaro de Billy a lo lejos. Mañana será otro día igual de gris.",
+        choices: [{ text: "Fin del Capítulo 5. Continuar...", next: "cap6_1_inicio" }]
+    },
+
+"cap5_5_pesadillas": {
+        text: "El sueño te atrapa, pero no es un refugio. Sueñas con el ruido del mar de California mezclándose con los gritos de Neil y el estruendo del Camaro. Te ves a ti misma corriendo por un pasillo infinito donde todas las puertas están cerradas con llave. Te despiertas empapada en sudor, con el corazón martilleando en el pecho. Hawkins te está devorando lentamente.",
+        choices: [{ text: "Tratar de calmarte y esperar al amanecer", next: "cap6_1_inicio" }]
+    },
+
+
+
+
+
+    // ==========================================
+    // CAPÍTULO SEIS: EL PESO DE NEIL Y BILLY
+    // ==========================================
+    "cap6_1_inicio": {
+        text: "<strong>CAPÍTULO SEIS: DINÁMICAS FAMILIARES. </strong><br><br>La mudanza a Hawkins no ha suavizado a Neil. Lo observas mientras critica todo lo que no se ajusta a sus estándares. Billy llega tarde y Neil le lanza esa mirada amarga y tensa de siempre. Billy se encoge de hombros, ignorándolo, y Neil te ordena que lo saludes. 'Saluda a Maxine', dice él, usando ese nombre que tanto odias.",
+        choices: [
+            { text: "Corregir a Neil: 'Mi nombre es Max'", skill: "temple", roll: 5, next: "cap6_2_enfrentamiento", fail: "cap6_2_sumision" },
+            { text: "Guardar silencio para evitar un conflicto mayor", skill: "instinto", roll: 3, next: "cap6_2_silencio", fail: "cap6_2_silencio" }
+        ]
+    },
+    "cap6_2_enfrentamiento": {
+        text: "Sientes que la furia te sube a las mejillas. 'Mi nombre es Max', dices con firmeza. Neil deja de masticar su hamburguesa y se inclina hacia ti; su aliento huele a pepinillos. 'Maxine, te lo advierto', sisea con una voz cargada de una amenaza latente.",
+        choices: [
+            { text: "Sostenerle la mirada con desafío", skill: "temple", roll: 6, next: "cap6_3_tension_extrema", fail: "cap6_3_castigo" },
+            { text: "Bajar la vista y retirarte de la mesa", skill: "agilidad", roll: 4, next: "cap6_3_escape", fail: "cap6_3_castigo" }
+        ]
+    },
+    "cap6_2_sumision": {
+        text: "Intentas hablar, pero la advertencia de Neil te hiela la sangre. Te quedas callada, sintiendo cómo el ambiente en la mesa se vuelve asfixiante. Billy te dedica una lenta y fría inclinación de cabeza, como si ya conociera este guion.",
+        choices: [{ text: "Continuar cenando en silencio", next: "cap6_3_escape" }]
+    },
+    "cap6_2_silencio": {
+        text: "Decides que no vale la pena. Neil siempre te llama así sin importar cuántas veces le digas que no lo haga. Billy te observa con esos ojos pesados y aburridos, mientras tú te aferras a tu silencio como a un escudo.",
+        choices: [{ text: "Terminar la cena e ir a tu cuarto", next: "cap6_3_escape" }]
+    },
+    "cap6_3_castigo": {
+        text: "Neil no tolera la falta de respeto. Aunque no levanta la voz, su tono promete consecuencias futuras. Sientes que la libertad que tenías en California se desvanece en este pueblo gris.",
+        choices: [{ text: "Ir a tu habitación", next: "cap7_1" }]
+    },
+
+
+"cap6_3_tension_extrema": {
+        text: "Sostienes la mirada, pero el silencio de Neil es peor que sus gritos. Sientes que el aire en el comedor se vuelve pesado, eléctrico. Neil no dice nada más, simplemente vuelve a su comida como si fueras invisible, pero su mandíbula está apretada por la furia contenida. Billy suelta una risa corta y amarga, disfrutando del espectáculo.",
+        choices: [
+            { text: "Pedir permiso para retirarte", skill: "temple", roll: 5, next: "cap6_4_habitacion", fail: "cap6_3_castigo" },
+            { text: "Levantarte sin decir nada", skill: "agilidad", roll: 6, next: "cap6_4_habitacion", fail: "cap6_3_castigo" }
+        ]
+    },
+
+    "cap6_3_escape": {
+        text: "Bajas la cabeza y terminas tu cena mecánicamente. El sabor de la comida es como ceniza en tu boca. Neil y Susan (tu madre) intercambian palabras triviales sobre la mudanza, ignorando la tensión que casi hace estallar las paredes. Billy te lanza una última mirada de advertencia antes de levantarse y tomar las llaves del Camaro.",
+        choices: [{ text: "Subir a tu cuarto y encerrarte", next: "cap6_4_habitacion" }]
+    },
+
+    "cap6_4_habitacion": {
+        text: "Una vez en tu habitación, cierras la puerta y finalmente sueltas el aire que no sabías que estabas conteniendo. Te sientas en la cama y miras tus cajas aún sin desempacar. Hawkins no es el nuevo comienzo que te prometieron; es solo una prisión diferente con calles más anchas.",
+        choices: [
+            { text: "Escuchar música para desconectar", next: "cap7_1_inicio" },
+            { text: "Mirar por la ventana hacia la oscuridad de Hawkins", next: "cap7_1_inicio" }
+        ]
+    },
+
+
+
+
+
+// ==========================================
+    // CAPÍTULO SIETE: EL REFUGIO DE LOS TESOROS
+    // ==========================================
+    "cap7_1_inicio": { // Cambiado para coincidir con el final del cap 6
+        text: "<strong>CAPÍTULO SIETE: LA MÁSCARA Y EL ARCADE. </strong><br><br>Te encierras en tu habitación, donde las cajas de la mudanza aún están apiladas. Encuentras la caja marcada como 'Tesoros de Max'. Dentro, descansando sobre tus cómics de Flash, está la máscara de Michael Myers. La elegiste porque él no tiene debilidades; es una pesadilla de goma que te hace sentir imparable.",
+        choices: [
+            { text: "Ponerte la máscara para sentirte poderosa", skill: "percepcion", roll: 4, next: "cap7_2_mascara_puesta", fail: "cap7_2_mascara_puesta" },
+            { text: "Esconder la máscara bajo la cama por si entra Billy", skill: "agilidad", roll: 4, next: "cap7_3_billy_entra", fail: "cap7_3_billy_entra" }
+        ]
+    },
+    "cap7_2_mascara_puesta": {
+        text: "A través de las cuencas de la máscara, el mundo parece diferente, más manejable. Sientes que tu determinación fluye. <em>(Tu Estrés disminuye)</em>. Pero la realidad golpea cuando Billy aparece en el umbral sin llamar.",
+        choices: [{ text: "Quitarte la máscara rápidamente", next: "cap7_3_billy_entra" }]
+    },
+    "cap7_3_billy_entra": {
+        text: "Billy te mira con desprecio. 'Ese chico con el que hablabas en la escuela, ¿quién es?', pregunta refiriéndose a Lucas. Su voz es peligrosamente ecuánime. 'No es nadie', respondes, pero él nota tu nerviosismo.",
+        choices: [
+            { text: "Desafiar su autoridad: '¿Por qué te importa?'", skill: "temple", roll: 5, next: "cap7_4_billy_estalla", fail: "cap7_4_amenaza_billy" },
+            { text: "Intentar calmarlo diciendo que solo pedías direcciones", skill: "instinto", roll: 4, next: "cap7_4_amenaza_billy", fail: "cap7_4_amenaza_billy" }
+        ]
+    },
+    "cap7_4_billy_estalla": {
+        text: "Billy da un paso hacia ti, invadiendo tu espacio personal. 'Porque eres mi responsabilidad, Max. Y no quiero que te juntes con basura', sisea. La amenaza es clara: si te ve con ellos, habrá consecuencias.",
+        choices: [{ text: "Esperar a que se marche y escapar al Arcade", next: "cap7_5_escape_arcade" }]
+    },
+    "cap7_4_amenaza_billy": {
+        text: "Billy suelta una carcajada seca. 'No sabes mentir, Maxine'. Te advierte que se acabó el tiempo de juegos. Cuando sale de la habitación dando un portazo, sientes que las paredes se te echan encima.",
+        choices: [{ text: "Tomar tu patineta y huir al Palace Arcade", next: "cap7_5_escape_arcade" }]
+    },
+    "cap7_5_escape_arcade": {
+        text: "El Palace Arcade es tu santuario. Huele a palomitas quemadas y suena a sintetizadores. Vas directa a Dig Dug, pero hay un cartel de 'Fuera de servicio'. Keith, el empleado con acné y mirada de sabelotodo, te observa desde el mostrador masticando Cheetos.",
+        choices: [
+            { text: "Presionar a Keith para que la arregle ya", skill: "instinto", roll: 5, next: "cap7_6_trato_keith", fail: "cap7_6_keith_pesado" },
+            { text: "Intentar arreglarla tú misma", skill: "percepcion", roll: 6, next: "cap7_6_arreglo_manual", fail: "cap7_6_keith_pesado" }
+        ]
+    },
+    "cap7_6_trato_keith": {
+        text: "Keith te propone un trato. La arreglará si le consigues información sobre Nancy Wheeler. Es un asqueroso, pero es tu única forma de recuperar tu récord.",
+        choices: [{ text: "Aceptar a regañadientes", next: "cap8_1_inicio" }]
+    },
+    "cap7_6_keith_pesado": {
+        text: "Keith se niega a moverse. 'La política de la empresa dice que las reparaciones llevan tiempo, preciosa'. Te toca esperar o buscar otro juego mientras él te ignora.",
+        choices: [{ text: "Ir al Capítulo 8", next: "cap8_1_inicio" }]
+    },
+
+"cap7_6_arreglo_manual": {
+        text: "Te inclinas sobre la máquina y revisas el cableado detrás del panel frontal. Keith se ríe, pero logras ajustar un fusible suelto. La pantalla de Dig Dug parpadea y vuelve a la vida con un pitido triunfal. Keith se queda boquiabierto mientras te apartas el pelo de la cara con suficiencia.",
+        choices: [{ text: "Disfrutar de tu victoria y empezar a jugar", next: "cap8_1_inicio" }]
+    },
+
+
+// ==========================================
+    // CAPÍTULO OCHO: EL MURO DE MIKE (VERIFICADO)
+    // ==========================================
+    "cap8_1_inicio": {
+        text: "<strong>CAPÍTULO OCHO: EL MURO DE MIKE. </strong><br><br>Después de la tensión en el Arcade, el lunes en la escuela no es mejor. Has logrado seguir a los chicos hasta la sala de audiovisual, un lugar que huele a ozono y cables viejos. Sin embargo, Mike Wheeler te bloquea el paso físicamente. Te dice que no te necesitan, que su grupo ya está completo con un paladín y un clérigo, y que tú no encajas en su mundo.",
+        choices: [
+            { text: "Desafiar su lógica: 'No necesito ser un clérigo para ayudar'", skill: "temple", roll: 5, next: "cap8_2_respeto", fail: "cap8_2_humillacion" },
+            { text: "Fijarte en la caja que Dustin protege con tanto celo", skill: "percepcion", roll: 4, next: "cap8_3_curiosidad", fail: "cap8_3_ignorada" }
+        ]
+    },
+    "cap8_2_respeto": {
+        text: "Tu firmeza deja a Mike sin argumentos por un segundo. Lucas parece impresionado por tu seguridad. Aunque Mike se cruza de brazos y bufa, la atmósfera cambia ligeramente; ya no eres solo 'la chica nueva', eres alguien que no se deja pisotear.",
+        choices: [{ text: "Aprovechar el silencio para ver qué esconden", next: "cap8_3_curiosidad" }]
+    },
+    "cap8_2_humillacion": {
+        text: "Mike se burla de tus palabras. 'Esto no es un juego, Maxine', dice usando ese nombre para marcar una jerarquía. Te sientes pequeña bajo su mirada de sospecha. Lucas y Dustin miran al suelo, incómodos, pero no te defienden.",
+        choices: [{ text: "Quedarte en un rincón observando", next: "cap8_4_final" }]
+    },
+    "cap8_3_curiosidad": {
+        text: "Te acercas a la mesa. La caja de Dustin vibra levemente y escuchas un gorgoteo viscoso que te eriza la piel. Definitivamente no es un reptil normal. Mike te aparta de un empujón antes de que puedas ver más, pero el secreto ya te ha picado la curiosidad.",
+        choices: [{ text: "Salir antes de que Mike explote", next: "cap8_4_final" }]
+    },
+    "cap8_3_ignorada": {
+        text: "Intentas acercarte, pero Dustin cierra la mochila rápidamente. Mike sigue enumerando las reglas del grupo mientras te ignora por completo. Te das cuenta de que para Mike, tú eres una amenaza para el equilibrio de su amistad.",
+        choices: [{ text: "Abandonar la sala", next: "cap8_4_final" }]
+    },
+    "cap8_4_final": {
+        text: "Las clases terminan y por un momento olvidas el vacío de la sala AV al pensar en tu patineta. Pero al salir al estacionamiento, el brillo del sol se refleja en el cromo del Camaro de Billy. La música metálica retumba desde el interior. El refugio escolar se ha terminado.",
+        choices: [{ text: "Subir al auto de Billy", next: "cap9_1_inicio" }]
+    },
+
+
+    // ==========================================
+    // CAPÍTULO NUEVE: LA SOMBRA DEL CINTURÓN
+    // ==========================================
+    "cap9_1_inicio": {
+        text: "<strong>CAPÍTULO NUEVE: LA SOMBRA DEL CINTURÓN. </strong><br><br>La tensión en casa ha llegado a un punto crítico. Neil está de un humor amargo porque algo no se ajustó a sus estándares. Billy llega tarde y el aire se vuelve eléctrico. Neil lo obliga a saludarte como 'Maxine'. Sabes que Billy odia esto tanto como tú, pero su frustración siempre termina recayendo sobre ti.",
+        choices: [
+            { text: "Intentar mediar entre Neil y Billy", skill: "instinto", roll: 6, next: "cap9_2_tregua", fail: "cap9_2_furia_neil" },
+            { text: "Ir directo a tu cuarto para evitar el estallido", skill: "agilidad", roll: 4, next: "cap9_3_encierro", fail: "cap9_3_interceptada" }
+        ]
+    },
+    "cap9_2_tregua": {
+        text: "Dices algo que distrae a Neil momentáneamente. Él se concentra en su hamburguesa. Billy te lanza una mirada de extrañeza, pero el conflicto inmediato se disuelve.",
+        choices: [{ text: "Retirarte antes de que cambie de opinión", next: "cap9_4_consecuencia" }]
+    },
+    "cap9_2_furia_neil": {
+        text: "Neil deja de masticar y se inclina hacia ti. Su aliento a pepinillos es asqueroso. 'No te metas, Maxine', advierte. El miedo se instala en tu pecho como una piedra.",
+        choices: [{ text: "Bajar la cabeza", next: "cap9_4_consecuencia" }]
+    },
+    "cap9_3_encierro": {
+        text: "Logras subir las escaleras sin que nadie te detenga. Te encierras y escuchas los gritos ahogados desde la planta baja. Es tu rutina de supervivencia.",
+        choices: [{ text: "Buscar consuelo en tus cómics", next: "cap9_4_consecuencia" }]
+    },
+"cap9_3_interceptada": {
+        text: "Neil te detiene antes de que llegues a la escalera. Te obliga a quedarte y presenciar cómo reprende a Billy. Es una forma de tortura psicológica para ambos. Neil mueve el cinturón con una parsimonia que te revuelve el estómago. Billy no se inmuta, pero sus ojos prometen que alguien pagará por esto más tarde.",
+        choices: [{ text: "Apretar los puños y soportar", next: "cap9_4_consecuencia" }]
+    },
+    "cap9_4_consecuencia": {
+        text: "El silencio que sigue al estallido es aún peor. Te encierras en tu cuarto y preparas tu mochila. Ya no es solo por aburrimiento; es por supervivencia. Mañana buscarás a Lucas y a los demás. Si Mike no te quiere en su grupo, tendrá que decírtelo a la cara mientras lo ayudas a salvar el mundo.",
+        choices: [
+            { text: "Dormir con un ojo abierto (siguiente capítulo)", next: "cap10_1_inicio" }
+        ]
+    },
+
+// ==========================================
+    // CAPÍTULO DIEZ: EL PRECIO DE LA CURIOSIDAD
+    // ==========================================
+    "cap10_1_inicio": {
+        text: "<strong>CAPÍTULO DIEZ: EL PRECIO DE LA CURIOSIDAD. </strong><br><br>Al alejarte de Lucas, Billy te espera apoyado en el Camaro. Te pregunta con voz peligrosamente ecuánime quién es ese chico. Sabes que en Hawkins, Billy busca cualquier excusa para ejercer control. El viaje a casa es un infierno de velocidad y música a todo volumen; Billy conduce como si quisiera matar a alguien.",
+        choices: [
+            { text: "Enfrentar a Billy: 'Solo es un chico de la escuela'", skill: "temple", roll: 5, next: "cap10_2_enfrentamiento", fail: "cap10_2_castigo_tabla" },
+            { text: "Cerrar los ojos y esperar a llegar vivos", skill: "instinto", roll: 4, next: "cap10_2_viaje_tenso", fail: "cap10_2_castigo_tabla" }
+        ]
+    },
+    "cap10_2_enfrentamiento": {
+        text: "—No es nadie, Billy. Déjame en paz —dices con firmeza. Él suelta una carcajada seca y acelera aún más. 'Te he dicho que te alejes de ellos, Maxine', sisea. Sientes que su rabia es un volcán a punto de estallar.",
+        choices: [{ text: "Llegar a casa", next: "cap10_3_llegada" }]
+    },
+    "cap10_2_viaje_tenso": {
+        text: "Te pegas al asiento mientras el Camaro derrapa en las curvas. Billy fuma en silencio, pero su mandíbula está apretada. El silencio es casi peor que sus gritos.",
+        choices: [{ text: "Llegar a casa", next: "cap10_3_llegada" }]
+    },
+    "cap10_2_castigo_tabla": {
+        text: "Al llegar a la entrada de casa, Billy frena en seco. Antes de que puedas bajar, da marcha atrás bruscamente. Escuchas un crujido seco bajo el neumático. Billy ha pasado sobre tu patineta. Te quedas mirando los restos astillados; era lo único que te quedaba de San Diego.",
+        choices: [{ text: "Recoger los trozos con lágrimas en los ojos", next: "cap10_3_llegada" }]
+    },
+    "cap10_3_llegada": {
+        text: "Entras en casa y la sombra de Neil lo cubre todo. Billy se vuelve dócil y tenso en su presencia, una transformación que te da asco. Neil te mira de arriba abajo, juzgando tu desorden. 'A tu habitación, ahora', ordena con esa voz fría que no admite réplica.",
+        choices: [
+            { text: "Subir las escaleras sin mirar atrás", skill: "agilidad", roll: 3, next: "cap11_1_inicio", fail: "cap11_1_inicio" }
+        ]
+    },
+
+    // ==========================================
+    // CAPÍTULO ONCE: LA VERDAD SEGÚN LUCAS
+    // ==========================================
+    "cap11_1_inicio": {
+        text: "<strong>CAPÍTULO ONCE: LA GRIETA EN EL MUNDO. </strong><br><br>Lucas logra hablar contigo a solas. Su mirada es abierta, exasperada y completamente honesta. Te cuenta una historia extraordinaria: Will no se perdió en el bosque de forma ordinaria. Te habla de dimensiones, de un laboratorio y de una chica con poderes.",
+        choices: [
+            { text: "Creer en su historia y pedir más detalles", skill: "instinto", roll: 5, next: "cap11_2_detalles_upside", fail: "cap11_2_escepticismo" },
+            { text: "Cuestionar su cordura: 'Eso suena a ciencia ficción'", skill: "temple", roll: 4, next: "cap11_2_escepticismo", fail: "cap11_2_escepticismo" }
+        ]
+    },
+
+    "cap11_2_escepticismo": {
+        text: "Lucas se desespera. '¡No estoy inventando esto, Max!'. Te muestra dibujos y menciona a 'Ce'. Algo en su tono te hace dudar de tu propio escepticismo. Hawkins es más extraño de lo que pensabas.",
+        choices: [{ text: "Decidir investigar por tu cuenta", next: "cap11_3_final" }]
+    },
+
+"cap11_2_detalles_upside": {
+        text: "Lucas baja la voz, mirando por encima del hombro. Te habla de 'El Mundo del Revés', un lugar frío y oscuro que existe justo debajo de Hawkins. Te habla de monstruos y de una chica llamada Once que los salvó. Por primera vez, sientes que la grieta no está solo en el mundo, sino en tu propia realidad.",
+        choices: [{ text: "Aceptar el plan para ir al depósito de chatarra", next: "cap11_3_final" }]
+    },
+    "cap11_3_final": {
+        text: "Lucas te entrega un walkie-talkie. 'Canal seis', dice antes de alejarse. Te quedas mirando el aparato; es pesado y huele a electrónica vieja. Escapar de Billy esta noche no será fácil, pero la promesa de ver a un 'monstruo' es más fuerte que el miedo a sus gritos.",
+        choices: [
+            { text: "Preparar tu equipo y esperar a la noche", next: "cap12_1_inicio" }
+        ]
+    },
+
+// ==========================================
+    // CAPÍTULO DOCE: EL DEPÓSITO DE CHATARRA
+    // ==========================================
+    "cap12_1_inicio": {
+        text: "<strong>CAPÍTULO DOCE: EL DEPÓSITO DE CHATARRA. </strong><br><br>La niebla de Hawkins es espesa y huele a metal oxidado. Estás en un autobús escolar abandonado, fortificándolo con láminas de metal. Steve Harrington lidera el grupo con un bate lleno de clavos. Mike sigue tratándote con frialdad, pero Lucas está a tu lado. De pronto, un aullido inhumano desgarra el silencio del bosque.",
+        choices: [
+            { text: "Ayudar a Dustin a preparar la trampa de carne", skill: "agilidad", roll: 4, next: "cap12_2_preparacion", fail: "cap12_2_susto" },
+            { text: "Subir al techo del autobús para vigilar", skill: "percepcion", roll: 5, next: "cap12_2_avistamiento", fail: "cap12_2_emboscada" }
+        ]
+    },
+    "cap12_2_preparacion": {
+        text: "Mueves las piezas de metal con rapidez. Steve te asiente con la cabeza, reconociendo tu esfuerzo. Te sientes parte de algo más grande que los problemas de tu casa. La adrenalina sustituye al miedo.",
+        choices: [{ text: "Escuchar el crujido de las hojas", next: "cap12_3_ataque" }]
+    },
+    "cap12_2_susto": {
+        text: "En la oscuridad, tropiezas con un cubo de metal. El ruido resuena en todo el depósito. Mike te lanza una mirada furiosa: '¡Vas a hacer que nos maten!'. Te invade la inseguridad.",
+        choices: [{ text: "Recuperar la compostura", next: "cap12_3_ataque" }]
+    },
+    "cap12_2_avistamiento": {
+        text: "Desde el techo, ves sombras moviéndose entre la niebla. No son perros normales. Sus caras se abren como flores de carne. '¡Vienen por el oeste!', gritas avisando al grupo. Has salvado el factor sorpresa.",
+        choices: [{ text: "Bajar rápido al refugio", next: "cap12_3_ataque" }]
+    },
+    "cap12_2_emboscada": {
+        text: "La niebla te engaña. Una de esas criaturas ya está bajo el autobús antes de que puedas verla. Sus garras raspan el metal justo debajo de tus pies. El terror te paraliza un segundo.",
+        choices: [{ text: "Saltar dentro del autobús", next: "cap12_3_ataque" }]
+    },
+    "cap12_3_ataque": {
+        text: "¡Están aquí! Los 'Demodogos' chocan contra las paredes del autobús. Steve se prepara para luchar. En medio del caos, te das cuenta de que Lucas tenía razón: Hawkins es el centro de un horror que nadie más puede ver.",
+        choices: [
+            { text: "Finalizar Capítulo 12.", next: "cap13_1_inicio" }
+        ]
+    },
+
+
+// ==========================================
+    // CAPÍTULO TRECE: EL ASEDIO AL AUTOBÚS
+    // ==========================================
+    "cap13_1_inicio": {
+        text: "<strong>CAPÍTULO TRECE: EL ASEDIO AL AUTOBÚS. </strong><br><br>El metal del autobús gime bajo el peso de los 'demodogos'. Estás atrapada con Lucas, Dustin y Steve en una caja de hierro rodeada de niebla y dientes. Steve blande su bate con clavos, moviéndose con una confianza desesperada. Los chillidos de las criaturas te indican que no se darán por vencidas fácilmente.",
+        choices: [
+            { text: "Vigilar las ventanas traseras con los binoculares", skill: "percepcion", roll: 4, next: "cap13_2_avistamiento", fail: "cap13_2_sorpresa" },
+            { text: "Ayudar a Steve a bloquear la entrada", skill: "agilidad", roll: 5, next: "cap13_2_bloqueo", fail: "cap13_2_accidente" }
+        ]
+    },
+    "cap13_2_avistamiento": {
+        text: "A través de la bruma y el cristal sucio, ves siluetas moviéndose. No son perros; son criaturas sin rostro que se mueven sobre el suelo brumoso como flores de carne. '¡Vienen por detrás!', gritas, permitiendo que Steve reaccione a tiempo.",
+        choices: [{ text: "Prepararse para el impacto", next: "cap13_3_ataque" }]
+    },
+    "cap13_2_bloqueo": {
+        text: "Luchas con los neumáticos viejos y agrietados para reforzar la puerta, dejando manchas negras en tus manos. Logras encajarlos siguiendo un patrón que mantiene la estructura firme. Te sientes útil en medio del caos.",
+        choices: [{ text: "Escuchar el golpe contra el metal", next: "cap13_3_ataque" }]
+    },
+    "cap13_2_sorpresa": {
+        text: "La niebla es demasiado densa. No ves nada hasta que un chillido agudo rompe el cristal justo a tu lado. El miedo te paraliza un segundo antes de que Lucas te jale hacia el centro del pasillo.",
+        choices: [{ text: "Recuperar el aliento", next: "cap13_3_ataque" }]
+    },
+    "cap13_2_accidente": {
+        text: "Un neumático resbala y caes pesadamente contra el metal. El ruido resuena en todo el depósito, y una de las bestias golpea el panel justo donde estaba tu cabeza hace un segundo.",
+        choices: [{ text: "Levantarte rápido", next: "cap13_3_ataque" }]
+    },
+    "cap13_3_ataque": {
+        text: "¡Están arriba! Las bestias se estrellan contra el techo del autobús. Ves a Steve salir un segundo para golpear a una antes de lanzarse dentro justo cuando Dustin cierra la puerta. Estás viendo algo que desafía toda lógica.",
+        choices: [
+            { text: "Usar un palo para defender las ventanas", skill: "agilidad", roll: 4, next: "cap13_4_final", fail: "cap13_4_final" },
+            { text: "Mantener la calma y ayudar a Lucas con el cerrojo", skill: "temple", roll: 5, next: "cap13_4_final", fail: "cap13_4_final" }
+        ]
+    },
+    "cap13_4_final": {
+        text: "De repente, las criaturas se detienen y se alejan hacia el bosque, como si algo las hubiera llamado. Te quedas temblando, procesando que la historia de Lucas era real. Hawkins no es solo un pueblo aburrido; es una pesadilla de la que no puedes escapar simplemente patinando. Has cruzado el punto de no retorno.",
+        choices: [
+            { text: "Recuperar el aliento y salir del autobús", next: "cap14_1_inicio" }
+        ]
+    },
+
+    // ==========================================
+    // CAPÍTULO CATORCE: EL GRUPO SE UNE
+    // ==========================================
+    "cap14_1_inicio": {
+        text: "<strong>CAPÍTULO CATORCE: EL GRUPO SE UNE. </strong><br><br>Tras el horror del depósito, la casa de los Byers parece un búnker. El aire está cargado de humo de cigarrillos y desesperación. Joyce y Hopper están en el cobertizo intentando sacar información a Will, mientras tú te quedas en la casa con el resto. Mike sigue tratándote como a una intrusa, pero Dustin y Steve ya cuentan contigo. Por primera vez, no eres 'Maxine', eres parte de la resistencia de Hawkins.",
+        choices: [
+            { text: "Vigilar el perímetro desde el porche", skill: "percepcion", roll: 5, next: "cap14_2_vigilancia", fail: "cap14_2_distraccion" },
+            { text: "Ayudar a preparar defensas improvisadas en la cocina", skill: "agilidad", roll: 4, next: "cap14_3_luces", fail: "cap14_3_torpeza" }
+        ]
+    },
+
+    "cap14_2_vigilancia": {
+        text: "La oscuridad del bosque es absoluta. Notas que el silencio es artificial; no hay grillos ni pájaros. De repente, ves un destello de movimiento cerca del cobertizo. 'Viene algo', avisas por el walkie-talkie. Tu alerta da unos segundos vitales al grupo.",
+        choices: [{ text: "Entrar y cerrar la puerta", next: "cap14_4_tension" }]
+    },
+    "cap14_2_distraccion": {
+        text: "Te distraes pensando en California y en cómo tu vida cambió tan rápido. No notas la sombra que se desliza cerca del porche hasta que un crujido te sobresalta. Mike te lanza una mirada de reproche.",
+        choices: [{ text: "Recuperar la compostura", next: "cap14_4_tension" }]
+    },
+    "cap14_3_luces": {
+        text: "Tus manos son rápidas y precisas. Ayudas a instalar el sistema de comunicación por luces de Joyce Byers. Jonathan te agradece con un gesto silencioso; él también sabe lo que es ser un extraño.",
+        choices: [{ text: "Esperar señales", next: "cap14_4_tension" }]
+    },
+    "cap14_3_torpeza": {
+        text: "Los cables se enredan y casi tiras una lámpara. La tensión en la casa es tan alta que cualquier ruido pequeño parece una explosión. Te sientes fuera de lugar otra vez.",
+        choices: [{ text: "Intentar ayudar en otra cosa", next: "cap14_4_tension" }]
+    },
+    "cap14_4_tension": {
+        text: "Will empieza a enviar señales mediante espasmos: es Morse. El grupo se agolpa alrededor de la mesa. Mike intenta apartarte del círculo, pero Lucas se planta frente a él. 'Ella ha estado en las trincheras con nosotros, Mike. Se queda'. Es la primera vez que sientes que este no es solo el club de Mike, sino también el tuyo.",
+        choices: [
+            { text: "Ayudar a descifrar el código Morse", skill: "instinto", roll: 5, next: "cap15_1_inicio", fail: "cap15_1_inicio" },
+            { text: "Vigilar que nada entre mientras están distraídos", skill: "temple", roll: 4, next: "cap15_1_inicio", fail: "cap15_1_inicio" }
+        ]
+    },
+
+
+
+
+
+    // ==========================================
+    // CAPÍTULO QUINCE: LA CAZA DE BILLY
+    // ==========================================
+    "cap15_1_inicio": {
+        text: "<strong>CAPÍTULO QUINCE: LA CAZA DE BILLY. </strong><br><br>Mientras estás en casa de los Byers, no dejas de pensar en Billy. Él ha estado recorriendo las calles de Hawkins como un depredador, buscándote bajo las órdenes de Neil. Sabes que si te encuentra aquí, con 'esa gente', las consecuencias serán devastadoras. De repente, escuchas el rugido inconfundible del motor del Camaro acercándose a la casa.",
+        choices: [
+            { text: "Salir a enfrentarlo antes de que entre", skill: "temple", roll: 6, next: "cap15_2_cara_a_cara", fail: "cap15_2_miedo" },
+            { text: "Esconderte y esperar que Steve lo maneje", skill: "instinto", roll: 4, next: "cap15_3_pelea_steve", fail: "cap15_3_pelea_steve" }
+        ]
+    },
+    "cap15_2_cara_a_cara": {
+        text: "Sales al porche. Las luces del Camaro te ciegan. Billy baja del auto, destilando una rabia pura y contenida. 'Súbete al auto, Maxine', dice con esa voz que promete dolor. Te mantienes firme, aunque tus rodillas tiemblan.",
+        choices: [{ text: "Negarte a irte", next: "cap15_4_conflicto" }]
+    },
+    "cap15_2_miedo": {
+        text: "El pánico te paraliza. Billy patea la puerta de los Byers. La fragilidad de tu refugio se desmorona ante su presencia. Su mirada recorre la habitación hasta que se clava en ti. 'Te dije que no te juntaras con ellos'.",
+        choices: [{ text: "Retroceder hacia la cocina", next: "cap15_4_conflicto" }]
+    },
+    "cap15_3_pelea_steve": {
+        text: "Steve Harrington sale a defenderte. 'Vete de aquí, Billy', dice con el bate en la mano. La tensión entre los dos es eléctrica. Billy se ríe, una risa seca y sin alegría, antes de lanzar el primer golpe.",
+        choices: [{ text: "Intervenir en la pelea", skill: "agilidad", roll: 5, next: "cap15_4_conflicto", fail: "cap15_4_conflicto" }]
+    },
+"cap15_4_conflicto": {
+        text: "La situación estalla. Billy golpea a Steve con una brutalidad animal. Ves a tus amigos aterrorizados y a Steve sangrando en el suelo. Billy se gira hacia Lucas con una mirada asesina. Sabes que tú eres la única que puede detener esto, porque tú conoces el lenguaje de violencia de tu familia mejor que nadie.",
+        choices: [
+            { text: "Usar la jeringuilla de sedante contra Billy", skill: "agilidad", roll: 5, next: "cap15_5_final_exito", fail: "cap15_5_final_caos" },
+            { text: "Recoger el bate de Steve y plantarle cara", skill: "temple", roll: 6, next: "cap15_5_final_exito", fail: "cap15_5_final_caos" }
+        ]
+    },
+    "cap15_5_final_exito": {
+        text: "¡ZAS! Clavas la jeringuilla en el cuello de Billy. Sus ojos se abren con sorpresa antes de desplomarse. Recoges el bate con clavos y lo golpeas contra el suelo, justo entre sus piernas. '¡Déjanos en paz o te juro que te mato!', gritas. El silencio es absoluto. Mike te mira con un respeto que nunca antes habías visto.",
+        choices: [{ text: "Tomar las llaves del Camaro y salir de allí", next: "cap16_1_inicio" }]
+    },
+    "cap15_5_final_caos": {
+        text: "Billy es demasiado rápido. Te aparta de un empujón y continúa su asalto. La casa de los Byers se convierte en un campo de batalla hasta que logran reducirlo entre varios. Te sientes agotada, pero la determinación de proteger a tus nuevos amigos es más fuerte que tu miedo.",
+        choices: [{ text: "Finalizar Capítulo 15. ¿Hacia el final?", next: "cap16_1_inicio" }]
+    },
+
+
+    // ==========================================
+    // CAPÍTULO DIECISÉIS: EL SEDANTE Y LA LLAVE
+    // ==========================================
+    "cap16_1_inicio": {
+        text: "<strong>CAPÍTULO DIECISÉIS: EL SEDANTE Y LA LLAVE. </strong><br><br>Billy yace inconsciente en el suelo de la casa de los Byers después de que le inyectaras el sedante. El silencio es absoluto mientras el grupo te mira con una mezcla de asombro y miedo. Tienes la llave del Camaro en la mano y, por primera vez, el poder ha cambiado de bando. Steve Harrington se recupera del suelo, limpiándose la sangre de la cara.",
+        choices: [
+            { text: "Tomar el mando: 'Vamos a los túneles'", skill: "temple", roll: 5, next: "cap16_2_liderazgo", fail: "cap16_2_duda" },
+            { text: "Asegurarte de que Billy no despierte pronto", skill: "percepcion", roll: 4, next: "cap16_3_asegurar", fail: "cap16_3_descuido" }
+        ]
+    },
+"cap16_2_liderazgo": {
+        text: "Metes a todos en el Camaro. Tus pies apenas llegan a los pedales, pero pisas el acelerador con una rabia liberadora. Los chicos gritan mientras derrapas para salir del camino de entrada. '¡No nos va a alcanzar!', exclamas. Por un momento, el motor ruge con tu propia voz.",
+        choices: [{ text: "Dirigirte al campo de calabazas de Merrill", next: "cap17_1_inicio" }]
+    },
+    "cap16_2_duda": {
+        text: "Tus manos tiemblan tanto que dejas caer las llaves. Mike Wheeler las recoge rápidamente. 'Yo no confío en ella', sisea, aunque sus acciones dicen lo contrario mientras sube al auto.",
+        choices: [{ text: "Subir al auto como pasajera", next: "cap17_1_inicio" }]
+    },
+    "cap16_3_asegurar": {
+        text: "Revisas los bolsillos de Billy y tomas su encendedor. Sabes que sin su auto y sin su orgullo, Billy es solo un matón herido. Te sientes más ligera, como si una parte de la Max fugitiva hubiera regresado.",
+        choices: [{ text: "Subir al Camaro", next: "cap17_1_inicio" }]
+    },
+    "cap16_3_descuido": {
+        text: "En tu prisa por salir, olvidas cerrar la puerta de la casa. El viento frío entra, recordándote que en Hawkins nada permanece oculto por mucho tiempo.",
+        choices: [{ text: "Arrancar el motor", next: "cap17_1_inicio" }]
+    },
+
+    // ==========================================
+    // CAPÍTULO DIECISIETE: EL CORAZÓN DE LA COLMENA
+    // ==========================================
+    "cap17_1_inicio": {
+        text: "<strong>CAPÍTULO DIECISIETE: EL CORAZÓN DE LA COLMENA. </strong><br><br>Se encuentran en los túneles debajo de Hawkins, un lugar que huele a descomposición y tierra húmeda. Las paredes parecen respirar. Dustin lanza una ráfaga de fuego para abrir camino, pero los demodogos están cerca. Deben quemar el núcleo para distraer a la mente colmena y ayudar a Eleven y Hopper en el laboratorio.",
+        choices: [
+            { text: "Bajar al túnel principal para colocar el cebo", skill: "agilidad", roll: 6, next: "cap17_2_exito_tunel", fail: "cap17_2_atrapada" },
+            { text: "Cubrir la retaguardia de Lucas con tu bate", skill: "temple", roll: 5, next: "cap17_3_defensa", fail: "cap17_3_caos" }
+        ]
+    },
+    "cap17_2_exito_tunel": {
+        text: "Te deslizas por las lianas viscosas con una agilidad sorprendente. Logras colocar el combustible en el centro de la colmena. El calor empieza a subir y escuchas los chillidos de las criaturas alejándose.",
+        choices: [{ text: "Correr hacia la salida", next: "cap17_4_final" }]
+    },
+    "cap17_2_atrapada": {
+        text: "Una de las raíces se enrolla en tu tobillo. Caes al suelo pegajoso y ves una sombra acercándose. Lucas lanza una piedra con su resortera, dándote el segundo necesario para liberarte.",
+        choices: [{ text: "Escapar por los pelos", next: "cap17_4_final" }]
+    },
+    "cap17_3_defensa": {
+        text: "Te mantienes firme mientras Lucas apunta. Un demodogo salta desde la oscuridad, pero lo golpeas con fuerza antes de que lo toque. '¡Buen tiro, Max!', grita Dustin.",
+        choices: [{ text: "Reagruparse con el equipo", next: "cap17_4_final" }]
+    },
+    "cap17_3_caos": {
+        text: "La oscuridad te juega una mala pasada. El golpe falla y el grupo tiene que retroceder en desorden. La niebla se vuelve más espesa y casi pierdes de vista a Steve.",
+        choices: [{ text: "Seguir la voz de Dustin", next: "cap17_4_final" }]
+    },
+"cap17_4_final": {
+        text: "Salen de los túneles jadeando, cubiertos de esa sustancia pegajosa y ceniza. A lo lejos, un rayo de energía azul se desvanece: Once lo ha logrado. Miras a Lucas, quien te devuelve una sonrisa cansada. Ya no eres la chica que miraba por la ventana del autobús deseando volver a California. Tienes una nueva tabla que construir y, por primera vez, amigos que te ayudarán a hacerlo.",
+        choices: [
+            { text: "FIN DE LA AVENTURA. Ver Epílogo: El Baile de Invierno", next: "epilogo_final" }
+        ]
+    },
+
+    // ==========================================
+    // EPÍLOGO: EL BAILE DE INVIERNO (Snow Ball)
+    // ==========================================
+    "epilogo_final": {
+        text: "<strong>EPÍLOGO: UNA NUEVA PIEL</strong><br><br>Ha pasado un mes desde que el mundo casi se acaba en los túneles. Hawkins luce un manto de nieve que oculta las cicatrices del suelo. Te encuentras en el gimnasio de la escuela para el baile de invierno. Lucas está allí, buscándote con la mirada, luciendo un traje que le queda un poco grande. Por primera vez en mucho tiempo, no sientes que tengas que huir.",
+        choices: [
+            { text: "Aceptar bailar con Lucas", skill: "temple", roll: 3, next: "epi_baile_lucas", fail: "epi_baile_nervios" },
+            { text: "Observar a Billy en el estacionamiento antes de entrar", skill: "percepcion", roll: 4, next: "epi_billy_derrotado", fail: "epi_billy_tension" },
+            { text: "Buscar a Mike para intentar una tregua final", skill: "instinto", roll: 5, next: "epi_tregua_mike", fail: "epi_tregua_mike" }
+        ]
+    },
+    "epi_baile_lucas": {
+        text: "Caminas hacia la pista. La música es lenta. Lucas te toma de las manos y, aunque Hawkins sigue siendo un lugar extraño, estar con él te hace sentir en casa. Has dejado de ser 'la fugitiva' para empezar a ser simplemente Max.",
+        choices: [{ text: "Mirar hacia el futuro", next: "fin_absoluto" }]
+    },
+    "epi_baile_nervios": {
+        text: "Te sientes abrumada por la multitud y el ruido. Sales un momento a tomar aire. Lucas te encuentra y simplemente se queda sentado a tu lado en silencio. No necesitas bailar para saber que él está ahí para ti.",
+        choices: [{ text: "Mirar hacia el futuro", next: "fin_absoluto" }]
+    },
+    "epi_billy_derrotado": {
+        text: "Desde la ventana, ves el Camaro. Billy está allí, pero ya no tiene esa aura de depredador. Desde la noche del sedante, sabe que no eres una presa fácil. Has marcado tu territorio en la casa de los Hargrove.",
+        choices: [
+            { text: "Entrar al gimnasio con la cabeza alta", skill: "temple", roll: 4, next: "epi_baile_lucas", fail: "epi_baile_lucas" }
+        ]
+    },
+    "epi_billy_tension": {
+        text: "El solo ver el auto te trae recuerdos de California y de Neil. Sacudes la cabeza; hoy no es día para fantasmas. Te concentras en las luces de colores del gimnasio.",
+        choices: [{ text: "Entrar al baile", next: "epi_baile_lucas" }]
+    },
+    "epi_tregua_mike": {
+        text: "Encuentras a Mike cerca de la mesa de ponche. Intercambian una mirada de reconocimiento. Él no te dará una bienvenida efusiva, pero después de los túneles, el respeto es mutuo. Eres parte del grupo, te guste a él o no.",
+        choices: [{ text: "Unirte a Lucas", next: "epi_baile_lucas" }]
+    },
+
+"fin_absoluto": {
+        text: "<strong>FIN DE LA AVENTURA</strong><br><br>Hawkins ya no es solo un pueblo gris en el mapa. Es el lugar donde enfrentaste a tus monstruos, tanto a los que tienen garras como a los que llevan cinturón. Max Mayfield ya no está huyendo. Ha encontrado su lugar en la resistencia. <br><br><em>'Ya no soy la chica de San Diego. Soy Max. Y esto es solo el principio.'</em>",
+        choices: [
+            { text: "VOLVER AL PRINCIPIO (Rejugar)", next: "prologo" }
         ]
     }
 
-
-
-
-
 };
+
+
+
 //************************************************************************************************************************************************
 </script>
 </body>
