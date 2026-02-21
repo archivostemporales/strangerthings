@@ -302,10 +302,14 @@
             text: "El estrés y la presión de la preparatoria te han superado. Necesitas un respiro. GAME OVER.",
             choices: [{ text: "Volver al Menú Principal", next: "title" }]
         },
-        "title": { 
-            text: "",
-            choices: []
+
+"title": { 
+            text: "<strong>¡GRACIAS POR JUGAR!</strong><br><br>Has terminado 'El Experimento de Dustin'. Si quieres volver a intentarlo para conseguir otro final o descubrir nuevas rutas, haz clic abajo.",
+            choices: [
+                { text: "JUGAR DE NUEVO", next: "cap1_inicio" } // Esto inicia un bucle nuevo
+            ]
         },
+
         "cap1_inicio": {
             text: "Capítulo 1. Viernes, 30 de agosto de 1985. <br><br>Estás en la cafetería intentando convencer a Lucas y a Mike de unirse a la feria de ciencias y al Club Fuego Infernal. Lucas duda, dice que no quiere empezar la preparatoria como un empollón. De repente, algo se precipita hacia tu cabeza. ¡Es una pelota de baloncesto perdida!",
             choices: [
@@ -495,12 +499,6 @@
                 { text: "Prometer ser más cuidadoso (Avanzar al Cap. 6)", next: "cap6_inicio" }
             ]
         },
-        "cap6_inicio": {
-            text: "¡CAPÍTULO 5 COMPLETADO!<br><br>Tu proyecto es potente, quizás demasiado. Octubre se acerca y con él, el regreso de la tensión con tus amigos y el Club Fuego Infernal.",
-            choices: [
-                { text: "Continuar al siguiente capítulo", next: "title" }
-            ]
-        },
 
 // --- CAPÍTULO 6 ---
         "cap6_inicio": {
@@ -554,12 +552,6 @@
             item: "Mapa de suministros",
             choices: [
                 { text: "Trazar un plan para la Caja del Bardo (Ir al Cap. 8)", next: "cap8_inicio" }
-            ]
-        },
-        "cap8_inicio": {
-            text: "¡CAPÍTULO 7 COMPLETADO!<br><br>Tienes un mapa y una misión. Se acerca Halloween, pero este año será muy diferente a los anteriores...",
-            choices: [
-                { text: "Continuar la aventura", next: "title" }
             ]
         },
 
