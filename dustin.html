@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stranger Things: El Experimento de Dustin</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+
+        :root {
+            --st-red: #ff0000;
+            --st-red-glow: rgba(255, 0, 0, 0.6);
+            --st-black: #050505;
+            --st-panel: #121212;
+            --st-text: #e0e0e0;
+        }
+
+        body {
+            background-color: var(--st-black);
+            color: var(--st-text);
+            font-family: 'Courier Prime', monospace;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #game-wrapper {
+            width: 90%;
+            max-width: 700px;
+            border: 4px solid var(--st-red);
+            box-shadow: 0 0 20px var(--st-red-glow);
+            background: var(--st-panel);
+            padding: 30px;
+            position: relative;
+        }
+
+        h1 {
+            color: var(--st-red);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 0 0 10px var(--st-red);
+            margin-top: 0;
+        }
+
+        #hud {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--st-red);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
+
+        .stress-hearts {
+            color: var(--st-red);
+            font-size: 1.2em;
+            letter-spacing: 2px;
+        }
+
+        .choice-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            background: transparent;
+            color: var(--st-text);
+            border: 1px solid var(--st-red);
+            cursor: pointer;
+            text-transform: uppercase;
+            font-family: inherit;
+            transition: 0.3s;
+        }
+
+        .choice-btn:hover:not(:disabled) {
+            background: var(--st-red);
+            color: var(--st-black);
+            box-shadow: 0 0 15px var(--st-red);
+        }
+
+        .choice-btn:disabled {
+            border-color: #444;
+            color: #444;
+            cursor: not-allowed;
+        }
+
+        .controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 15px;
+            z-index: 10;
+        }
+
+        .ctrl-icon {
+            cursor: pointer;
+            opacity: 0.6;
+            font-size: 0.9em;
+            user-select: none;
+        }
+
+        #dice-zone {
+            text-align: center;
+            height: 30px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .screen { display: none; }
+        .active { display: block; }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music" loop>
+        <source src="strangerthings.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="game-wrapper">
+        <div class="controls">
+            <div class="ctrl-icon" onclick="toggleMusic()">🎵 MÚSICA: <span id="m-status">OFF</span></div>
+            <div class="ctrl-icon" onclick="toggleVoice()">🗣️ VOZ: <span id="v-status">ON</span></div>
+        </div>
+
+        <div id="menu-screen" class="screen active">
+            <h1>Stranger Things</h1>
+            <p style="text-align: center;">EL EXPERIMENTO DE DUSTIN</p>
+            <button class="choice-btn" onclick="initGame()">NUEVA AVENTURA</button>
+            <button class="choice-btn" onclick="loadProgress()">CARGAR PARTIDA</button>
+        </div>
+
+        <div id="game-screen" class="screen">
+            <div id="hud">
+                <div>ESTRÉS: <span id="hearts" class="stress-hearts"></span></div>
+                <div style="font-size: 0.8em; color: #aaa;">INV: <span id="items-list"></span></div>
+            </div>
+            <div id="dice-zone"></div>
+            <div id="story-container"></div>
+            <div id="choices-box"></div>
+        </div>
+
+        <div id="over-screen" class="screen">
+            <h1 style="font-size: 3em;">ELIMINADO</h1>
+            <p style="text-align: center;">Dustin no pudo soportar más presión.</p>
+            <button class="choice-btn" onclick="location.reload()">VOLVER AL MENÚ PRINCIPAL</button>
+        </div>
+    </div>
+
+<script>
+    // --- CONFIGURACIÓN ---
+    const MAX_ESTRES = 7;
+    let state = { stress: MAX_ESTRES, inventory: [], currentNode: 'cap1_inicio' };
+    let voiceEnabled = true;
+
+    const music = document.getElementById('bg-music');
+    const synth = window.speechSynthesis;
+
+    // --- CONTROLES DE AUDIO ---
+    function toggleMusic() {
+        if (music.paused) {
+            music.play();
+            document.getElementById('m-status').innerText = "ON";
+            music.volume = 0.3;
+        } else {
+            music.pause();
+            document.getElementById('m-status').innerText = "OFF";
+        }
+    }
+
+    function toggleVoice() {
+        voiceEnabled = !voiceEnabled;
+        document.getElementById('v-status').innerText = voiceEnabled ? "ON" : "OFF";
+        if (!voiceEnabled) synth.cancel();
+    }
+
+    function leerTexto(texto) {
+        if (!voiceEnabled) return;
+        synth.cancel();
+        
+        // Limpiar etiquetas HTML para que no las lea
+        const textoLimpio = texto.replace(/<[^>]*>?/gm, '');
+        const utterance = new SpeechSynthesisUtterance(textoLimpio);
+        
+        utterance.lang = 'es-ES';
+        utterance.pitch = 1.5; // Tono más agudo para parecer un niño
+        utterance.rate = 1.0;
+        synth.speak(utterance);
+    }
+
+    // --- MOTOR DEL JUEGO ---
+    function initGame() {
+        state = { stress: MAX_ESTRES, inventory: [], currentNode: 'cap1_inicio' };
+        showScreen('game-screen');
+        updateUI();
+        renderNode(state.currentNode);
+    }
+
+    function showScreen(id) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    function updateUI() {
+        let h = "";
+        for(let i = 0; i < MAX_ESTRES; i++) h += (i < state.stress) ? "♥" : "♡";
+        document.getElementById('hearts').innerText = h;
+        document.getElementById('items-list').innerText = state.inventory.length > 0 ? state.inventory.join(", ") : "Vacío";
+    }
+
+    function renderNode(nodeId) {
+        const node = storyNodes[nodeId];
+        if (!node) return;
+
+        state.currentNode = nodeId;
+        saveProgress();
+
+        document.getElementById('story-container').innerHTML = node.text;
+        leerTexto(node.text);
+
+        const box = document.getElementById('choices-box');
+        box.innerHTML = "";
+        document.getElementById('dice-zone').innerText = "";
+
+        // GESTIÓN DE CURACIÓN
+        if (node.item) {
+            const esConsumible = (node.item === "Pudín de Chocolate" || node.item === "New Coke");
+            
+            if (esConsumible) {
+                // Pequeño retardo para que la voz no se corte con el prompt
+                setTimeout(() => {
+                    if (confirm(`Has encontrado ${node.item}. ¿Quieres usarlo ahora para recuperar 1 de Estrés?`)) {
+                        if (state.stress < MAX_ESTRES) state.stress++;
+                        updateUI();
+                    } else {
+                        if (!state.inventory.includes(node.item)) state.inventory.push(node.item);
+                        updateUI();
+                    }
+                }, 500);
+            } else {
+                if (!state.inventory.includes(node.item)) state.inventory.push(node.item);
+                updateUI();
+            }
+        }
+
+        node.choices.forEach(c => {
+            const btn = document.createElement('button');
+            btn.className = "choice-btn";
+            btn.innerText = c.text;
+            btn.onclick = () => handleChoice(c);
+            box.appendChild(btn);
+        });
+    }
+
+    function handleChoice(choice) {
+        const buttons = document.querySelectorAll('.choice-btn');
+        buttons.forEach(b => b.disabled = true);
+        synth.cancel(); // Para la voz al elegir una opción
+
+        if (choice.rollTarget) {
+            const roll = Math.floor(Math.random() * 6) + 1;
+            const zone = document.getElementById('dice-zone');
+            const target = Number(choice.rollTarget);
+
+            if (roll >= target) {
+                zone.innerText = `🎲 LANZAMIENTO: ${roll} - ¡ÉXITO!`;
+                zone.style.color = "#00ff00";
+                setTimeout(() => { renderNode(choice.next); buttons.forEach(b => b.disabled = false); }, 1200);
+            } else {
+                zone.innerText = `🎲 LANZAMIENTO: ${roll} - FALLO`;
+                zone.style.color = "#ff0000";
+                state.stress--;
+                updateUI();
+                setTimeout(() => {
+                    if (state.stress <= 0) showScreen('over-screen');
+                    else renderNode(choice.failNext || choice.next);
+                    buttons.forEach(b => b.disabled = false);
+                }, 1200);
+            }
+        } else {
+            renderNode(choice.next);
+            buttons.forEach(b => b.disabled = false);
+        }
+    }
+
+    function saveProgress() { localStorage.setItem('st_dustin_save', JSON.stringify(state)); }
+    function loadProgress() {
+        const saved = localStorage.getItem('st_dustin_save');
+        if (saved) { state = JSON.parse(saved); showScreen('game-screen'); updateUI(); renderNode(state.currentNode); }
+        else alert("No hay partidas.");
+    }
+
+//****************************************************************************************************************************************
+// --- DATOS DE LA HISTORIA (Capítulos 1 al 3) ---
+    const storyNodes = {
+        "game_over": {
+            text: "El estrés y la presión de la preparatoria te han superado. Necesitas un respiro. GAME OVER.",
+            choices: [{ text: "Volver al Menú Principal", next: "title" }]
+        },
+        "title": { 
+            text: "",
+            choices: []
+        },
+        "cap1_inicio": {
+            text: "Capítulo 1. Viernes 30 de Agosto de 1985.<br><br>Estás en la cafetería intentando convencer a Lucas y a Mike de unirse a la feria de ciencias y al Club Fuego Infernal. Lucas duda, dice que no quiere empezar la preparatoria como un nerd. De repente, una masa borrosa se precipita hacia tu cabeza. ¡Es una pelota de basquetbol perdida!",
+            choices: [
+                { text: "Intentar esquivar (Tirada Agilidad: 4+)", rollTarget: 4, next: "cap1_esquiva_exito", failNext: "cap1_golpe" },
+                { text: "No reaccionar a tiempo", next: "cap1_golpe" }
+            ]
+        },
+        "cap1_esquiva_exito": {
+            text: "Te agachas justo a tiempo. La pelota golpea tu bandeja de comida, salpicando todo, pero al menos tu cabeza está a salvo. Toda la cafetería mira hacia tu mesa. Eddie Munson, el líder del Club Fuego Infernal, se pone de pie sobre una mesa para regañar a los del equipo de basquetbol.",
+            choices: [
+                { text: "Admirar la valentía de Eddie", next: "cap1_family_video" }
+            ]
+        },
+        "cap1_golpe": {
+            text: "¡BAM! La pelota te golpea en la cabeza y caes de la silla. Toda la cafetería se ríe mientras te sobas la cabeza. Eddie Munson se sube a una mesa y reprende en voz alta al cretino que te golpeó. Quedas impresionado por su actitud descarada.",
+            choices: [
+                { text: "Levantarte y limpiar el desastre", next: "cap1_family_video" }
+            ]
+        },
+        "cap1_family_video": {
+            text: "Después de la escuela, vas a Family Video a quejarte con Steve y Robin. Estás moviendo los VHS con fuerza. '¡Todos cambian menos yo!', te quejas. Robin te observa de forma analítica.",
+            item: "Cinta de Karate Kid",
+            choices: [
+                { text: "Escuchar el consejo de Robin", next: "cap1_consejo_robin" },
+                { text: "Ignorarla y quejarte con Steve", next: "cap1_consejo_steve" }
+            ]
+        },
+        "cap1_consejo_robin": {
+            text: "Robin propone que pruebes algo nuevo: 'Haz algo que normalmente no harías. Únete a un club nuevo. Haz algo que te asuste un poco'. Te quedas pensando.",
+            choices: [
+                { text: "Decidir probar algo nuevo (Ir al Cap. 2)", next: "cap2_inicio" }
+            ]
+        },
+        "cap1_consejo_steve": {
+            text: "Steve te dice que tienes que arriesgarte y aceptar que las cosas cambian. La idea de hacer algo diferente empieza a tomar forma en tu cabeza.",
+            choices: [
+                { text: "Aceptar el reto (Ir al Cap. 2)", next: "cap2_inicio" }
+            ]
+        },
+
+        // --- CAPÍTULO 2 ---
+        "cap2_inicio": {
+            text: "Capítulo 2. Martes 3 de Septiembre de 1985.<br><br>Frente al tablero de anuncios, buscas tu nuevo destino. De pronto, un grupo de deportistas con chamarras verdes pasa a tu lado y te empuja bruscamente. Caes al suelo y tu gorra sale volando.",
+            choices: [
+                { text: "Soportar el empujón y no decir nada (Tirada Voluntad: 3+)", rollTarget: 3, next: "cap2_tablero", failNext: "cap2_enojo" }
+            ]
+        },
+        "cap2_enojo": {
+            text: "Gritas una serie de insultos que afortunadamente nadie escucha. El coraje te consume, pero te levantas. Sacudes tu ropa.",
+            choices: [
+                { text: "Mirar el tablero de anuncios", next: "cap2_tablero" }
+            ]
+        },
+        "cap2_tablero": {
+            text: "Te pones de pie. Un folleto de la feria de ciencias parece burlarse de ti desde el tablero. Lo miras como si fuera una ofensa personal. En el almuerzo, Lucas los abandona para sentarse con el equipo de basquetbol. Mike y tú se quedan sin mesa hasta que Eddie Munson los llama a la mesa del Club Fuego Infernal.",
+            item: "Folleto Feria Ciencias",
+            choices: [
+                { text: "Sentarse con Eddie y presentarte", next: "cap2_hellfire" }
+            ]
+        },
+        "cap2_hellfire": {
+            text: "Eddie está frustrado. Su Walkman no funciona y está golpeándolo contra la mesa. Amenaza con que prefiere a Madonna antes que el silencio.",
+            choices: [
+                { text: "Ofrecerte a reparar el Walkman (Tirada Tecnología: 2+)", rollTarget: 2, next: "cap2_walkman_exito", failNext: "cap2_walkman_fallo" }
+            ]
+        },
+        "cap2_walkman_fallo": {
+            text: "Tratas de abrirlo y por poco rompes un plástico. Eddie te mira con nerviosismo, pero finalmente logras acomodar un cable suelto. ¡La música vuelve a sonar!",
+            choices: [
+                { text: "Devolverle el Walkman", next: "cap2_banda" }
+            ]
+        },
+        "cap2_walkman_exito": {
+            text: "Con la delicadeza de un cirujano nerd, abres el dispositivo, ajustas el contacto y lo cierras en segundos. ¡Eres un genio! Eddie se pone los audífonos y empieza a sacudir la cabeza al ritmo de las guitarras eléctricas.",
+            choices: [
+                { text: "Disfrutar de tu victoria nerd", next: "cap2_banda" }
+            ]
+        },
+        "cap2_banda": {
+            text: "Eddie está maravillado con tu talento. Te comenta que su banda, 'Ataúd Oxidado', tiene un amplificador estropeado y un concierto la próxima semana. Te pide que le eches un vistazo.",
+            choices: [
+                { text: "Aceptar el reto tecnológico (Ir al Cap. 3)", next: "cap3_inicio" }
+            ]
+        },
+
+        // --- CAPÍTULO 3 ---
+        "cap3_inicio": {
+            text: "Capítulo 3. Miércoles 4 de Septiembre de 1985.<br><br>Por la mañana confrontas a Lucas por unirse al basquetbol. Sientes que los está abandonando. Después de clases, te reúnes con Eddie para revisar su preciado amplificador.",
+            choices: [
+                { text: "Desarmar el amplificador (Tirada Tecnología: 3+)", rollTarget: 3, next: "cap3_amp_exito", failNext: "cap3_amp_fallo" }
+            ]
+        },
+        "cap3_amp_fallo": {
+            text: "Te quemas un poco el dedo con el soldador, pero tu experiencia desarmando las radios de tu padre da sus frutos. Logras reparar el contacto con algo de retroalimentación negativa.",
+            choices: [
+                { text: "Mostrarle a Eddie que funciona", next: "cap3_metal" }
+            ]
+        },
+        "cap3_amp_exito": {
+            text: "Rápidamente encuentras el problema en el conector. Limpias la pieza, la sueldas y aplicas retroalimentación negativa. Queda sonando incluso mejor que antes.",
+            choices: [
+                { text: "Pedirle a Eddie que lo pruebe", next: "cap3_metal" }
+            ]
+        },
+        "cap3_metal": {
+            text: "Eddie conecta su preciada guitarra. Te pregunta qué música escuchas y se escandaliza cuando no sabes de heavy metal. Comienza a tocar 'Crazy Train' de Ozzy Osbourne a todo volumen.",
+            choices: [
+                { text: "Sacudir la cabeza al ritmo (Tirada Vibe: 2+)", rollTarget: 2, next: "cap3_headbang_exito", failNext: "cap3_headbang_fallo" },
+                { text: "Solo escuchar", next: "cap3_idea_proyecto" }
+            ]
+        },
+        "cap3_headbang_fallo": {
+            text: "Te mueves de forma torpe y casi tiras una lámpara. Eddie se ríe, pero aprecia tu intento de abrazar el lado oscuro del metal.",
+            choices: [
+                { text: "Recuperar la compostura", next: "cap3_idea_proyecto" }
+            ]
+        },
+        "cap3_headbang_exito": {
+            text: "¡Te dejas llevar! Sacudes la cabeza tan fuerte que tu gorra sale volando. Eddie y tú se ríen a carcajadas compartiendo un momento genuino de rock and roll.",
+            choices: [
+                { text: "Recoger tu gorra del suelo", next: "cap3_idea_proyecto" }
+            ]
+        },
+        "cap3_idea_proyecto": {
+            text: "Eddie te dice que deberías construir algo épico. Como Ozzy Osbourne dejó Black Sabbath para hacer lo suyo, Eddie sugiere que tu proyecto de ciencias sea una 'cruzada en solitario'. ¡Todos los puntos de experiencia para ti!",
+            choices: [
+                { text: "Decidir construir la 'Caja del Bardo' y llamar a Suzie", next: "cap3_suzie" }
+            ]
+        },
+        "cap3_suzie": {
+            text: "Llamas a Suzie por Cerebro. Le cuentas que construirás un superamplificador con funciones de grabación para la feria de ciencias en Indianápolis. La aventura en solitario ha comenzado.",
+            choices: [
+                { text: "CAPÍTULOS 2 y 3 COMPLETADOS (Avanzar al Cap. 4)", next: "cap4_inicio" } // Nodo puente para el futuro
+            ]
+        },
+        "cap4_inicio": {
+            text: "Próximamente: Capítulo 4. El proyecto te consume y el Club Fuego Infernal te hace un gran regalo...",
+            choices: [
+                { text: "Volver al Menú", next: "title" }
+            ]
+        },
+
+// --- CAPÍTULO 4 ---
+        "cap4_inicio": {
+            text: "Capítulo 4. Viernes 6 de Septiembre de 1985.<br><br>Estás totalmente absorto en tu proyecto. Eddie te ha prestado un casete de Iron Maiden para que 'eduques tus oídos'. En tu habitación, rodeado de cables y soldadores, decides probar la potencia de los nuevos circuitos que diseñaste con Suzie.",
+            choices: [
+                { text: "Poner el casete a todo volumen (Tirada Audacia: 4+)", rollTarget: 4, next: "cap4_rock_exito", failNext: "cap4_susto_mama" }
+            ]
+        },
+        "cap4_susto_mama": {
+            text: "La música truena tanto que no oyes a tu madre entrar. Te asustas tanto que saltas de la silla y casi tiras el soldador encendido. Tu cara se pone roja como un tomate mientras ella te mira con una mezcla de confusión y risa.",
+            choices: [
+                { text: "Bajar el volumen y explicarle el proyecto", next: "cap4_explicacion" }
+            ]
+        },
+        "cap4_rock_exito": {
+            text: "¡El sonido es perfecto! Te dejas llevar por el ritmo de las guitarras. Sientes que la Caja del Bardo no es solo un proyecto, es una obra maestra técnica. Tu madre se queda en el umbral de la puerta sonriendo ante tu entusiasmo.",
+            choices: [
+                { text: "Enseñarle a mamá cómo funciona", next: "cap4_explicacion" }
+            ]
+        },
+        "cap4_explicacion": {
+            text: "Le explicas a tu madre que estás creando un sistema que puede grabar, reproducir y ecualizar múltiples pistas a la vez. Ella asiente, aunque parece más preocupada por la gata Tews que por los hercios.",
+            item: "Casete de Iron Maiden",
+            choices: [
+                { text: "Seguir trabajando hasta tarde (Ir al Cap. 5)", next: "cap5_inicio" }
+            ]
+        },
+
+        // --- CAPÍTULO 5 ---
+        "cap5_inicio": {
+            text: "Capítulo 5. Sábado 28 de Septiembre de 1985.<br><br>Llevas semanas perfeccionando la Caja del Bardo. Hoy decides forzar el transformador para ver hasta dónde llega. De repente, escuchas un zumbido eléctrico creciente. ¡Algo no va bien!",
+            choices: [
+                { text: "Intentar estabilizar el voltaje (Tirada Tecnología: 5+)", rollTarget: 5, next: "cap5_estabilizar_exito", failNext: "cap5_apagon" }
+            ]
+        },
+        "cap5_apagon": {
+            text: "¡ZAS! Un chispazo sale del amplificador y todas las luces de la casa se apagan. Has fundido no solo un fusible, sino los plomos de toda la manzana. Escuchas a tu madre gritar desde la sala: '¿¡Dusty!?'",
+            choices: [
+                { text: "Bajar al sótano con una linterna", next: "cap5_sotano" }
+            ]
+        },
+        "cap5_estabilizar_exito": {
+            text: "Con un movimiento rápido, ajustas el potenciómetro y evitas el desastre total. Sin embargo, las luces de tu habitación parpadean peligrosamente y hueles a quemado. Has salvado la placa, pero la red eléctrica de la casa está al límite.",
+            choices: [
+                { text: "Apagar todo por seguridad", next: "cap5_sotano" }
+            ]
+        },
+        "cap5_sotano": {
+            text: "En el sótano, entre cajas viejas, logras rearmar el interruptor principal. Tu madre te sugiere con un suspiro que 'quizás deberíamos invertir en un protector de sobrevoltaje'. Te sientes aliviado de que no te haya castigado.",
+            item: "Linterna de Hawkins",
+            choices: [
+                { text: "Prometer ser más cuidadoso (Avanzar al Cap. 6)", next: "cap6_inicio" }
+            ]
+        },
+        "cap6_inicio": {
+            text: "¡CAPÍTULO 5 COMPLETADO!<br><br>Tu proyecto es potente, quizás demasiado. Octubre se acerca y con él, el regreso de la tensión con tus amigos y el Club Fuego Infernal.",
+            choices: [
+                { text: "Continuar al siguiente capítulo", next: "title" }
+            ]
+        },
+
+// --- CAPÍTULO 6 ---
+        "cap6_inicio": {
+            text: "Capítulo 6. Martes 8 de Octubre de 1985.<br><br>Intentas hablar con Mike sobre circuitos y frecuencias en los pasillos de la escuela, pero él parece estar mirando al vacío de su casillero como si fuera un agujero negro. No ha escuchado ni una palabra. Sientes que la 'Hermandad' se desmorona mientras tú eres el único que sigue entusiasmado por la ciencia.",
+            choices: [
+                { text: "Chasquear los dedos frente a Mike (Tirada Carisma: 3+)", rollTarget: 3, next: "cap6_atencion_exito", failNext: "cap6_ignorado" }
+            ]
+        },
+        "cap6_ignorado": {
+            text: "Mike ni se inmuta. Cierra su casillero y se va murmurando algo sobre Ce y lo mucho que la extraña. Te quedas solo en el pasillo. El estrés de sentirte 'el amigo sobrante' empieza a pesarte.",
+            choices: [
+                { text: "Suspirar e ir a clase", next: "cap6_clase" }
+            ]
+        },
+        "cap6_atencion_exito": {
+            text: "Mike parpadea y regresa a la realidad. 'Lo siento, Dustin, es que... es difícil sin los demás', admite. Aunque no te ayuda con los circuitos, al menos reconoce que sigue ahí. Te sientes un poco más animado.",
+            choices: [
+                { text: "Aceptar sus disculpas", next: "cap6_clase" }
+            ]
+        },
+        "cap6_clase": {
+            text: "En clase de ciencias, el profesor menciona que la feria de Indianápolis busca 'innovación disruptiva'. Miras tu boceto de la Caja del Bardo. Es exactamente lo que tienes, pero necesitas piezas más potentes que las que tienes en casa.",
+            choices: [
+                { text: "Ir a buscar consejo al Family Video (Ir al Cap. 7)", next: "cap7_inicio" }
+            ]
+        },
+
+        // --- CAPÍTULO 7 ---
+        "cap7_inicio": {
+            text: "Capítulo 7. Viernes 11 de Octubre de 1985.<br><br>Entras en Family Video hecho una furia. '¡Lucas se ha vuelto loco!', gritas. Una clienta se asusta tanto que derriba un cartel de cartón de 'El Planeta de los Simios'. Steve corre a arreglarlo mientras Robin te mira divertida tras el mostrador.",
+            choices: [
+                { text: "Pedir disculpas a la clienta", next: "cap7_mostrador" },
+                { text: "Ir directo al grano con Robin", next: "cap7_mostrador" }
+            ]
+        },
+        "cap7_mostrador": {
+            text: "Te dejas caer sobre el mostrador. 'Todo es terrible', gimes. Robin te da unos golpecitos inseguros en la cabeza. Les cuentas cómo Lucas prefiere el entrenamiento de basquetbol a la ciencia y cómo Mike solo piensa en su Nintendo y en Ce.",
+            choices: [
+                { text: "Pedir un consejo de 'adulto' a Steve", next: "cap7_consejo_steve" },
+                { text: "Preguntar a Robin por piezas técnicas", next: "cap7_tecnologia" }
+            ]
+        },
+        "cap7_consejo_steve": {
+            text: "Steve deja de disculparse con el simio de cartón y te dice: 'Dustin, la gente crece. No puedes obligarlos a ser niños para siempre'. Duele, pero sabes que tiene parte de razón.",
+            choices: [
+                { text: "Refugiarse en la tecnología", next: "cap7_tecnologia" }
+            ]
+        },
+        "cap7_tecnologia": {
+            text: "Robin te sugiere que dejes de preocuparte por ellos y te enfoques en ganar. Te menciona que hay una tienda de suministros industriales cerca de la biblioteca que podría tener los capacitores que buscas.",
+            item: "Mapa de suministros",
+            choices: [
+                { text: "Trazar un plan para la Caja del Bardo (Ir al Cap. 8)", next: "cap8_inicio" }
+            ]
+        },
+        "cap8_inicio": {
+            text: "¡CAPÍTULO 7 COMPLETADO!<br><br>Tienes un mapa y una misión. Se acerca Halloween, pero este año será muy diferente a los anteriores...",
+            choices: [
+                { text: "Continuar la aventura", next: "title" }
+            ]
+        },
+
+// --- CAPÍTULO 8 ---
+        "cap8_inicio": {
+            text: "Capítulo 8. Jueves 31 de Octubre de 1985 (Halloween).<br><br>Es la noche de Halloween y, por primera vez en años, estás solo. Eres demasiado grande para pedir dulces, pero no lo suficientemente 'popular' para las fiestas. Decides quedarte en tu habitación comiendo dulces y escribiéndole una carta a Will. Sientes un vacío enorme al no tener a la Hermandad unida.",
+            choices: [
+                { text: "Enfocarte en la carta para Will (Tirada Carisma: 3+)", rollTarget: 3, next: "cap8_carta_exito", failNext: "cap8_tristeza" }
+            ]
+        },
+        "cap8_tristeza": {
+            text: "Empiezas a escribir pero la nostalgia te supera. Miras tus viejos disfraces de Ghostbusters en el armario y suspiras. Pierdes un poco de ánimo, pero decides canalizar esa energía en la 'Caja del Bardo'.",
+            choices: [
+                { text: "Comer un chocolate y seguir trabajando", next: "cap8_progreso" }
+            ]
+        },
+        "cap8_carta_exito": {
+            text: "Le cuentas a Will todo sobre la feria de Indianápolis y cómo extrañas los viejos tiempos. Poner tus sentimientos en papel te hace sentir mejor. La Hermandad no es lo mismo sin él y Ce, pero mantienes la esperanza.",
+            choices: [
+                { text: "Terminar la carta y revisar los circuitos", next: "cap8_progreso" }
+            ]
+        },
+        "cap8_progreso": {
+            text: "Halloween termina en silencio. Tu proyecto de la feria de ciencias es lo único que parece ir por buen camino. Te prometes a ti mismo que la 'Caja del Bardo' será la sensación de Indianápolis.",
+            item: "Carta para Will",
+            choices: [
+                { text: "Ir a dormir para enfrentar el lunes (Ir al Cap. 9)", next: "cap9_inicio" }
+            ]
+        },
+
+        // --- CAPÍTULO 9 ---
+        "cap9_inicio": {
+            text: "Capítulo 9. Lunes 11 de Noviembre de 1985.<br><br>Sientes que el mundo se acaba. Tu madre te mira con lástima desde la cocina mientras alimenta a Tews. Estás frustrado porque necesitas probar la Caja del Bardo con instrumentos reales, no solo ruidos electrónicos. Se te ocurre una idea: ¿Y si pides ayuda a la banda de Eddie?",
+            choices: [
+                { text: "Visitar el ensayo de 'Ataúd Oxidado' (Tirada Audacia: 4+)", rollTarget: 4, next: "cap9_ensayo_exito", failNext: "cap9_ensayo_timido" }
+            ]
+        },
+        "cap9_ensayo_timido": {
+            text: "Llegas al lugar de ensayo pero el estruendo de la batería te intimida. Jeff, uno de los músicos, te mira con gesto poco impresionado. Te sientes como un intruso.",
+            choices: [
+                { text: "Buscar a Eddie para que interceda", next: "cap9_ensayo_exito" }
+            ]
+        },
+        "cap9_ensayo_exito": {
+            text: "Eddie te recibe con los brazos abiertos. Le explicas que necesitas grabar sus ensayos para tomar medidas de frecuencia y datos para tu proyecto. '¡La ciencia no puede funcionar solo con ruidos!', exclamas. Eddie acepta dejarte grabar a la banda.",
+            item: "Grabadora de datos",
+            choices: [
+                { text: "Preparar el equipo de grabación", next: "cap9_grabacion" }
+            ]
+        },
+        "cap9_grabacion": {
+            text: "Mientras grabas a 'Ataúd Oxidado', te das cuenta de que la música y la tecnología están perfectamente conectadas. Jeff te pregunta si vas a hacer música o si es solo una 'payasada'. Mantienes la calma y demuestras que tu equipo es profesional.",
+            choices: [
+                { text: "CAPÍTULO 9 COMPLETADO (Avanzar al Cap. 10)", next: "cap10_inicio" }
+            ]
+        },
+        "cap10_inicio": {
+            text: "Próximamente: Capítulo 10. La reconciliación con los amigos y el viaje a Indianápolis se acercan...",
+            choices: [
+                { text: "Volver al Menú", next: "title" }
+            ]
+        },
+
+// --- CAPÍTULO 10 ---
+        "cap10_inicio": {
+            text: "Capítulo 10. Miércoles 13 de Noviembre de 1985.<br><br>La tensión en la Hermandad ha llegado a un punto crítico. Robin, actuando como una especie de 'maestra de ceremonias' de la madurez, ha organizado una reunión en el Family Video. Mike y Lucas están allí, pero el aire se siente tan pesado como si un Demogorgon estuviera a punto de cruzar la pared.<br><br>Robin saca un bote de helado vacío y anuncia su plan: <i>'Nadie sale de aquí hasta que todos escriban sus quejas en un papel y las discutamos como adultos... o como lo que sea que sean ustedes'</i>.",
+            choices: [
+                { text: "Escribir con honestidad sobre cómo te sientes (Tirada Carisma: 4+)", rollTarget: 4, next: "cap10_reconciliacion_exito", failNext: "cap10_discusion_cliches" },
+                { text: "Ser sarcástico y evitar el drama", next: "cap10_sarcasmo" }
+            ]
+        },
+        "cap10_sarcasmo": {
+            text: "Intentas romper el hielo con un chiste sobre el peinado de Steve, pero nadie se ríe. Lucas te mira con una decepción que duele más que un golpe. <i>'¿Ves? Esto es lo que pasa, Dustin. Todo es un chiste para ti'</i>, dice Lucas. El estrés sube por las nubes.",
+            choices: [
+                { text: "Tragar el orgullo y pedir perdón", next: "cap10_reconciliacion_exito" }
+            ]
+        },
+        "cap10_discusion_cliches": {
+            text: "Empiezan a discutir sobre quién llamó a quién primero. La conversación se vuelve un círculo vicioso de reproches infantiles. Mike dice que está harto de ser el mediador y Lucas dice que solo quiere tener una vida fuera del sótano. Pierdes 1 de Estrés por la frustración emocional.",
+            choices: [
+                { text: "Usar la técnica de Robin: 'Habla por ti, no por los demás'", next: "cap10_reconciliacion_exito" }
+            ]
+        },
+        "cap10_reconciliacion_exito": {
+            text: "Finalmente, las palabras fluyen. Admiten que se extrañan, pero que la preparatoria les da miedo de formas distintas. Lucas confiesa que el equipo de basquetbol es su forma de no ser una víctima, y Mike admite que se siente perdido sin Ce. Robin sonríe como una profesora satisfecha. <i>'Ven, no era tan difícil'</i>. Aunque no todo está resuelto, la Hermandad vuelve a hablarse.",
+            item: "Notas de la Hermandad",
+            choices: [
+                { text: "Celebrar con un batido y volver al taller (Ir al Cap. 11)", next: "cap11_inicio" }
+            ]
+        },
+
+        // --- CAPÍTULO 11 ---
+        "cap11_inicio": {
+            text: "Capítulo 11. Sábado 16 de Noviembre de 1985.<br><br>Con la mente más despejada, te enfocas en el problema técnico de la Caja del Bardo: las frecuencias altas se distorsionan. Vas al garaje donde ensaya 'Ataúd Oxidado'. Eddie Munson está allí, cambiando una cuerda de su guitarra. <br><br><i>'Dusty, mi pequeño genio'</i>, te saluda Eddie, <i>'¿vienes por más castigo auditivo o necesitas el secreto del metal?'</i>. Le explicas que tu amplificador no soporta los agudos limpios.",
+            choices: [
+                { text: "Pedirle a Eddie una demostración de 'Crazy Train'", next: "cap11_ozzy" }
+            ]
+        },
+        "cap11_ozzy": {
+            text: "Eddie conecta su guitarra y el riff de Ozzy Osbourne llena el garaje. Observas sus dedos, pero sobre todo, observas los osciloscopios de tu equipo. ¡Ahí está! La distorsión no es el problema, es la falta de retroalimentación negativa en el circuito de salida.",
+            choices: [
+                { text: "Intentar una soldadura de precisión (Tirada Tecnología: 5+)", rollTarget: 5, next: "cap11_tecnologia_exito", failNext: "cap11_quemadura" }
+            ]
+        },
+        "cap11_quemadura": {
+            text: "¡Auch! El cautín resbala y te quemas el pulgar. Sueltas una palabrota que hace que Eddie silbe impresionado. <i>'¡Ese es el espíritu del rock!'</i>, bromea mientras te pasa un trapo frío. Pierdes 1 de Estrés, pero el circuito queda medio ajustado.",
+            choices: [
+                { text: "Probar el sonido de nuevo", next: "cap11_perfeccion" }
+            ]
+        },
+        "cap11_tecnologia_exito": {
+            text: "Tus manos no tiemblan. Aplicas el punto exacto de soldadura en el condensador cerámico. Eddie toca un acorde de potencia y el sonido sale puro, cristalino y atronador. <i>'¡Maldita sea, Henderson! Has convertido este trasto en un arma de destrucción masiva'</i>, grita Eddie entusiasmado.",
+            choices: [
+                { text: "Brindar con una Coca-Cola por el éxito", next: "cap11_perfeccion" }
+            ]
+        },
+        "cap11_perfeccion": {
+            text: "La Caja del Bardo está lista. Eddie te mira con respeto genuino. <i>'Sabes, la mayoría de la gente aquí piensa que soy un bicho raro, pero tú... tú eres un bicho raro con un propósito. No dejes que esos idiotas de la feria de Indianápolis te digan lo contrario'</i>. Te sientes invencible.",
+            item: "Circuito Mejorado",
+            choices: [
+                { text: "CAPÍTULOS 10 y 11 COMPLETADOS (Ir al Cap. 12)", next: "cap12_inicio" }
+            ]
+        },
+        "cap12_inicio": {
+            text: "Próximamente: Capítulo 12. El viaje a Indianápolis comienza y los nervios de la competencia real aparecen...",
+            choices: [
+                { text: "Volver al Menú", next: "title" }
+            ]
+        },
+
+// --- CAPÍTULO 12 ---
+        "cap12_inicio": {
+            text: "Capítulo 12. Martes 3 de Diciembre de 1985.<br><br>Es el gran día. Estás en la estación de autobuses de Hawkins con tu pesada maleta y, lo más importante, la 'Caja del Bardo' protegida con capas de plástico de burbujas. Mike te acompaña para despedirte, pero Lucas no ha podido ir por su entrenamiento de basquetbol. 'Prometo que estaré allí para las finales', te dijo por radio anoche, pero el vacío se siente real.<br><br>Mientras esperas el autobús a Indianápolis, el señor Clarke se acerca para darte un último consejo: <i>'Recuerda, Dustin, la curiosidad es la madre de la invención, pero la claridad es la madre de la presentación'</i>. Te entrega un sobre con contactos de profesores en la ciudad por si algo falla.",
+            choices: [
+                { text: "Repasar mentalmente tu discurso (Tirada Tecnología: 3+)", rollTarget: 3, next: "cap12_discurso_exito", failNext: "cap12_nervios" },
+                { text: "Hablar con Mike sobre la Hermandad", next: "cap12_despedida_mike" }
+            ]
+        },
+        "cap12_nervios": {
+            text: "Intentas recordar la explicación sobre la retroalimentación negativa, pero los nervios hacen que las palabras se mezclen en tu cabeza como cables enredados. Mike te da un apretón en el hombro. <i>'Dustin, eres el tipo más inteligente que conozco. Solo sé tú mismo'</i>. El autobús llega con un chirrido de frenos.",
+            choices: [
+                { text: "Subir al autobús hacia lo desconocido", next: "cap12_viaje" }
+            ]
+        },
+        "cap12_discurso_exito": {
+            text: "Recitas los principios de la modulación de frecuencia y la captura de datos con una precisión asombrosa. Sientes que la Caja del Bardo no es solo un proyecto, es tu pasaporte a algo más grande. Mike te mira impresionado: <i>'Vas a ganarles a todos esos chicos de ciudad, Henderson'</i>.",
+            choices: [
+                { text: "Subir al autobús con confianza", next: "cap12_viaje" }
+            ]
+        },
+        "cap12_despedida_mike": {
+            text: "Le pides a Mike que no deje que Lucas se aleje demasiado. Él asiente con una mirada sombría. <i>'Haremos que funcione, Dustin. Solo concéntrate en la feria'</i>. El autobús abre sus puertas y el olor a diésel te recuerda que esta vez, la aventura es solo tuya.",
+            choices: [
+                { text: "Despedirte y subir al autobús", next: "cap12_viaje" }
+            ]
+        },
+        "cap12_viaje": {
+            text: "El viaje a Indianápolis dura horas. Miras por la ventana los campos de Indiana mientras escuchas el casete de Iron Maiden que te prestó Eddie. En un cuaderno, empiezas a bosquejar posibles preguntas que los jueces podrían hacerte. Sabes que el nivel en la FICI (Feria Internacional de Ciencias e Ingeniería) será brutal.",
+            item: "Cuaderno de bocetos",
+            choices: [
+                { text: "Llegar a la ciudad (Ir al Cap. 13)", next: "cap13_inicio" }
+            ]
+        },
+
+        // --- CAPÍTULO 13 ---
+        "cap13_inicio": {
+            text: "Capítulo 13. Miércoles 4 de Diciembre de 1985.<br><br>Indianápolis es enorme, ruidosa y llena de edificios que parecen tocar el cielo. Llegas al Centro de Exposiciones y te sientes diminuto. En la mesa de inscripción, una mujer te mira con recelo cuando ve a Eddie Munson, quien ha aparecido de sorpresa para apoyarte (y quizás para huir un poco de Hawkins). <br><br><i>'¿Este es el señor Henderson padre?'</i>, pregunta ella con duda. Eddie saluda con una sonrisa traviesa: <i>'Nop, solo el apoyo logístico y el experto en distorsión armónica'</i>.",
+            choices: [
+                { text: "Inscribirte y buscar tu puesto (Tirada Carisma: 4+)", rollTarget: 4, next: "cap13_puesto_exito", failNext: "cap13_puesto_caos" }
+            ]
+        },
+        "cap13_puesto_caos": {
+            text: "Te asignan un puesto cerca de los baños. El ruido de la gente y el olor a desinfectante no son ideales para una demostración de audio. Además, un chico de una escuela privada llamado Brian se burla de tu gorra y de tu equipo 'casero'. <i>'¿Eso es un amplificador o una caja de zapatos con cables?'</i>, comenta con condescendencia.",
+            choices: [
+                { text: "Ignorar a Brian e instalar tu equipo", next: "cap13_montaje" }
+            ]
+        },
+        "cap13_puesto_exito": {
+            text: "Logras que te asignen un puesto en la fila central, con buena iluminación. Eddie te ayuda a descargar la Caja del Bardo con un cuidado casi religioso. Mientras montas tu cartel, notas que los otros proyectos son impecables, con presupuestos que Hawkins nunca ha visto. Pero tu proyecto tiene algo que ellos no: alma.",
+            choices: [
+                { text: "Terminar de montar el cartel", next: "cap13_montaje" }
+            ]
+        },
+        "cap13_montaje": {
+            text: "Mientras ajustas los últimos cables, un chico con un pato con correa se acerca a tu mesa. Se presenta como Danny y su proyecto trata sobre el comportamiento animal. <i>'Me gusta tu caja. Parece sacada de una película de espías'</i>, dice Danny. <br><br>De repente, escuchas un rumor en la sala: parece que varios proyectos de la sección de biología han sufrido 'accidentes' extraños durante la noche. Hay un saboteador suelto.",
+            item: "Tarjeta de la FICI",
+            choices: [
+                { text: "Investigar el sabotaje con Danny (Avanzar al Cap. 14)", next: "cap14_inicio" }
+            ]
+        },
+        "cap14_inicio": {
+            text: "¡CAPÍTULO 13 COMPLETADO!<br><br>Has llegado a la gran liga. Tienes un aliado con un pato y un misterio que resolver antes de que los jueces lleguen a tu mesa.",
+            choices: [
+                { text: "Continuar la aventura", next: "title" }
+            ]
+        },
+
+// --- CAPÍTULO 14 ---
+        "cap14_inicio": {
+            text: "Capítulo 14. Miércoles 4 de Diciembre de 1985.<br><br>La FICI es un monstruo de mil cabezas. Cientos de estudiantes de toda la zona triestatal bullen por los pasillos del centro de convenciones, moviendo maquetas que parecen costar más que tu casa. Eddie camina a tu lado, tratando de ignorar las miradas de desaprobación de los padres y profesores hacia su chaleco de parches.<br><br>Mientras intentas calibrar la 'Caja del Bardo', notas una conmoción dos mesas más allá. Una chica llamada Anika está llorando frente a lo que parece ser un montón de cenizas verdes: su proyecto de botánica ha sido calcinado misteriosamente. <i>'Es la maldición de la FICI'</i>, susurra alguien a tus espaldas.",
+            choices: [
+                { text: "Acercarte a consolar a Anika (Tirada Carisma: 3+)", rollTarget: 3, next: "cap14_consuelo_exito", failNext: "cap14_rechazo" },
+                { text: "Analizar los restos de la planta en busca de pistas", next: "cap14_investigacion" }
+            ]
+        },
+        "cap14_rechazo": {
+            text: "Intentas decir algo reconfortante, pero Anika está demasiado hundida en su miseria. <i>'No lo entenderías, chico de Hawkins'</i>, dice entre sollozos, <i>'mi beca para Eastwood dependía de esta superplanta'</i>. Te sientes mal por ella, pero el instinto de detective de la Hermandad se activa. Esto no parece un accidente.",
+            choices: [
+                { text: "Buscar pistas alrededor de la mesa", next: "cap14_investigacion" }
+            ]
+        },
+        "cap14_consuelo_exito": {
+            text: "Le ofreces un pañuelo y un poco de chocolate que tenías en la mochila. Anika levanta la vista y, tras notar tu gorra de Dustin, se calma un poco. Te explica que su proyecto era una planta genéticamente modificada para crecer en climas extremos. <i>'Ayer estaba perfecta. Hoy, parece que alguien le echó ácido o la metió en un horno'</i>.",
+            choices: [
+                { text: "Ofrecerte a investigar qué pasó", next: "cap14_investigacion" }
+            ]
+        },
+        "cap14_investigacion": {
+            text: "Te arrodillas bajo la mesa de Anika y encuentras algo pequeño y brillante: un fusible fundido que no pertenece al equipo de ella. Al levantarte, ves a Brian, el chico de la escuela Eastwood, observándolos con una sonrisa gélida. <i>'Qué tragedia, ¿no? La selección natural aplicada a los proyectos de ciencia'</i>, comenta Brian antes de alejarse con arrogancia.",
+            item: "Fusible sospechoso",
+            choices: [
+                { text: "Seguir a Brian (Ir al Cap. 15)", next: "cap15_inicio" }
+            ]
+        },
+
+        // --- CAPÍTULO 15 ---
+        "cap15_inicio": {
+            text: "Capítulo 15. Jueves 5 de Diciembre de 1985.<br><br>Empiezas el día con una misión doble: preparar tu propia presentación y descubrir quién está saboteando a los competidores. Mientras caminas por la zona de carga para tomar aire, ves algo surrealista: un chico está tratando de ponerle una correa a un pato. El pato lleva una pequeña placa que dice 'Frodo Quackins'.<br><br>El chico se presenta como Danny. <i>'Frodo es un experto en comportamiento aviar... y en encontrar cosas que no debería'</i>, dice Danny mientras el pato picotea un cable suelto en el suelo. Te das cuenta de que Danny es tan 'raro' como tú, y eso te hace sentir instantáneamente como en casa.",
+            choices: [
+                { text: "Presentarle la Caja del Bardo a Danny (Tirada Tecnología: 4+)", rollTarget: 4, next: "cap15_demo_exito", failNext: "cap15_demo_fallo" }
+            ]
+        },
+        "cap15_demo_fallo": {
+            text: "Al encender la caja para mostrarle a Danny cómo funciona, un fuerte pitido de retroalimentación hace que Frodo Quackins salga volando asustado hacia la sección de química. Danny corre tras él gritando disculpas. Te sientes como un tonto, pero al menos has roto el hielo.",
+            choices: [
+                { text: "Ayudar a Danny a atrapar al pato", next: "cap15_alianza" }
+            ]
+        },
+        "cap15_demo_exito": {
+            text: "La Caja del Bardo emite un sonido armónico perfecto. Danny queda boquiabierto y hasta el pato parece inclinarse con respeto. <i>'¡Eso es increíble! Podrías usarlo para comunicarte con animales si ajustas la frecuencia'</i>, sugiere Danny. Te das cuenta de que has encontrado a tu primer aliado en esta jungla de científicos.",
+            choices: [
+                { text: "Hablar con Danny sobre el sabotaje", next: "cap15_alianza" }
+            ]
+        },
+        "cap15_alianza": {
+            text: "Danny te confiesa que él también vio sombras cerca de la mesa de Anika anoche. <i>'Frodo encontró un rastro de fertilizante líquido que lleva directo a la zona de los estudiantes de Eastwood'</i>. Justo en ese momento, las luces de la feria parpadean y un fuerte estruendo proviene del muelle de carga. Alguien está atacando de nuevo.",
+            item: "Pluma de Frodo (Amuleto)",
+            choices: [
+                { text: "CAPÍTULOS 14 y 15 COMPLETADOS (Avanzar al Cap. 16)", next: "cap16_inicio" }
+            ]
+        },
+        "cap16_inicio": {
+            text: "Próximamente: Capítulo 16. La persecución por los conductos de ventilación y el primer enfrentamiento directo con el saboteador...",
+            choices: [
+                { text: "Volver al Menú", next: "title" }
+            ]
+        },
+
+// --- CAPÍTULO 16 ---
+        "cap16_inicio": {
+            text: "Capítulo 16. Jueves 5 de Diciembre de 1985.<br><br>La Feria Internacional de Ciencias e Ingeniería (FICI) se ha convertido en una escena del crimen. El sabotaje del proyecto de Anika no fue un accidente aislado. Mientras recorres los pasillos, notas que otros proyectos de biología y química también presentan fallas extrañas. Danny, tu nuevo amigo del pato 'Frodo Quackins', te señala algo inquietante: <i>'Mira las cámaras de seguridad del techo, Dustin. Están cubiertas con cinta negra en esta sección'</i>.<br><br>Eddie Munson, que se ha tomado muy en serio su papel de 'guardaespaldas', sugiere que el saboteador debe ser alguien con acceso a las llaves maestras o alguien muy escurridizo.",
+            choices: [
+                { text: "Infiltrarse en la sala de seguridad (Tirada Audacia: 5+)", rollTarget: 5, next: "cap16_seguridad_exito", failNext: "cap16_pillados" },
+                { text: "Entrevistar a otros competidores afectados", next: "cap16_entrevistas" }
+            ]
+        },
+        "cap16_pillados": {
+            text: "Intentas colarte por una puerta lateral, pero un guardia de seguridad con cara de pocos amigos te detiene. <i>'¿A dónde vas, niño? El área de personal está prohibida'</i>. Eddie tiene que intervenir con una historia inventada sobre que perdiste a tu 'tío' (señalándose a sí mismo) para que no te expulsen de la feria. Pierdes 1 de Estrés por el susto.",
+            choices: [
+                { text: "Reagruparse con Danny y Frodo", next: "cap16_entrevistas" }
+            ]
+        },
+        "cap16_seguridad_exito": {
+            text: "Usas tu pequeña linterna y tus habilidades para moverte sin ser visto. Logras asomarte a la oficina de seguridad y ves un horario de rondas. Notas que un nombre se repite en los turnos donde ocurrieron los sabotajes: Richard Rasch, un ex-estudiante de Eastwood que ahora trabaja como asistente de la feria. ¡Tienes un sospechoso!",
+            item: "Horario de Rondas",
+            choices: [
+                { text: "Compartir el hallazgo con el equipo", next: "cap16_entrevistas" }
+            ]
+        },
+        "cap16_entrevistas": {
+            text: "Hablas con otros chicos. Todos mencionan haber visto a un estudiante de la escuela Eastwood merodeando cerca de los proyectos dañados. Brian, tu rival, parece demasiado tranquilo. Empiezas a sospechar que hay una conspiración para que Eastwood gane todos los premios de la FICI cueste lo que cueste.",
+            choices: [
+                { text: "CAPÍTULO 16 COMPLETADO (Ir al Cap. 17)", next: "cap17_inicio" }
+            ]
+        },
+
+        // --- CAPÍTULO 17 ---
+        "cap17_inicio": {
+            text: "Capítulo 17. Viernes 6 de Diciembre de 1985.<br><br>Falta solo un día para la gran evaluación final. Danny te lleva a un rincón apartado. <i>'Frodo encontró esto cerca de la ventilación'</i>, dice, mostrando un pequeño frasco de un químico acelerador de combustión. Es el mismo que usaron para quemar la planta de Anika. <br><br>Deciden que la única forma de atrapar al saboteador es tenderle una trampa nocturna. Vas a usar la 'Caja del Bardo' como cebo, programándola para que emita una alarma de alta frecuencia si alguien toca tu mesa.",
+            choices: [
+                { text: "Programar la alarma de proximidad (Tirada Tecnología: 4+)", rollTarget: 4, next: "cap17_trampa_exito", failNext: "cap17_trampa_fallo" }
+            ]
+        },
+        "cap17_trampa_fallo": {
+            text: "El código es complicado y la 'Caja del Bardo' empieza a emitir ruidos de estática que atraen la atención de los jueces que pasan por allí. Tienes que fingir que es 'música experimental' para que no te penalicen. El equipo queda sensible, pero funciona.",
+            choices: [
+                { text: "Esconderse tras los carteles", next: "cap17_espera" }
+            ]
+        },
+        "cap17_trampa_exito": {
+            text: "La programación es impecable. Has conectado los sensores de la Caja del Bardo a un circuito de respuesta rápida. Si alguien se acerca a menos de 30 cm de tu proyecto sin el código de desactivación, el sonido será ensordecedor. Eddie te mira con orgullo: <i>'Henderson, eres un genio del mal'</i>.",
+            choices: [
+                { text: "Prepararse para la vigilancia nocturna", next: "cap17_espera" }
+            ]
+        },
+        "cap17_espera": {
+            text: "Te quedas escondido con Danny y Frodo bajo una mesa de exhibición cuando las luces de la feria se apagan. El silencio es total, roto solo por el graznido ocasional del pato. De repente, escuchas pasos metálicos. Alguien está caminando por los conductos de ventilación sobre ustedes. <br><br><i>'Ahí está'</i>, susurra Danny. Una sombra baja por una rejilla justo encima del proyecto de Anika.",
+            choices: [
+                { text: "¡Saltar y encender la linterna!", next: "cap17_enfrentamiento" }
+            ]
+        },
+        "cap17_enfrentamiento": {
+            text: "La luz revela a un chico con la chamarra verde de Eastwood, pero no es Brian, es uno de sus secuaces siguiendo órdenes. Al verse descubierto, intenta huir hacia el muelle de carga. <br><br><i>'¡No en mi guardia!'</i>, grita Eddie apareciendo desde las sombras con una actitud intimidante. El saboteador tropieza con la correa del pato y cae al suelo, dejando caer un aerosol químico.",
+            item: "Prueba del Sabotaje",
+            choices: [
+                { text: "CAPÍTULO 17 COMPLETADO (Ir al Cap. 18)", next: "cap18_inicio" }
+            ]
+        },
+        "cap18_inicio": {
+            text: "Próximamente: Capítulo 18. El interrogatorio al saboteador y la impactante revelación de quién está realmente detrás de todo el plan en la FICI...",
+            choices: [
+                { text: "Volver al Menú", next: "title" }
+            ]
+        },
+
+// --- CAPÍTULO 18 ---
+        "cap18_inicio": {
+            text: "Capítulo 18. Sábado 7 de Diciembre de 1985.<br><br>El día de la evaluación final ha llegado y el aire en el centro de convenciones está cargado de una 'espesa capa de ansiedad'[cite: 16]. Los jueces avanzan lentamente, fila por fila, mientras tú y Danny observan con horror cómo el saboteador ha vuelto a actuar: otros proyectos han fallado misteriosamente justo antes de ser evaluados[cite: 16].<br><br>No puedes quedarte de brazos cruzados. Con la ayuda de Eddie, que mantiene a raya a los guardias con sus historias, decides que es hora de pasar a la ofensiva. <i>'Necesito que Frodo genere algo de caos'</i>, le susurras a Danny, señalando la jaula del pato[cite: 16].",
+            choices: [
+                { text: "Liberar a 'Frodo Quackins' para distraer a los jueces (Tirada Audacia: 4+)", rollTarget: 4, next: "cap18_caos_pato", failNext: "cap18_pato_timido" },
+                { text: "Intentar una reparación de emergencia en el proyecto de Anika", next: "cap18_reparacion" }
+            ]
+        },
+        "cap18_pato_timido": {
+            text: "Frodo se niega a salir de su jaula, prefiriendo sus granos de maíz. El tiempo se agota y los jueces ya están en la mesa anterior a la de Anika. Sientes que el fracaso es inminente[cite: 16].",
+            choices: [
+                { text: "Usar un señuelo para atraer a Frodo", next: "cap18_caos_pato" }
+            ]
+        },
+        "cap18_caos_pato": {
+            text: "¡Funciona! El pato sale disparado, abriendo pestillos y derribando el 'Cuchillomóvil de Barbie' de otro stand[cite: 16]. Mientras los jueces y el público intentan atrapar al animal, tú y Danny aprovechan la confusión para revisar los cables bajo las mesas principales. Descubren que Richard Rasch, el asistente de la feria, ha estado usando un dispositivo de interferencia para arruinar los circuitos de los competidores[cite: 16, 17].",
+            item: "Dispositivo de Interferencia",
+            choices: [
+                { text: "Desconectar el dispositivo y regresar a tu puesto (Ir al Cap. 19)", next: "cap19_inicio" }
+            ]
+        },
+        "cap18_reparacion": {
+            text: "Te enfocas en ayudar a Anika a salvar su planta. Usas tus conocimientos de química para neutralizar el acelerador que Richard aplicó. Logras que la planta recupere su brillo justo cuando los jueces giran la cabeza.",
+            choices: [
+                { text: "Correr a tu puesto antes de que te toque", next: "cap19_inicio" }
+            ]
+        },
+
+        // --- CAPÍTULO 19 ---
+        "cap19_inicio": {
+            text: "Capítulo 19. Sábado 7 de Diciembre de 1985 (Tarde).<br><br>Los jueces llegan a tu mesa. El corazón te late tan fuerte que temes que rompa tus costillas. Has pasado tanto tiempo salvando los proyectos de los demás que apenas has ensayado tu propia presentación. Miras la 'Caja del Bardo' y ves a Brian, tu rival de Eastwood, observándote con una sonrisa burlona, esperando que falles[cite: 18, 19].<br><br><i>'Señor Henderson, el tiempo corre'</i>, dice uno de los jueces con un portapapeles. Es el momento de la verdad.",
+            choices: [
+                { text: "Hacer una demostración técnica impecable (Tirada Tecnología: 5+)", rollTarget: 5, next: "cap19_exito_tecnico", failNext: "cap19_improvisacion" }
+            ]
+        },
+        "cap19_improvisacion": {
+            text: "Te trabas con las palabras. El discurso técnico desaparece de tu mente. Ves a Eddie al fondo de la sala haciéndote gestos de 'rock and roll'. Decides tirar el guion por la ventana. <i>'La ciencia no son solo datos'</i>, gritas, <i>'¡la ciencia es energía!'</i>. Conectas la Caja del Bardo y empiezas a reproducir una versión distorsionada de 'Crazy Train' de Ozzy Osbourne.",
+            choices: [
+                { text: "Aumentar el volumen al máximo", next: "cap19_final_epico" }
+            ]
+        },
+        "cap19_exito_tecnico": {
+            text: "Explicas la modulación de frecuencia con tal claridad que los jueces dejan de tomar notas para escucharte. Brian se pone pálido. Demuestras cómo tu caja puede capturar audio y transformarlo en datos puros. Es una victoria técnica absoluta.",
+            choices: [
+                { text: "Finalizar con la demostración sonora", next: "cap19_final_epico" }
+            ]
+        },
+        "cap19_final_epico": {
+            text: "El sonido de 'Crazy Train' llena la sala. Los jueces están atónitos, pero no pueden evitar sonreír ante tu entusiasmo. Eddie aplaude de forma 'atronadora' desde la multitud. Al terminar, Brian se acerca furioso, pero tú ya sabes la verdad: <i>'Sabemos lo que hiciste con Richard, Brian'</i>, le dices con calma. Has ganado, y no solo la competencia, sino el respeto de verdaderos amigos.",
+            item: "Respeto de la FICI",
+            choices: [
+                { text: "CAPÍTULOS 18 y 19 COMPLETADOS (Ir al Cap. 20)", next: "cap20_inicio" }
+            ]
+        },
+        "cap20_inicio": {
+            text: "Próximamente: Capítulo 20. El veredicto final, la inesperada oferta de una beca y la decisión que cambiará el futuro de Dustin en Hawkins...",
+            choices: [
+                { text: "Volver al Menú", next: "title" }
+            ]
+        },
+
+// --- CAPÍTULO 20 ---
+        "cap20_inicio": {
+            text: "Capítulo 20. Sábado 7 de Diciembre de 1985 (Noche).<br><br>El gran salón de la FICI está en silencio absoluto mientras el Dr. Aristhorp, el juez principal, sube al estrado. Richard Rasch ha sido escoltado fuera por la seguridad tras tu denuncia, pero Brian sigue allí, lanzándote miradas de puro odio. <br><br><i>'Este año'</i>, comienza el Dr. Aristhorp, <i>'hemos visto una innovación sin precedentes, pero también comportamientos que no tienen lugar en la ciencia'</i>. Tus manos sudan. Sientes el peso del sobre en tu bolsillo, el que te dio el profesor Clarke. El juez anuncia los premios de categoría y, finalmente, llega al Gran Premio a la Innovación.",
+            choices: [
+                { text: "Cruzar los dedos y esperar el nombre (Tirada Suerte: 4+)", rollTarget: 4, next: "cap20_ganador", failNext: "cap20_mencion" }
+            ]
+        },
+        "cap20_mencion": {
+            text: "El Gran Premio se lo lleva un proyecto de astrofísica de una escuela de Chicago. Te sientes decepcionado por un segundo, pero entonces el juez añade: <i>'Sin embargo, el jurado otorga una Mención Especial por Excelencia Técnica y Coraje Intelectual a Dustin Henderson por la Caja del Bardo'</i>. <br><br>¡Subes al escenario! Mientras recibes el diploma, el director de la Academia Eastwood se te acerca y te susurra: <i>'Henderson, tenemos una beca completa para ti. Podrías dejar ese pueblucho y venir con los mejores'</i>.",
+            item: "Mención de Honor FICI",
+            choices: [
+                { text: "Hablar con Eddie sobre la oferta", next: "cap21_inicio" }
+            ]
+        },
+        "cap20_ganador": {
+            text: "<i>'...¡Dustin Henderson!'</i>. El estruendo de los aplausos es ensordecedor. Eddie grita como si estuviera en un concierto de Metallica. Subes al escenario con las piernas temblando. Al bajar, el director de la prestigiosa Academia Eastwood te intercepta. <br><br><i>'Dustin, eres un diamante en bruto. Olvida Hawkins. En Eastwood tendrás laboratorios de verdad, no garajes. Te ofrecemos una beca completa inmediata'</i>. Tu sueño de ser un científico de élite está a un apretón de manos de distancia.",
+            item: "Trofeo de la FICI",
+            choices: [
+                { text: "Considerar la beca seriamente (Ir al Cap. 21)", next: "cap21_inicio" }
+            ]
+        },
+
+        // --- CAPÍTULO 21 ---
+        "cap21_inicio": {
+            text: "Capítulo 21. Domingo 8 de Diciembre de 1985.<br><br>Estás sentado en un restaurante de carretera con Eddie, Danny y el pato Frodo Quackins antes de volver a Hawkins. La oferta de la beca quema en tu bolsillo. Danny está emocionado por ti: <i>'¡Es Eastwood, Dustin! Es el lugar donde los nerds se vuelven reyes'</i>. <br><br>Pero miras a Eddie. Él está extrañamente callado, jugueteando con sus anillos. <i>'Es una oportunidad de oro, Dusty'</i>, dice Eddie con voz ronca. <i>'Si te quedas en Hawkins, solo serás el bicho raro del club de ciencias. Allí serás alguien'</i>. Sientes un nudo en la garganta al pensar en dejar a tu madre, a Steve, a la Hermandad... y al Club Fuego Infernal.",
+            choices: [
+                { text: "Preguntar a Eddie qué haría él (Tirada Vínculo: 3+)", rollTarget: 3, next: "cap21_consejo_eddie", failNext: "cap21_duda" },
+                { text: "Llamar a Suzie para pedir consejo", next: "cap21_suzie" }
+            ]
+        },
+        "cap21_duda": {
+            text: "Eddie solo se encoge de hombros. <i>'Yo soy un fracasado escolar, Henderson. No me preguntes a mí cómo ser un triunfador'</i>. Su amargura te duele. Empiezas a darte cuenta de que ser 'alguien' en Eastwood podría significar perder a las personas que te aceptan como eres.",
+            choices: [
+                { text: "Reflexionar sobre lo que significa Hawkins", next: "cap21_decision_previa" }
+            ]
+        },
+        "cap21_consejo_eddie": {
+            text: "Eddie te mira a los ojos. <i>'Escucha, Henderson. Esos tipos de Eastwood te quieren por lo que puedes construir para ellos. Nosotros te queremos por lo que eres. Pero si ese lugar es lo que necesitas para volar... no dejes que este pueblo te hunda'</i>. Sus palabras te dan una claridad dolorosa. El estrés aumenta al pensar en la elección.",
+            choices: [
+                { text: "Reflexionar sobre la Hermandad", next: "cap21_decision_previa" }
+            ]
+        },
+        "cap21_suzie": {
+            text: "Suzie escucha en silencio a través del teléfono público. <i>'Dustin, la ciencia se puede hacer en cualquier lugar, pero los amigos como los tuyos no crecen en los árboles'</i>. Te recuerda que el experimento más importante es el que estás viviendo con tus amigos.",
+            choices: [
+                { text: "Tomar una decisión final", next: "cap21_decision_previa" }
+            ]
+        },
+        "cap21_decision_previa": {
+            text: "Vuelves al autobús. Miras el folleto brillante de la Academia Eastwood y luego miras tu gorra vieja y sudada de Hawkins. Te das cuenta de que Brian, a pesar de sus laboratorios, es una persona vacía. ¿Quieres convertirte en eso? <br><br><i>'¿Y bien?'</i>, pregunta Eddie mientras el autobús arranca hacia el sur, hacia casa. <i>'¿Mañana serás un estudiante de élite o seguirás siendo mi bardo favorito?'</i>.",
+            choices: [
+                { text: "Romper el folleto de la beca (Lealtad a Hawkins)", next: "cap21_lealtad" },
+                { text: "Guardar el folleto 'por si acaso' (Duda)", next: "cap21_duda_final" }
+            ]
+        },
+        "cap21_lealtad": {
+            text: "Rompes el papel en mil pedazos y los dejas caer por la ventana del autobús. Eddie suelta una carcajada y te revuelve el pelo. <i>'¡Ese es mi chico! ¡Larga vida al Club Fuego Infernal!'</i>. Te sientes ligero, como si te hubieras quitado una armadura de plomo.",
+            item: "Confianza Recuperada",
+            choices: [
+                { text: "CAPÍTULOS 20 y 21 COMPLETADOS (Ir al final)", next: "cap22_inicio" }
+            ]
+        },
+        "cap21_duda_final": {
+            text: "Guardas el folleto en tu mochila. No estás listo para decir que no, pero tampoco para decir que sí. El viaje de vuelta a Hawkins es silencioso. Sabes que, ganes o pierdas, nada volverá a ser igual.",
+            choices: [
+                { text: "CAPÍTULOS 20 y 21 COMPLETADOS (Ir al final)", next: "cap22_inicio" }
+            ]
+        },
+        "cap22_inicio": {
+            text: "Próximamente: Capítulo 22. El regreso a Hawkins, el reencuentro con Lucas y Mike, y el destino final de la Caja del Bardo.",
+            choices: [
+                { text: "Volver al Menú", next: "title" }
+            ]
+        },
+
+// --- CAPÍTULO 22 ---
+        "cap22_inicio": {
+            text: "Capítulo 22. Lunes 9 de Diciembre de 1985.<br><br>El autobús te deja en Hawkins y el aire se siente diferente. Traes contigo un trofeo (o una mención), pero nadie te espera en la estación, salvo tu madre que te recibe con un abrazo asfixiante y una lasaña casera. <br><br>Al día siguiente en la escuela, caminas por los pasillos esperando que alguien te pregunte por Indianápolis. Pero la vida en Hawkins ha seguido sin ti: Lucas está celebrando una victoria del equipo de basquetbol y Mike está encerrado en la biblioteca estudiando para un examen que olvidaste por completo. Te sientes como un fantasma que regresa a una casa que ya no le pertenece.",
+            choices: [
+                { text: "Presumir tu trofeo en el Club de Ciencias (Tirada Carisma: 3+)", rollTarget: 3, next: "cap22_presumir_exito", failNext: "cap22_vacio" },
+                { text: "Buscar a Steve en el Family Video para desahogarte", next: "cap22_steve" }
+            ]
+        },
+        "cap22_vacio": {
+            text: "Intentas mostrar tu diploma a un par de chicos del club, pero solo te dan un 'ah, genial' distraído. La Caja del Bardo, que parecía un milagro en la FICI, aquí parece solo un trasto ruidoso. Pierdes 1 de Estrés por la sensación de aislamiento.",
+            choices: [
+                { text: "Caminar solo hacia casa", next: "cap23_inicio" }
+            ]
+        },
+        "cap22_presumir_exito": {
+            text: "El profesor Clarke se detiene y te felicita efusivamente. <i>'¡Sabía que lo lograrías, Dustin! Has puesto a Hawkins en el mapa científico'</i>. Sus palabras te dan un poco de calor, pero sigues echando de menos las caras de tus mejores amigos entre el público.",
+            choices: [
+                { text: "Agradecer al profesor e irte", next: "cap23_inicio" }
+            ]
+        },
+        "cap22_steve": {
+            text: "Steve está rebobinando cintas. Te mira y sonríe: <i>'¡Hey, volvió el campeón! Robin me contó lo del sabotaje. ¿Pateaste traseros de sabelotodos?'</i>. Hablar con Steve te recuerda que, aunque la Hermandad esté tensa, sigues teniendo familia en Hawkins.",
+            item: "Insignia de Steve",
+            choices: [
+                { text: "Sentirte mejor y volver a casa (Ir al Cap. 23)", next: "cap23_inicio" }
+            ]
+        },
+
+        // --- CAPÍTULO 23 ---
+        "cap23_inicio": {
+            text: "Capítulo 23. Martes 10 de Diciembre de 1985.<br><br>Recibes una llamada por radio. Es Lucas. Su voz suena extraña, una mezcla de culpa y orgullo. <i>'Escucha, Henderson... ganamos el partido, pero no fue lo mismo sin tus gritos molestos desde la grada. Mike y yo estamos en su sótano. Trae esa caja ruidosa'</i>. <br><br>Llegas al sótano de los Wheeler. Es como entrar en una cápsula del tiempo. El tablero de D&D está cubierto de polvo, pero ellos están allí, esperándote con una caja de pizza fría.",
+            choices: [
+                { text: "Hacer una entrada dramática con la Caja del Bardo (Tirada Audacia: 4+)", rollTarget: 4, next: "cap23_entrada_exito", failNext: "cap23_entrada_tibia" }
+            ]
+        },
+        "cap23_entrada_tibia": {
+            text: "Entras tímidamente. La conversación es un poco forzada al principio. Hablan del basquetbol, de las notas... hasta que Mike señala tu invento. <i>'¿De verdad funciona esa cosa?'</i>.",
+            choices: [
+                { text: "Encender la Caja del Bardo", next: "cap23_reunion" }
+            ]
+        },
+        "cap23_entrada_exito": {
+            text: "Entras pateando la puerta y conectando la Caja del Bardo al amplificador viejo de Mike. <i>'¡Prepárense para que sus cerebros exploten con la ciencia de Indianápolis!'</i>, gritas. Lucas y Mike se ríen, y por un segundo, vuelven a tener doce años.",
+            choices: [
+                { text: "Hacer una demostración", next: "cap23_reunion" }
+            ]
+        },
+        "cap23_reunion": {
+            text: "Les muestras las grabaciones de la banda de Eddie y les cuentas sobre el sabotaje, el pato Frodo y los chicos de Eastwood. Ellos escuchan hipnotizados. Te das cuenta de que, aunque ellos hayan cambiado, tu lugar en el grupo sigue siendo el de 'el tipo que trae la aventura'.",
+            item: "Pizza fría de Hawkins",
+            choices: [
+                { text: "Disfrutar del momento (Ir al Cap. 24)", next: "cap24_inicio" }
+            ]
+        },
+
+        // --- CAPÍTULO 24 ---
+        "cap24_inicio": {
+            text: "Capítulo 24. Miércoles 11 de Diciembre de 1985.<br><br>La paz dura poco. Mike confiesa que se siente culpable por haberte dejado solo. Lucas admite que el basquetbol es divertido, pero que extraña las noches de juegos. <br><br>De repente, tu madre baja al sótano con una carta certificada. Es de la Academia Eastwood. Es el contrato formal de la beca. Mike y Lucas se quedan callados al ver el membrete oficial. <i>'¿Te vas a ir, Dustin?'</i>, pregunta Mike con un hilo de voz.",
+            choices: [
+                { text: "Decirles la verdad sobre la beca (Tirada Sinceridad: 5+)", rollTarget: 5, next: "cap24_verdad_exito", failNext: "cap24_verdad_fallo" }
+            ]
+        },
+        "cap24_verdad_fallo": {
+            text: "Intentas restarle importancia, pero ellos ven que estás dudando. La tensión vuelve a llenar la habitación. <i>'Si quieres ser un chico rico de ciudad, adelante'</i>, dice Lucas herido. El estrés sube al máximo.",
+            choices: [
+                { text: "Calmar los ánimos", next: "cap24_final" }
+            ]
+        },
+        "cap24_verdad_exito": {
+            text: "Les explicas que te ofrecieron todo lo que siempre quisiste: laboratorios, dinero, prestigio. <i>'Pero en Eastwood todos son como Brian'</i>, dices. <i>'Son genios, pero no tienen amigos que se enfrenten a un Demogorgon por ellos'</i>. Mike sonríe y Lucas suelta un suspiro de alivio.",
+            choices: [
+                { text: "Confirmar que te quedas en Hawkins", next: "cap24_final" }
+            ]
+        },
+        "cap24_final": {
+            text: "Deciden que la Caja del Bardo no puede quedarse solo como un proyecto de feria. ¡La usarán para mejorar sus radios de largo alcance y para poner música en las sesiones del Club Fuego Infernal! La Hermandad está, por ahora, a salvo. <br><br>Pero antes de terminar la noche, recibes una interferencia extraña en la Caja del Bardo... una frecuencia que no debería existir en Hawkins.",
+            item: "Contrato de Eastwood (Roto)",
+            choices: [
+                { text: "CAPÍTULOS 22, 23 y 24 COMPLETADOS (Ir al final definitivo)", next: "cap25_inicio" }
+            ]
+        },
+        "cap25_inicio": {
+            text: "¡PREPÁRATE PARA EL EPÍLOGO!<br><br>Capítulo 25: El destino de la Caja del Bardo y la última lección de Eddie Munson.",
+            choices: [
+                { text: "Ir al Capítulo Final", next: "title" }
+            ]
+        },
+
+// --- CAPÍTULO 25: EL EPÍLOGO ---
+        "cap25_inicio": {
+            text: "Capítulo 25. Domingo 15 de Diciembre de 1985.<br><br>La Feria de Ciencias es ahora un recuerdo guardado en una caja, pero las lecciones se quedan contigo. Estás en el garaje de Eddie terminando de ajustar la 'Caja del Bardo'. No la vas a vender, ni la vas a usar para entrar en Eastwood. La has modificado para que sea el amplificador definitivo del Club Fuego Infernal y una radio de emergencia ultra potente para la Hermandad.<br><br>Eddie entra con una caja de casetes nuevos. <i>'Henderson, he oído que rechazaste a los estirados de la ciudad. Una decisión valiente... o muy estúpida'</i>, dice riendo. <i>'Pero este pueblo necesita a su bardo. Y el Club necesita a su mago'</i>.",
+            choices: [
+                { text: "Hacer una última tirada de dados para sellar el destino (Tirada Final: 3+)", rollTarget: 3, next: "final_bueno", failNext: "final_agridulce" }
+            ]
+        },
+        "final_agridulce": {
+            text: "La tirada no es perfecta, pero la vida tampoco lo es. Has perdido algo de esa inocencia infantil y sabes que la preparatoria seguirá siendo difícil. Pero mientras guardas tus herramientas, Lucas y Mike aparecen en sus bicicletas gritando tu nombre. <br><br><b>FINAL ALCANZADO: VICTORIA HUMILDE.</b><br>No ganaste el primer premio, pero recuperaste a tus amigos. Hawkins sigue siendo tu hogar, con todos sus peligros y sus maravillas.",
+            choices: [{ text: "CRÉDITOS Y MENÚ PRINCIPAL", next: "title" }]
+        },
+        "final_bueno": {
+            text: "¡ÉXITO TOTAL! La 'Caja del Bardo' emite una señal limpia y poderosa. Has logrado el equilibrio perfecto entre tu intelecto y tu lealtad. Eddie te entrega un parche oficial del Club Fuego Infernal: <i>'Te lo has ganado, bardo'</i>. <br><br>Esa noche, todos se reúnen en el sótano de Mike. La radio capta una canción de Suzie desde Utah y todos cantan juntos. Te das cuenta de que el 'Experimento de Dustin' fue un éxito: demostraste que ser un nerd es genial, pero ser un amigo es lo que realmente importa.<br><br><b>FINAL ALCANZADO: HÉROE DE HAWKINS.</b>",
+            item: "Parche Hellfire Club",
+            choices: [{ text: "CRÉDITOS Y MENÚ PRINCIPAL", next: "title" }]
+        }
+    }; // <--- AQUÍ TERMINA EL OBJETO storyNodes
+
+
+</script>
+</body>
+</html>

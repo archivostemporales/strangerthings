@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Hawkins: Stranger Things</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+
+        :root {
+            --st-red: #ff0000;
+            --st-red-glow: rgba(255, 0, 0, 0.7);
+            --st-black: #050505;
+            --st-panel: #1a1a1a;
+            --st-text: #e0e0e0;
+        }
+
+        body {
+            background-color: var(--st-black);
+            color: var(--st-text);
+            font-family: 'Courier Prime', monospace;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: var(--st-red);
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            text-shadow: 0 0 15px var(--st-red);
+            margin-bottom: 40px;
+            text-align: center;
+            border-bottom: 2px solid var(--st-red);
+            padding-bottom: 10px;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            max-width: 1100px;
+            width: 100%;
+        }
+
+        .book-card {
+            background: var(--st-panel);
+            border: 2px solid #333;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: 0.3s;
+            text-decoration: none; /* Quita el subrayado del enlace */
+            color: inherit;
+            position: relative;
+        }
+
+        .book-card:hover {
+            border-color: var(--st-red);
+            box-shadow: 0 0 20px var(--st-red-glow);
+            transform: scale(1.02);
+        }
+
+        .book-cover {
+            width: 110px;
+            height: 160px;
+            background: #000;
+            border: 1px solid #444;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .book-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .book-info h2 {
+            font-size: 1.1em;
+            margin: 0 0 15px 0;
+            color: #fff;
+            line-height: 1.2;
+        }
+
+        .read-btn {
+            display: inline-block;
+            background: transparent;
+            color: var(--st-red);
+            border: 1px solid var(--st-red);
+            padding: 6px 20px;
+            font-family: inherit;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .book-card:hover .read-btn {
+            background: var(--st-red);
+            color: #000;
+        }
+
+        .book-number {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            font-size: 0.75em;
+            color: #555;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Archivo de Novelas Hawkins</h1>
+
+    <div class="books-grid">
+        
+        <a href="mentes.html" class="book-card">
+            <span class="book-number">01</span>
+            <div class="book-cover">
+                <img src="imagesst/mentes.webp" alt="Mentes Peligrosas">
+            </div>
+            <div class="book-info">
+                <h2>Mentes Peligrosas</h2>
+                <div class="read-btn">Leer</div>
+            </div>
+        </a>
+
+        <a href="ciudad.html" class="book-card">
+            <span class="book-number">02</span>
+            <div class="book-cover">
+                <img src="imagesst/ciudad.webp" alt="A oscuras en la ciudad">
+            </div>
+            <div class="book-info">
+                <h2>A oscuras en la ciudad</h2>
+                <div class="read-btn">Leer</div>
+            </div>
+        </a>
+
+        <a href="max.html" class="book-card">
+            <span class="book-number">03</span>
+            <div class="book-cover">
+                <img src="imagesst/max.jpg" alt="Max, la fugitiva">
+            </div>
+            <div class="book-info">
+                <h2>Max, la fugitiva</h2>
+                <div class="read-btn">Leer</div>
+            </div>
+        </a>
+
+        <a href="dustin.html" class="book-card">
+            <span class="book-number">04</span>
+            <div class="book-cover">
+                <img src="imagesst/dustin.webp" alt="El experimento de Dustin">
+            </div>
+            <div class="book-info">
+                <h2>El experimento de Dustin</h2>
+                <div class="read-btn">Leer</div>
+            </div>
+        </a>
+
+        <a href="robin.html" class="book-card">
+            <span class="book-number">05</span>
+            <div class="book-cover">
+                <img src="imagesst/robin.webp" alt="Robin, la rebelde">
+            </div>
+            <div class="book-info">
+                <h2>Robin, la rebelde</h2>
+                <div class="read-btn">Leer</div>
+            </div>
+        </a>
+
+        <a href="vuelo.html" class="book-card">
+            <span class="book-number">06</span>
+            <div class="book-cover">
+                <img src="imagesst/vuelo.webp" alt="El vuelo de Ícaro">
+            </div>
+            <div class="book-info">
+                <h2>El vuelo de Ícaro</h2>
+                <div class="read-btn">Leer</div>
+            </div>
+        </a>
+
+    </div>
+
+</body>
+</html>
