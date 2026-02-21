@@ -262,6 +262,8 @@
         buttons.forEach(b => b.disabled = true);
         synth.cancel(); // Para la voz al elegir una opción
 
+if (choice.next === "RELOAD") { location.reload(); return; }
+
         if (choice.rollTarget) {
             const roll = Math.floor(Math.random() * 6) + 1;
             const zone = document.getElementById('dice-zone');
@@ -306,7 +308,7 @@
 "title": { 
             text: "<strong>¡GRACIAS POR JUGAR!</strong><br><br>Has terminado 'El Experimento de Dustin'. Si quieres volver a intentarlo para conseguir otro final o descubrir nuevas rutas, haz clic abajo.",
             choices: [
-                { text: "JUGAR DE NUEVO", next: "cap1_inicio" } // Esto inicia un bucle nuevo
+                { text: "JUGAR DE NUEVO", next: "RELOAD" } // Esto inicia un bucle nuevo
             ]
         },
 
