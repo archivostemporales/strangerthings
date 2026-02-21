@@ -111,6 +111,15 @@
             font-size: 1.2em;
         }
 
+#inventory-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    max-height: 100px; /* Evita que crezca demasiado */
+    overflow-y: auto;  /* Añade scroll si hay demasiados objetos */
+}
+
+
         .screen { display: none; }
         .active { display: block; }
     </style>
