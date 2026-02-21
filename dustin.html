@@ -307,7 +307,7 @@
             choices: []
         },
         "cap1_inicio": {
-            text: "Capítulo 1. Viernes 30 de agosto de 1985. <br><br>Estás en la cafetería intentando convencer a Lucas y a Mike de unirse a la feria de ciencias y al Club Fuego Infernal. Lucas duda, dice que no quiere empezar la preparatoria como un empollón. De repente, algo se precipita hacia tu cabeza. ¡Es una pelota de basquetbol perdida!",
+            text: "Capítulo 1. Viernes, 30 de agosto de 1985. <br><br>Estás en la cafetería intentando convencer a Lucas y a Mike de unirse a la feria de ciencias y al Club Fuego Infernal. Lucas duda, dice que no quiere empezar la preparatoria como un empollón. De repente, algo se precipita hacia tu cabeza. ¡Es una pelota de baloncesto perdida!",
             choices: [
                 { text: "Intentar esquivar (Tirada Agilidad: 4+)", rollTarget: 4, next: "cap1_esquiva_exito", failNext: "cap1_golpe" },
                 { text: "No reaccionar a tiempo", next: "cap1_golpe" }
@@ -348,7 +348,7 @@
 
         // --- CAPÍTULO 2 ---
         "cap2_inicio": {
-            text: "Capítulo 2. Martes 3 de septiembre de 1985. <br><br>Frente al tablero de anuncios, buscas tu nuevo destino. De pronto, un grupo de deportistas con chamarras verdes pasa a tu lado y te empuja bruscamente. Caes al suelo y tu gorra vuela por los aires.",
+            text: "Capítulo 2. Martes, 3 de septiembre de 1985. <br><br>Frente al tablero de anuncios, buscas tu nuevo destino. De pronto, un grupo de deportistas con chamarras verdes pasa a tu lado y te empuja bruscamente. Caes al suelo y tu gorra vuela por los aires.",
             choices: [
                 { text: "Soportar el empujón y no decir nada (Tirada Voluntad: 3+)", rollTarget: 3, next: "cap2_tablero", failNext: "cap2_enojo" }
             ]
@@ -393,7 +393,7 @@
 
         // --- CAPÍTULO 3 ---
         "cap3_inicio": {
-            text: "Capítulo 3. Miércoles 4 de septiembre de 1985. <br><br>Por la mañana confrontas a Lucas por unirse al basquetbol. Sientes que los está abandonando. Después de clases, te reúnes con Eddie para revisar su preciado amplificador.",
+            text: "Capítulo 3. Miércoles, 4 de septiembre de 1985. <br><br>Por la mañana confrontas a Lucas por unirse al basquetbol. Sientes que los está abandonando. Después de clases, te reúnes con Eddie para revisar su preciado amplificador.",
             choices: [
                 { text: "Desarmar el amplificador (Tirada Tecnología: 3+)", rollTarget: 3, next: "cap3_amp_exito", failNext: "cap3_amp_fallo" }
             ]
@@ -438,19 +438,13 @@
         "cap3_suzie": {
             text: "Llamas a Suzie por Cerebro. Le cuentas que construirás un superamplificador con funciones de grabación para la feria de ciencias en Indianápolis. La aventura en solitario ha comenzado.",
             choices: [
-                { text: "CAPÍTULOS 2 y 3 COMPLETADOS (Avanzar al Cap. 4)", next: "cap4_inicio" } // Nodo puente para el futuro
-            ]
-        },
-        "cap4_inicio": {
-            text: "Próximamente: Capítulo 4. El proyecto te consume y el Club Fuego Infernal te hace un gran regalo...",
-            choices: [
-                { text: "Volver al Menú", next: "title" }
+                { text: "CAPÍTULO 3 COMPLETADO (Avanzar al Cap. 4)", next: "cap4_inicio" } // Nodo puente para el futuro
             ]
         },
 
 // --- CAPÍTULO 4 ---
         "cap4_inicio": {
-            text: "Capítulo 4. Viernes 6 de septiembre de 1985. <br><br>Estás totalmente absorto en tu proyecto. Eddie te ha prestado un casete de Iron Maiden para que 'eduques tus oídos'. En tu habitación, rodeado de cables y soldadores, decides probar la potencia de los nuevos circuitos que diseñaste con Suzie.",
+            text: "Capítulo 4. Viernes, 6 de septiembre de 1985. <br><br>Estás totalmente absorto en tu proyecto. Eddie te ha prestado un casete de Iron Maiden para que 'eduques tus oídos'. En tu habitación, rodeado de cables y soldadores, decides probar la potencia de los nuevos circuitos que diseñaste con Suzie.",
             choices: [
                 { text: "Poner el casete a todo volumen (Tirada Audacia: 4+)", rollTarget: 4, next: "cap4_rock_exito", failNext: "cap4_susto_mama" }
             ]
@@ -477,7 +471,7 @@
 
         // --- CAPÍTULO 5 ---
         "cap5_inicio": {
-            text: "Capítulo 5. Sábado 28 de septiembre de 1985. <br><br>Llevas semanas perfeccionando la Caja del Bardo. Hoy decides forzar el transformador para ver hasta dónde llega. De repente, escuchas un zumbido eléctrico creciente. ¡Algo no va bien!",
+            text: "Capítulo 5. Sábado, 28 de septiembre de 1985. <br><br>Llevas semanas perfeccionando la Caja del Bardo. Hoy decides forzar el transformador para ver hasta dónde llega. De repente, escuchas un zumbido eléctrico creciente. ¡Algo no va bien!",
             choices: [
                 { text: "Intentar estabilizar el voltaje (Tirada Tecnología: 5+)", rollTarget: 5, next: "cap5_estabilizar_exito", failNext: "cap5_apagon" }
             ]
@@ -510,7 +504,7 @@
 
 // --- CAPÍTULO 6 ---
         "cap6_inicio": {
-            text: "Capítulo 6. Martes 8 de octubre de 1985. <br><br>Intentas hablar con Mike sobre circuitos y frecuencias en los pasillos de la escuela, pero él parece estar mirando al vacío de su casillero como si fuera un agujero negro. No ha escuchado ni una palabra. Sientes que la 'Hermandad' se desmorona mientras tú eres el único que sigue entusiasmado por la ciencia.",
+            text: "Capítulo 6. Martes, 8 de octubre de 1985. <br><br>Intentas hablar con Mike sobre circuitos y frecuencias en los pasillos de la escuela, pero él parece estar mirando al vacío de su casillero como si fuera un agujero negro. No ha escuchado ni una palabra. Sientes que la 'Hermandad' se desmorona mientras tú eres el único que sigue entusiasmado por la ciencia.",
             choices: [
                 { text: "Chasquear los dedos frente a Mike (Tirada Carisma: 3+)", rollTarget: 3, next: "cap6_atencion_exito", failNext: "cap6_ignorado" }
             ]
@@ -536,7 +530,7 @@
 
         // --- CAPÍTULO 7 ---
         "cap7_inicio": {
-            text: "Capítulo 7. Viernes 11 de octubre de 1985. <br><br>Entras en Family Video hecho una furia. '¡Lucas se ha vuelto loco!', gritas. Una clienta se asusta tanto que derriba un cartel de cartón de 'El Planeta de los Simios'. Steve corre a arreglarlo mientras Robin te mira divertida tras el mostrador.",
+            text: "Capítulo 7. Viernes, 11 de octubre de 1985. <br><br>Entras en Family Video hecho una furia. '¡Lucas se ha vuelto loco!', gritas. Una clienta se asusta tanto que derriba un cartel de cartón de 'El Planeta de los Simios'. Steve corre a arreglarlo mientras Robin te mira divertida tras el mostrador.",
             choices: [
                 { text: "Pedir disculpas a la clienta", next: "cap7_mostrador" },
                 { text: "Ir directo al grano con Robin", next: "cap7_mostrador" }
@@ -571,7 +565,7 @@
 
 // --- CAPÍTULO 8 ---
         "cap8_inicio": {
-            text: "Capítulo 8. Jueves 31 de octubre de 1985 (Halloween). <br><br>Es la noche de Halloween y, por primera vez en años, estás solo. Eres demasiado grande para pedir dulces, pero no lo suficientemente 'popular' para las fiestas. Decides quedarte en tu habitación comiendo dulces y escribiéndole una carta a Will. Sientes un vacío enorme al no tener a la Hermandad unida.",
+            text: "Capítulo 8. Jueves, 31 de octubre de 1985 (Halloween). <br><br>Es la noche de Halloween y, por primera vez en años, estás solo. Eres demasiado grande para pedir dulces, pero no lo suficientemente 'popular' para las fiestas. Decides quedarte en tu habitación comiendo dulces y escribiéndole una carta a Will. Sientes un vacío enorme al no tener a la Hermandad unida.",
             choices: [
                 { text: "Enfocarte en la carta para Will (Tirada Carisma: 3+)", rollTarget: 3, next: "cap8_carta_exito", failNext: "cap8_tristeza" }
             ]
@@ -598,7 +592,7 @@
 
         // --- CAPÍTULO 9 ---
         "cap9_inicio": {
-            text: "Capítulo 9. Lunes 11 de noviembre de 1985. <br><br>Sientes que el mundo se acaba. Tu madre te mira con lástima desde la cocina mientras alimenta a Tews. Estás frustrado porque necesitas probar la Caja del Bardo con instrumentos reales, no solo ruidos electrónicos. Se te ocurre una idea: ¿Y si pides ayuda a la banda de Eddie?",
+            text: "Capítulo 9. Lunes, 11 de noviembre de 1985. <br><br>Sientes que el mundo se acaba. Tu madre te mira con lástima desde la cocina mientras alimenta a Tews. Estás frustrado porque necesitas probar la Caja del Bardo con instrumentos reales, no solo ruidos electrónicos. Se te ocurre una idea: ¿Y si pides ayuda a la banda de Eddie?",
             choices: [
                 { text: "Visitar el ensayo de 'Ataúd Oxidado' (Tirada Audacia: 4+)", rollTarget: 4, next: "cap9_ensayo_exito", failNext: "cap9_ensayo_timido" }
             ]
@@ -622,16 +616,10 @@
                 { text: "CAPÍTULO 9 COMPLETADO (Avanzar al Cap. 10)", next: "cap10_inicio" }
             ]
         },
-        "cap10_inicio": {
-            text: "Próximamente: Capítulo 10. La reconciliación con los amigos y el viaje a Indianápolis se acercan...",
-            choices: [
-                { text: "Volver al Menú", next: "title" }
-            ]
-        },
 
 // --- CAPÍTULO 10 ---
         "cap10_inicio": {
-            text: "Capítulo 10. Miércoles 13 de noviembre de 1985. <br><br>La tensión en la Hermandad ha llegado a un punto crítico. Robin, actuando como una especie de 'maestra de ceremonias' de la madurez, ha organizado una reunión en el Family Video. Mike y Lucas están allí, pero el aire se siente tan pesado como si un Demogorgon estuviera a punto de cruzar la pared. <br><br>Robin saca un bote de helado vacío y anuncia su plan: <i>'Nadie se va de aquí hasta que todos escriban sus quejas en un papel y las discutamos como adultos... o como lo que sea que sean ustedes'</i>.",
+            text: "Capítulo 10. Miércoles, 13 de noviembre de 1985. <br><br>La tensión en la Hermandad ha llegado a un punto crítico. Robin, actuando como una especie de 'maestra de ceremonias' de la madurez, ha organizado una reunión en el Family Video. Mike y Lucas están allí, pero el aire se siente tan pesado como si un Demogorgon estuviera a punto de cruzar la pared. <br><br>Robin saca un bote de helado vacío y anuncia su plan: <i>'Nadie se va de aquí hasta que todos escriban sus quejas en un papel y las discutamos como adultos... o como lo que sea que sean ustedes'</i>.",
             choices: [
                 { text: "Escribir con honestidad sobre cómo te sientes (Tirada Carisma: 4+)", rollTarget: 4, next: "cap10_reconciliacion_exito", failNext: "cap10_discusion_cliches" },
                 { text: "Ser sarcástico y evitar el drama", next: "cap10_sarcasmo" }
@@ -659,7 +647,7 @@
 
         // --- CAPÍTULO 11 ---
         "cap11_inicio": {
-            text: "Capítulo 11. Sábado 16 de noviembre de 1985. <br><br>Con la mente más despejada, te enfocas en el problema técnico de la Caja del Bardo: las frecuencias altas se distorsionan. Vas al garaje donde ensaya 'Ataúd Oxidado'. Eddie Munson está allí, cambiando una cuerda de su guitarra. <br><br><i>'Dusty, mi pequeño genio'</i>, te saluda Eddie, <i>'¿vienes por más castigo auditivo o necesitas el secreto del metal?'</i>. Le explicas que tu amplificador no soporta los agudos limpios.",
+            text: "Capítulo 11. Sábado, 16 de noviembre de 1985. <br><br>Con la mente más despejada, te enfocas en el problema técnico de la Caja del Bardo: las frecuencias altas se distorsionan. Vas al garaje donde ensaya 'Ataúd Oxidado'. Eddie Munson está allí, cambiando una cuerda de su guitarra. <br><br><i>'Dusty, mi pequeño genio'</i>, te saluda Eddie, <i>'¿vienes por más castigo auditivo o necesitas el secreto del metal?'</i>. Le explicas que tu amplificador no soporta los agudos limpios.",
             choices: [
                 { text: "Pedirle a Eddie una demostración de 'Crazy Train'", next: "cap11_ozzy" }
             ]
@@ -686,19 +674,13 @@
             text: "La Caja del Bardo está lista. Eddie te mira con respeto genuino. <i>'Sabes, la mayoría de la gente aquí piensa que soy un bicho raro, pero tú... tú eres un bicho raro con un propósito. No dejes que esos idiotas de la feria de Indianápolis te digan lo contrario'</i>. Te sientes invencible.",
             item: "Circuito Mejorado",
             choices: [
-                { text: "CAPÍTULOS 10 y 11 COMPLETADOS (Ir al Cap. 12)", next: "cap12_inicio" }
-            ]
-        },
-        "cap12_inicio": {
-            text: "Próximamente: Capítulo 12. El viaje a Indianápolis comienza y los nervios de la competencia real aparecen...",
-            choices: [
-                { text: "Volver al Menú", next: "title" }
+                { text: "CAPÍTULO 11 COMPLETADO (Ir al Cap. 12)", next: "cap12_inicio" }
             ]
         },
 
 // --- CAPÍTULO 12 ---
         "cap12_inicio": {
-            text: "Capítulo 12. Martes 3 de diciembre de 1985. <br><br>Es el gran día. Estás en la estación de autobuses de Hawkins con tu pesada maleta y, lo más importante, la 'Caja del Bardo' protegida con capas de plástico de burbujas. Mike te acompaña para despedirte, pero Lucas no ha podido ir por su entrenamiento de basquetbol. 'Prometo que estaré allí para las finales', te dijo por radio anoche, pero el vacío se siente real. <br><br>Mientras esperas el autobús a Indianápolis, el señor Clarke se acerca para darte un último consejo: <i>'Recuerda, Dustin, la curiosidad es la madre de la invención, pero la claridad es la madre de la presentación'</i>. Te entrega un sobre con contactos de profesores en la ciudad por si algo falla.",
+            text: "Capítulo 12. Martes, 3 de diciembre de 1985. <br><br>Es el gran día. Estás en la estación de autobuses de Hawkins con tu pesada maleta y, lo más importante, la 'Caja del Bardo' protegida con capas de plástico de burbujas. Mike te acompaña para despedirte, pero Lucas no ha podido ir por su entrenamiento de basquetbol. 'Prometo que estaré allí para las finales', te dijo por radio anoche, pero el vacío se siente real. <br><br>Mientras esperas el autobús a Indianápolis, el señor Clarke se acerca para darte un último consejo: <i>'Recuerda, Dustin, la curiosidad es la madre de la invención, pero la claridad es la madre de la presentación'</i>. Te entrega un sobre con contactos de profesores en la ciudad por si algo falla.",
             choices: [
                 { text: "Repasar mentalmente tu discurso (Tirada Tecnología: 3+)", rollTarget: 3, next: "cap12_discurso_exito", failNext: "cap12_nervios" },
                 { text: "Hablar con Mike sobre la Hermandad", next: "cap12_despedida_mike" }
@@ -732,7 +714,7 @@
 
         // --- CAPÍTULO 13 ---
         "cap13_inicio": {
-            text: "Capítulo 13. Miércoles 4 de diciembre de 1985. <br><br>Indianápolis es enorme, ruidosa y llena de edificios que parecen tocar el cielo. Llegas al Centro de Exposiciones y te sientes diminuto. En la mesa de inscripción, una mujer te mira con recelo cuando ve a Eddie Munson, quien ha aparecido de sorpresa para apoyarte (y quizás para huir un poco de Hawkins). <br><br><i>'¿Este es el señor Henderson padre?'</i>, pregunta ella con duda. Eddie saluda con una sonrisa traviesa: <i>'Nop, solo el apoyo logístico y el experto en distorsión armónica'</i>.",
+            text: "Capítulo 13. Miércoles, 4 de diciembre de 1985. <br><br>Indianápolis es enorme, ruidosa y llena de edificios que parecen tocar el cielo. Llegas al Centro de Exposiciones y te sientes diminuto. En la mesa de inscripción, una mujer te mira con recelo cuando ve a Eddie Munson, quien ha aparecido de sorpresa para apoyarte (y quizás para huir un poco de Hawkins). <br><br><i>'¿Este es el señor Henderson padre?'</i>, pregunta ella con duda. Eddie saluda con una sonrisa traviesa: <i>'Nop, solo el apoyo logístico y el experto en distorsión armónica'</i>.",
             choices: [
                 { text: "Inscribirte y buscar tu puesto (Tirada Carisma: 4+)", rollTarget: 4, next: "cap13_puesto_exito", failNext: "cap13_puesto_caos" }
             ]
@@ -756,16 +738,10 @@
                 { text: "Investigar el sabotaje con Danny (Avanzar al Cap. 14)", next: "cap14_inicio" }
             ]
         },
-        "cap14_inicio": {
-            text: "¡CAPÍTULO 13 COMPLETADO!<br><br>Has llegado a la gran liga. Tienes un aliado con un pato y un misterio que resolver antes de que los jueces lleguen a tu mesa.",
-            choices: [
-                { text: "Continuar la aventura", next: "title" }
-            ]
-        },
 
 // --- CAPÍTULO 14 ---
         "cap14_inicio": {
-            text: "Capítulo 14. Miércoles 4 de diciembre de 1985. <br><br>La FICI es un monstruo de mil cabezas. Cientos de estudiantes de toda la zona triestatal bullen por los pasillos del centro de convenciones, moviendo maquetas que parecen costar más que tu casa. Eddie camina a tu lado, tratando de ignorar las miradas de desaprobación de los padres y profesores hacia su chaleco de parches. <br><br>Mientras intentas calibrar la 'Caja del Bardo', notas una conmoción dos mesas más allá. Una chica llamada Anika está llorando frente a lo que parece ser un montón de cenizas verdes: su proyecto de botánica ha sido calcinado misteriosamente. <i>'Es la maldición de la FICI'</i>, susurra alguien a tus espaldas.",
+            text: "Capítulo 14. Miércoles, 4 de diciembre de 1985. <br><br>La FICI es un monstruo de mil cabezas. Cientos de estudiantes de toda la zona triestatal bullen por los pasillos del centro de convenciones, moviendo maquetas que parecen costar más que tu casa. Eddie camina a tu lado, tratando de ignorar las miradas de desaprobación de los padres y profesores hacia su chaleco de parches. <br><br>Mientras intentas calibrar la 'Caja del Bardo', notas una conmoción dos mesas más allá. Una chica llamada Anika está llorando frente a lo que parece ser un montón de cenizas verdes: su proyecto de botánica ha sido calcinado misteriosamente. <i>'Es la maldición de la FICI'</i>, susurra alguien a tus espaldas.",
             choices: [
                 { text: "Acercarte a consolar a Anika (Tirada Carisma: 3+)", rollTarget: 3, next: "cap14_consuelo_exito", failNext: "cap14_rechazo" },
                 { text: "Analizar los restos de la planta en busca de pistas", next: "cap14_investigacion" }
@@ -793,7 +769,7 @@
 
         // --- CAPÍTULO 15 ---
         "cap15_inicio": {
-            text: "Capítulo 15. Jueves 5 de diciembre de 1985. <br><br>Empiezas el día con una misión doble: preparar tu propia presentación y descubrir quién está saboteando a los competidores. Mientras caminas por la zona de carga para tomar aire, ves algo surrealista: un chico está tratando de ponerle una correa a un pato. El pato lleva una pequeña placa que dice 'Frodo Quackins'. <br><br>El chico se presenta como Danny. <i>'Frodo es un experto en comportamiento aviar... y en encontrar cosas que no debería'</i>, dice Danny mientras el pato picotea un cable suelto en el suelo. Te das cuenta de que Danny es tan 'raro' como tú, y eso te hace sentir instantáneamente como en casa.",
+            text: "Capítulo 15. Jueves, 5 de diciembre de 1985. <br><br>Empiezas el día con una misión doble: preparar tu propia presentación y descubrir quién está saboteando a los competidores. Mientras caminas por la zona de carga para tomar aire, ves algo surrealista: un chico está tratando de ponerle una correa a un pato. El pato lleva una pequeña placa que dice 'Frodo Quackins'. <br><br>El chico se presenta como Danny. <i>'Frodo es un experto en comportamiento aviar... y en encontrar cosas que no debería'</i>, dice Danny mientras el pato picotea un cable suelto en el suelo. Te das cuenta de que Danny es tan 'raro' como tú, y eso te hace sentir instantáneamente como en casa.",
             choices: [
                 { text: "Presentarle la Caja del Bardo a Danny (Tirada Tecnología: 4+)", rollTarget: 4, next: "cap15_demo_exito", failNext: "cap15_demo_fallo" }
             ]
@@ -814,19 +790,13 @@
             text: "Danny te confiesa que él también vio sombras cerca de la mesa de Anika anoche. <i>'Frodo encontró un rastro de fertilizante líquido que lleva directo a la zona de los estudiantes de Eastwood'</i>. Justo en ese momento, las luces de la feria parpadean y un fuerte estruendo proviene del muelle de carga. Alguien está atacando de nuevo.",
             item: "Pluma de Frodo (Amuleto)",
             choices: [
-                { text: "CAPÍTULOS 14 y 15 COMPLETADOS (Avanzar al Cap. 16)", next: "cap16_inicio" }
-            ]
-        },
-        "cap16_inicio": {
-            text: "Próximamente: Capítulo 16. La persecución por los conductos de ventilación y el primer enfrentamiento directo con el saboteador...",
-            choices: [
-                { text: "Volver al Menú", next: "title" }
+                { text: "CAPÍTULO 15 COMPLETADO (Avanzar al Cap. 16)", next: "cap16_inicio" }
             ]
         },
 
 // --- CAPÍTULO 16 ---
         "cap16_inicio": {
-            text: "Capítulo 16. Jueves 5 de diciembre de 1985. <br><br>La Feria Internacional de Ciencias e Ingeniería (FICI) se ha convertido en una escena del crimen. El sabotaje del proyecto de Anika no fue un accidente aislado. Mientras recorres los pasillos, notas que otros proyectos de biología y química también presentan fallas extrañas. Danny, tu nuevo amigo del pato 'Frodo Quackins', te señala algo inquietante: <i>'Mira las cámaras de seguridad del techo, Dustin. Están cubiertas con cinta negra en esta sección'</i>. <br><br>Eddie Munson, que se ha tomado muy en serio su papel de 'guardaespaldas', sugiere que el saboteador debe ser alguien con acceso a las llaves maestras o alguien muy escurridizo.",
+            text: "Capítulo 16. Jueves, 5 de diciembre de 1985. <br><br>La Feria Internacional de Ciencias e Ingeniería (FICI) se ha convertido en una escena del crimen. El sabotaje del proyecto de Anika no fue un accidente aislado. Mientras recorres los pasillos, notas que otros proyectos de biología y química también presentan fallas extrañas. Danny, tu nuevo amigo del pato 'Frodo Quackins', te señala algo inquietante: <i>'Mira las cámaras de seguridad del techo, Dustin. Están cubiertas con cinta negra en esta sección'</i>. <br><br>Eddie Munson, que se ha tomado muy en serio su papel de 'guardaespaldas', sugiere que el saboteador debe ser alguien con acceso a las llaves maestras o alguien muy escurridizo.",
             choices: [
                 { text: "Infiltrarse en la sala de seguridad (Tirada Audacia: 5+)", rollTarget: 5, next: "cap16_seguridad_exito", failNext: "cap16_pillados" },
                 { text: "Entrevistar a otros competidores afectados", next: "cap16_entrevistas" }
@@ -854,7 +824,7 @@
 
         // --- CAPÍTULO 17 ---
         "cap17_inicio": {
-            text: "Capítulo 17. Viernes 6 de diciembre de 1985. <br><br>Falta solo un día para la gran evaluación final. Danny te lleva a un rincón apartado. <i>'Frodo encontró esto cerca de la ventilación'</i>, dice, mostrando un pequeño frasco de un químico acelerador de combustión. Es el mismo que usaron para quemar la planta de Anika. <br><br>Deciden que la única forma de atrapar al saboteador es tenderle una trampa nocturna. Vas a usar la 'Caja del Bardo' como cebo, programándola para que emita una alarma de alta frecuencia si alguien toca tu mesa.",
+            text: "Capítulo 17. Viernes, 6 de diciembre de 1985. <br><br>Falta solo un día para la gran evaluación final. Danny te lleva a un rincón apartado. <i>'Frodo encontró esto cerca de la ventilación'</i>, dice, mostrando un pequeño frasco de un químico acelerador de combustión. Es el mismo que usaron para quemar la planta de Anika. <br><br>Deciden que la única forma de atrapar al saboteador es tenderle una trampa nocturna. Vas a usar la 'Caja del Bardo' como cebo, programándola para que emita una alarma de alta frecuencia si alguien toca tu mesa.",
             choices: [
                 { text: "Programar la alarma de proximidad (Tirada Tecnología: 4+)", rollTarget: 4, next: "cap17_trampa_exito", failNext: "cap17_trampa_fallo" }
             ]
@@ -884,16 +854,10 @@
                 { text: "CAPÍTULO 17 COMPLETADO (Ir al Cap. 18)", next: "cap18_inicio" }
             ]
         },
-        "cap18_inicio": {
-            text: "Próximamente: Capítulo 18. El interrogatorio al saboteador y la impactante revelación de quién está realmente detrás de todo el plan en la FICI...",
-            choices: [
-                { text: "Volver al Menú", next: "title" }
-            ]
-        },
 
 // --- CAPÍTULO 18 ---
         "cap18_inicio": {
-            text: "Capítulo 18. Sábado 7 de diciembre de 1985. <br><br>El día de la evaluación final ha llegado y el aire en el centro de convenciones está cargado de una 'espesa capa de ansiedad'. Los jueces avanzan lentamente, fila por fila, mientras tú y Danny observan con horror cómo el saboteador ha vuelto a actuar: otros proyectos han fallado misteriosamente justo antes de ser evaluados. <br><br>No puedes quedarte de brazos cruzados. Con la ayuda de Eddie, que mantiene a raya a los guardias con sus historias, decides que es hora de pasar a la ofensiva. <i>'Necesito que Frodo genere algo de caos'</i>, le susurras a Danny, señalando la jaula del pato.",
+            text: "Capítulo 18. Sábado, 7 de diciembre de 1985. <br><br>El día de la evaluación final ha llegado y el aire en el centro de convenciones está cargado de una 'espesa capa de ansiedad'. Los jueces avanzan lentamente, fila por fila, mientras tú y Danny observan con horror cómo el saboteador ha vuelto a actuar: otros proyectos han fallado misteriosamente justo antes de ser evaluados. <br><br>No puedes quedarte de brazos cruzados. Con la ayuda de Eddie, que mantiene a raya a los guardias con sus historias, decides que es hora de pasar a la ofensiva. <i>'Necesito que Frodo genere algo de caos'</i>, le susurras a Danny, señalando la jaula del pato.",
             choices: [
                 { text: "Liberar a 'Frodo Quackins' para distraer a los jueces (Tirada Audacia: 4+)", rollTarget: 4, next: "cap18_caos_pato", failNext: "cap18_pato_timido" },
                 { text: "Intentar una reparación de emergencia en el proyecto de Anika", next: "cap18_reparacion" }
@@ -921,7 +885,7 @@
 
         // --- CAPÍTULO 19 ---
         "cap19_inicio": {
-            text: "Capítulo 19. Sábado 7 de diciembre de 1985 (Tarde). <br><br>Los jueces llegan a tu mesa. El corazón te late tan fuerte que temes que rompa tus costillas. Has pasado tanto tiempo salvando los proyectos de los demás que apenas has ensayado tu propia presentación. Miras la 'Caja del Bardo' y ves a Brian, tu rival de Eastwood, observándote con una sonrisa burlona, esperando que falles. <br><br><i>'Señor Henderson, el tiempo corre'</i>, dice uno de los jueces con un portapapeles. Es el momento de la verdad.",
+            text: "Capítulo 19. Sábado, 7 de diciembre de 1985 (Tarde). <br><br>Los jueces llegan a tu mesa. El corazón te late tan fuerte que temes que rompa tus costillas. Has pasado tanto tiempo salvando los proyectos de los demás que apenas has ensayado tu propia presentación. Miras la 'Caja del Bardo' y ves a Brian, tu rival de Eastwood, observándote con una sonrisa burlona, esperando que falles. <br><br><i>'Señor Henderson, el tiempo corre'</i>, dice uno de los jueces con un portapapeles. Es el momento de la verdad.",
             choices: [
                 { text: "Hacer una demostración técnica impecable (Tirada Tecnología: 5+)", rollTarget: 5, next: "cap19_exito_tecnico", failNext: "cap19_improvisacion" }
             ]
@@ -942,19 +906,13 @@
             text: "El sonido de 'Crazy Train' llena la sala. Los jueces están atónitos, pero no pueden evitar sonreír ante tu entusiasmo. Eddie aplaude de forma 'atronadora' desde la multitud. Al terminar, Brian se acerca furioso, pero tú ya sabes la verdad: <i>'Sabemos lo que hiciste con Richard, Brian'</i>, le dices con calma. Has ganado, y no solo la competencia, sino el respeto de verdaderos amigos.",
             item: "Respeto de la FICI",
             choices: [
-                { text: "CAPÍTULOS 18 y 19 COMPLETADOS (Ir al Cap. 20)", next: "cap20_inicio" }
-            ]
-        },
-        "cap20_inicio": {
-            text: "Próximamente: Capítulo 20. El veredicto final, la inesperada oferta de una beca y la decisión que cambiará el futuro de Dustin en Hawkins...",
-            choices: [
-                { text: "Volver al Menú", next: "title" }
+                { text: "CAPÍTULO 19 COMPLETADO (Ir al Cap. 20)", next: "cap20_inicio" }
             ]
         },
 
 // --- CAPÍTULO 20 ---
         "cap20_inicio": {
-            text: "Capítulo 20. Sábado 7 de diciembre de 1985 (Noche). <br><br>El gran salón de la FICI está en silencio absoluto mientras el Dr. Aristhorp, el juez principal, sube al estrado. Richard Rasch ha sido escoltado fuera por la seguridad tras tu denuncia, pero Brian sigue allí, lanzándote miradas de puro odio. <br><br><i>'Este año'</i>, comienza el Dr. Aristhorp, <i>'hemos visto una innovación sin precedentes, pero también comportamientos que no tienen lugar en la ciencia'</i>. Tus manos sudan. Sientes el peso del sobre en tu bolsillo, el que te dio el profesor Clarke. El juez anuncia los premios de categoría y, finalmente, llega al Gran Premio a la Innovación.",
+            text: "Capítulo 20. Sábado, 7 de diciembre de 1985 (Noche). <br><br>El gran salón de la FICI está en silencio absoluto mientras el Dr. Aristhorp, el juez principal, sube al estrado. Richard Rasch ha sido escoltado fuera por la seguridad tras tu denuncia, pero Brian sigue allí, lanzándote miradas de puro odio. <br><br><i>'Este año'</i>, comienza el Dr. Aristhorp, <i>'hemos visto una innovación sin precedentes, pero también comportamientos que no tienen lugar en la ciencia'</i>. Tus manos sudan. Sientes el peso del sobre en tu bolsillo, el que te dio el profesor Clarke. El juez anuncia los premios de categoría y, finalmente, llega al Gran Premio a la Innovación.",
             choices: [
                 { text: "Cruzar los dedos y esperar el nombre (Tirada Suerte: 4+)", rollTarget: 4, next: "cap20_ganador", failNext: "cap20_mencion" }
             ]
@@ -976,7 +934,7 @@
 
         // --- CAPÍTULO 21 ---
         "cap21_inicio": {
-            text: "Capítulo 21. Domingo 8 de diciembre de 1985. <br><br>Estás sentado en un restaurante de carretera con Eddie, Danny y el pato Frodo Quackins antes de volver a Hawkins. La oferta de la beca quema en tu bolsillo. Danny está emocionado por ti: <i>'¡Es Eastwood, Dustin! Es el lugar donde los empollones se vuelven reyes'</i>. <br><br>Pero miras a Eddie. Él está extrañamente callado, jugueteando con sus anillos. <i>'Es una oportunidad de oro, Dusty'</i>, dice Eddie con voz ronca. <i>'Si te quedas en Hawkins, solo serás el bicho raro del club de ciencias. Allí serás alguien'</i>. Sientes un nudo en la garganta al pensar en dejar a tu madre, a Steve, a la Hermandad... y al Club Fuego Infernal.",
+            text: "Capítulo 21. Domingo, 8 de diciembre de 1985. <br><br>Estás sentado en un restaurante de carretera con Eddie, Danny y el pato Frodo Quackins antes de volver a Hawkins. La oferta de la beca quema en tu bolsillo. Danny está emocionado por ti: <i>'¡Es Eastwood, Dustin! Es el lugar donde los empollones se vuelven reyes'</i>. <br><br>Pero miras a Eddie. Él está extrañamente callado, jugueteando con sus anillos. <i>'Es una oportunidad de oro, Dusty'</i>, dice Eddie con voz ronca. <i>'Si te quedas en Hawkins, solo serás el bicho raro del club de ciencias. Allí serás alguien'</i>. Sientes un nudo en la garganta al pensar en dejar a tu madre, a Steve, a la Hermandad... y al Club Fuego Infernal.",
             choices: [
                 { text: "Preguntar a Eddie qué haría él (Tirada Vínculo: 3+)", rollTarget: 3, next: "cap21_consejo_eddie", failNext: "cap21_duda" },
                 { text: "Llamar a Suzie para pedir consejo", next: "cap21_suzie" }
@@ -1011,25 +969,19 @@
             text: "Rompes el papel en mil pedazos y los dejas caer por la ventana del autobús. Eddie suelta una carcajada y te revuelve el pelo. <i>'¡Ese es mi chico! ¡Larga vida al Club Fuego Infernal!'</i>. Te sientes ligero, como si te hubieras quitado una armadura de plomo.",
             item: "Confianza Recuperada",
             choices: [
-                { text: "CAPÍTULOS 20 y 21 COMPLETADOS (Ir al final)", next: "cap22_inicio" }
+                { text: "CAPÍTULO 21 COMPLETADO (Ir al final)", next: "cap22_inicio" }
             ]
         },
         "cap21_duda_final": {
             text: "Guardas el folleto en tu mochila. No estás listo para decir que no, pero tampoco para decir que sí. El viaje de vuelta a Hawkins es silencioso. Sabes que, ganes o pierdas, nada volverá a ser igual.",
             choices: [
-                { text: "CAPÍTULOS 20 y 21 COMPLETADOS (Ir al final)", next: "cap22_inicio" }
-            ]
-        },
-        "cap22_inicio": {
-            text: "Próximamente: Capítulo 22. El regreso a Hawkins, el reencuentro con Lucas y Mike, y el destino final de la Caja del Bardo.",
-            choices: [
-                { text: "Volver al Menú", next: "title" }
+                { text: "CAPÍTULO 21 COMPLETADO (Ir al final)", next: "cap22_inicio" }
             ]
         },
 
 // --- CAPÍTULO 22 ---
         "cap22_inicio": {
-            text: "Capítulo 22. Lunes 9 de diciembre de 1985. <br><br>El autobús te deja en Hawkins y el aire se siente diferente. Traes contigo un trofeo (o una mención), pero nadie te espera en la estación, salvo tu madre que te recibe con un abrazo asfixiante y una lasaña casera. <br><br>Al día siguiente en la escuela, caminas por los pasillos esperando que alguien te pregunte por Indianápolis. Pero la vida en Hawkins ha seguido sin ti: Lucas está celebrando una victoria del equipo de basquetbol y Mike está encerrado en la biblioteca estudiando para un examen que olvidaste por completo. Te sientes como un fantasma que regresa a una casa que ya no le pertenece.",
+            text: "Capítulo 22. Lunes, 9 de diciembre de 1985. <br><br>El autobús te deja en Hawkins y el aire se siente diferente. Traes contigo un trofeo (o una mención), pero nadie te espera en la estación, salvo tu madre que te recibe con un abrazo asfixiante y una lasaña casera. <br><br>Al día siguiente en la escuela, caminas por los pasillos esperando que alguien te pregunte por Indianápolis. Pero la vida en Hawkins ha seguido sin ti: Lucas está celebrando una victoria del equipo de basquetbol y Mike está encerrado en la biblioteca estudiando para un examen que olvidaste por completo. Te sientes como un fantasma que regresa a una casa que ya no le pertenece.",
             choices: [
                 { text: "Presumir tu trofeo en el Club de Ciencias (Tirada Carisma: 3+)", rollTarget: 3, next: "cap22_presumir_exito", failNext: "cap22_vacio" },
                 { text: "Buscar a Steve en el Family Video para desahogarte", next: "cap22_steve" }
@@ -1057,7 +1009,7 @@
 
         // --- CAPÍTULO 23 ---
         "cap23_inicio": {
-            text: "Capítulo 23. Martes 10 de diciembre de 1985. <br><br>Recibes una llamada por radio. Es Lucas. Su voz suena extraña, una mezcla de culpa y orgullo. <i>'Escucha, Henderson... ganamos el partido, pero no fue lo mismo sin tus gritos molestos desde la grada. Mike y yo estamos en su sótano. Trae esa caja ruidosa'</i>. <br><br>Llegas al sótano de los Wheeler. Es como entrar en una cápsula del tiempo. El tablero de D&D está cubierto de polvo, pero ellos están allí, esperándote con una caja de pizza fría.",
+            text: "Capítulo 23. Martes, 10 de diciembre de 1985. <br><br>Recibes una llamada por radio. Es Lucas. Su voz suena extraña, una mezcla de culpa y orgullo. <i>'Escucha, Henderson... ganamos el partido, pero no fue lo mismo sin tus gritos molestos desde la grada. Mike y yo estamos en su sótano. Trae esa caja ruidosa'</i>. <br><br>Llegas al sótano de los Wheeler. Es como entrar en una cápsula del tiempo. El tablero de D&D está cubierto de polvo, pero ellos están allí, esperándote con una caja de pizza fría.",
             choices: [
                 { text: "Hacer una entrada dramática con la Caja del Bardo (Tirada Audacia: 4+)", rollTarget: 4, next: "cap23_entrada_exito", failNext: "cap23_entrada_tibia" }
             ]
@@ -1084,7 +1036,7 @@
 
         // --- CAPÍTULO 24 ---
         "cap24_inicio": {
-            text: "Capítulo 24. Miércoles 11 de diciembre de 1985. <br><br>La paz dura poco. Mike confiesa que se siente culpable por haberte dejado solo. Lucas admite que el basquetbol es divertido, pero que extraña las noches de juegos. <br><br>De repente, tu madre baja al sótano con una carta certificada. Es de la Academia Eastwood. Es el contrato formal de la beca. Mike y Lucas se quedan callados al ver el membrete oficial. <i>'¿Te vas a ir, Dustin?'</i>, pregunta Mike con un hilo de voz.",
+            text: "Capítulo 24. Miércoles, 11 de diciembre de 1985. <br><br>La paz dura poco. Mike confiesa que se siente culpable por haberte dejado solo. Lucas admite que el basquetbol es divertido, pero que extraña las noches de juegos. <br><br>De repente, tu madre baja al sótano con una carta certificada. Es de la Academia Eastwood. Es el contrato formal de la beca. Mike y Lucas se quedan callados al ver el membrete oficial. <i>'¿Te vas a ir, Dustin?'</i>, pregunta Mike con un hilo de voz.",
             choices: [
                 { text: "Decirles la verdad sobre la beca (Tirada Sinceridad: 5+)", rollTarget: 5, next: "cap24_verdad_exito", failNext: "cap24_verdad_fallo" }
             ]
@@ -1105,19 +1057,13 @@
             text: "Deciden que la Caja del Bardo no puede quedarse solo como un proyecto de feria. ¡La usarán para mejorar sus radios de largo alcance y para poner música en las sesiones del Club Fuego Infernal! La Hermandad está, por ahora, a salvo. <br><br>Pero antes de terminar la noche, recibes una interferencia extraña en la Caja del Bardo... una frecuencia que no debería existir en Hawkins.",
             item: "Contrato de Eastwood (Roto)",
             choices: [
-                { text: "CAPÍTULOS 22, 23 y 24 COMPLETADOS (Ir al final definitivo)", next: "cap25_inicio" }
-            ]
-        },
-        "cap25_inicio": {
-            text: "¡PREPÁRATE PARA EL EPÍLOGO!<br><br>Capítulo 25: El destino de la Caja del Bardo y la última lección de Eddie Munson.",
-            choices: [
-                { text: "Ir al Capítulo Final", next: "title" }
+                { text: "CAPÍTULO 24 COMPLETADO (Ir al final definitivo)", next: "cap25_inicio" }
             ]
         },
 
 // --- CAPÍTULO 25: EL EPÍLOGO ---
         "cap25_inicio": {
-            text: "Capítulo 25. Domingo 15 de diciembre de 1985. <br><br>La Feria de Ciencias es ahora un recuerdo guardado en una caja, pero las lecciones se quedan contigo. Estás en el garaje de Eddie terminando de ajustar la 'Caja del Bardo'. No la vas a vender, ni la vas a usar para entrar en Eastwood. La has modificado para que sea el amplificador definitivo del Club Fuego Infernal y una radio de emergencia ultra potente para la Hermandad. <br><br>Eddie entra con una caja de casetes nuevos. <i>'Henderson, he oído que rechazaste a los estirados de la ciudad. Una decisión valiente... o muy estúpida'</i>, dice riendo. <i>'Pero este pueblo necesita a su bardo. Y el Club necesita a su mago'</i>.",
+            text: "Capítulo 25. Domingo, 15 de diciembre de 1985. <br><br>La Feria de Ciencias es ahora un recuerdo guardado en una caja, pero las lecciones se quedan contigo. Estás en el garaje de Eddie terminando de ajustar la 'Caja del Bardo'. No la vas a vender, ni la vas a usar para entrar en Eastwood. La has modificado para que sea el amplificador definitivo del Club Fuego Infernal y una radio de emergencia ultra potente para la Hermandad. <br><br>Eddie entra con una caja de casetes nuevos. <i>'Henderson, he oído que rechazaste a los estirados de la ciudad. Una decisión valiente... o muy estúpida'</i>, dice riendo. <i>'Pero este pueblo necesita a su bardo. Y el Club necesita a su mago'</i>.",
             choices: [
                 { text: "Hacer una última tirada de dados para sellar el destino (Tirada Final: 3+)", rollTarget: 3, next: "final_bueno", failNext: "final_agridulce" }
             ]
@@ -1131,7 +1077,8 @@
             item: "Parche Hellfire Club",
             choices: [{ text: "CRÉDITOS Y MENÚ PRINCIPAL", next: "title" }]
         }
-    }; // <--- AQUÍ TERMINA EL OBJETO storyNodes
+
+}; // <--- AQUÍ TERMINA EL OBJETO storyNodes
 
 
 </script>
