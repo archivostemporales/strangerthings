@@ -355,7 +355,7 @@ const storyNodes = {
 
 
     "prologo": {
-        text: "<strong>PRÓLOGO: LA ESTACIÓN DE AUTOBUSES. </strong><br><br>El piso de la estación de autobuses de San Diego está prácticamente invadido por colillas de cigarrillos. Ahora sólo luce un pálido color gris, como un almacén lleno de volantes arrugados y errabundos. Es casi medianoche. Estoy apoyada contra una pared de casilleros, uno de ellos chorrea algo pegajoso que ya se ha adherido a mis zapatos. <br><br>Todo ordinario, menos mi cabello: largo y rojo, lo más brillante de mí. Tengo mi boleto a Los Ángeles que pagué con un billete de veinte dólares del joyero de mamá. Quiero perderme entre la multitud, pero soy la única aquí demasiado joven para tener una licencia de conducir.",
+        text: "<strong>PRÓLOGO: LA ESTACIÓN DE AUTOBUSES. </strong><br><br>El piso de la estación de autobuses de San Diego está prácticamente invadido por colillas de cigarrillos. Ahora sólo luce un pálido color gris, como un almacén lleno de volantes arrugados y errabundos. Es casi medianoche. Estoy apoyada contra una pared de casilleros, uno de ellos chorrea algo pegajoso que ya se ha adherido a mis zapatos. <br><br>Todo ordinario, menos mi cabello: largo y rojo, lo más brillante de mí. Tengo mi billete a Los Ángeles que pagué con veinte dólares que cogí del joyero de mamá. Quiero perderme entre la multitud, pero soy la única aquí demasiado joven para tener una licencia de conducir.",
         choices: [
             { text: "Hacerte una coleta y caminar con naturalidad", skill: "temple", roll: 3, next: "prologo_2", fail: "prologo_2_nervios" },
             { text: "Caminar rápido cerca de los casilleros ocultando tu rostro", skill: "agilidad", roll: 4, next: "prologo_2", fail: "prologo_2_nervios" },
@@ -367,14 +367,14 @@ const storyNodes = {
         choices: [{ text: "Acercarte a las taquillas", next: "prologo_2" }]
     },
     "prologo_2": {
-        text: "Paso junto a las taquillas. Un par de chicas mayores con los ojos maquillados en tonos verduzcos y peinados que parecen algodón de azúcar discuten con el tipo detrás del cristal. Le faltan un dólar con cincuenta. <br><br>—¿Te parece que esto es una beneficencia? Sin dinero no hay boleto —dice el chico sarcástico. Yo acaricio el mío en el bolsillo de mi chamarra. Con mi patineta bajo el brazo, pienso en lo genial que sería bajarla y pasar zumbando entre las bancas.",
+        text: "Paso junto a las taquillas. Un par de chicas mayores con los ojos maquillados en tonos verduzcos y peinados que parecen algodón de azúcar discuten con el tipo detrás del cristal. Le faltan un dólar con cincuenta. <br><br>—¿Te parece que esto es una beneficencia? Sin dinero no hay billete —dice el chico sarcástico. Yo acaricio el mío en el bolsillo de mi chamarra. Con mi monopatín bajo el brazo, pienso en lo genial que sería bajarlo y pasar zumbando entre las bancas.",
         choices: [
             { text: "Resistir el impulso de patinar para no llamar la atención", skill: "temple", roll: 4, next: "prologo_3", fail: "prologo_3" },
             { text: "Aprovechar la discusión de las chicas para avanzar más rápido", skill: "instinto", roll: 3, next: "prologo_3", fail: "prologo_3" }
         ]
     },
     "prologo_3": {
-        text: "Ya me encuentro casi al final del vestíbulo cuando un murmullo nervioso atraviesa la multitud. Dos tipos de uniformes marrones están parados junto a las máquinas expendedoras. Oficiales de policía. <br><br>El alto tiene brazos largos como patas de araña. Iba y venía con ese andar lento y señorial que dice: 'Podré parecer un bueno para nada, pero soy yo quien tiene una insignia y el arma'. Me recuerda a mi padrastro.",
+        text: "Ya me encuentro casi al final del vestíbulo cuando un murmullo nervioso atraviesa la multitud. Dos tipos con uniformes azules están parados junto a las máquinas expendedoras. Son agentes de policía. <br><br>El alto tiene brazos largos como patas de araña. Iba y venía con ese andar lento y señorial que dice: 'Puede que sea un imbécil, pero soy yo quien tiene una insignia y un arma'. Me recuerda a mi padrastro.",
         choices: [
             { text: "Evaluar hacia dónde miran los policías", skill: "percepcion", roll: 5, next: "prologo_4", fail: "prologo_4_falla" },
             { text: "Moverte sigilosamente hacia la terminal de autobuses", skill: "agilidad", roll: 4, next: "prologo_4", fail: "prologo_4_falla" }
@@ -404,7 +404,7 @@ const storyNodes = {
     // CAPÍTULO UNO
     // ==========================================
     "cap1_1": {
-        text: "<strong>CAPÍTULO UNO: EL CIELO DE HAWKINS. </strong><br><br>El cielo está tan bajo que parece posado justo encima del centro de Hawkins. Avanzo rápido en mi patineta; el frío hace que me duelan los oídos. Aquí todo se ve pálido y gris. Hawkins, Indiana: hogar de nubes grises, chamarras acolchadas e invierno. <br><br>Pasé la tarde en el Palace Arcade, jugando Dig Dug hasta llevar mi nombre al puesto número uno. Me quedé sin monedas y la ansiedad me hizo salir. Ahora paso zumbando más allá del restaurante y un cine anticuado. El cartel anuncia <em>Terminator</em>. Me gustó esa película, Sarah Connor resultaba ser una rudísima patea traseros. Lástima que ninguna mujer que conozco sea como ella.",
+        text: "<strong>CAPÍTULO UNO: EL CIELO DE HAWKINS. </strong><br><br>El cielo está tan bajo que parece posado justo encima del centro de Hawkins. Avanzo rápido en mi monopatín; el frío hace que me duelan los oídos. Aquí todo se ve pálido y gris. Hawkins, Indiana: hogar de nubes grises, chamarras acolchadas e invierno. <br><br>Pasé la tarde en el Palace Arcade, jugando Dig Dug hasta llevar mi nombre al puesto número uno. Me quedé sin monedas y la ansiedad me hizo salir. Ahora paso zumbando más allá del restaurante y un cine anticuado. El cartel anuncia <em>Terminator</em>. Me gustó esa película, Sarah Connor resultaba ser una rudísima patea traseros. Lástima que ninguna mujer que conozco sea como ella.",
         choices: [
             { text: "Aumentar la velocidad por la calle principal", skill: "agilidad", roll: 3, next: "cap1_2", fail: "cap1_2_caida" },
             { text: "Observar las decoraciones falsas de Halloween", skill: "percepcion", roll: 4, next: "cap1_2", fail: "cap1_2_caida" }
@@ -432,7 +432,7 @@ const storyNodes = {
     "cap1_4": {
         text: "Ella sacude la suciedad de mis manos. Aclara que pregunta si 'sano fácilmente'. Antes de que pueda responder, el aire es cortado en dos por el rugido de un motor. <br><br>El Camaro azul ignora el semáforo y se detiene en la acera. Billy está recostado en el asiento del conductor. Me observa de esa manera plana, vacía y pesada, pero con un filo brillante y peligroso. Baja la ventanilla. La música de <em>Quiet Riot</em> golpea el aire. <br>—Entra —ordena.",
         choices: [
-            { text: "Tomar tu patineta sin mostrar debilidad frente a él", skill: "temple", roll: 5, next: "cap1_5", fail: "cap1_5" },
+            { text: "Coger tu monopatín sin mostrar debilidad frente a él", skill: "temple", roll: 5, next: "cap1_5", fail: "cap1_5" },
             { text: "Subir rápido para no alargar la humillación", skill: "agilidad", roll: 4, next: "cap1_5", fail: "cap1_5" }
         ]
     },
@@ -460,14 +460,14 @@ const storyNodes = {
     // CAPÍTULO DOS
     // ==========================================
     "cap2_1": {
-        text: "<strong>CAPÍTULO DOS: EL PRIMER DÍA. </strong><br><br>Mi primer día en la secundaria Hawkins fue un martes, para entonces el curso ya tenía más de un mes de haber dado inicio. Mamá metió la cabeza en mi habitación y me dijo que me levantara. Me dio la impresión de que tal vez tener a Billy por ahí todo el tiempo comenzaba a volverla un poco loca. <br><br>Ya estaba vestida con jeans y un suéter como el que usaba todos los días. Recordé cómo mamá intentó darme algo 'especial' para hoy, pero no estaba dispuesta a asistir a mi primer día en una nueva escuela vestida como alguien más. Saqué mi mochila y mi patineta y salí detrás de Billy. El Camaro olía como siempre, a laca para el cabello y cigarrillos.",
+        text: "<strong>CAPÍTULO DOS: EL PRIMER DÍA. </strong><br><br>Mi primer día en la secundaria Hawkins fue un martes, para entonces el curso ya tenía más de un mes de haber dado inicio. Mamá metió la cabeza en mi habitación y me dijo que me levantara. Me dio la impresión de que tal vez tener a Billy por ahí todo el tiempo comenzaba a volverla un poco loca. <br><br>Ya estaba vestida con jeans y un suéter como el que usaba todos los días. Recordé cómo mamá intentó darme algo 'especial' para hoy, pero no estaba dispuesta a asistir a mi primer día en una nueva escuela vestida como alguien más. Saqué mi mochila y mi monopatín y salí detrás de Billy. El Camaro olía como siempre, a laca para el cabello y cigarrillos.",
         choices: [
             { text: "Subir rápido al auto para evitar problemas", skill: "agilidad", roll: 3, next: "cap2_2_viaje", fail: "cap2_2_viaje_tenso" },
             { text: "Tomarte tu tiempo, demostrando que no le temes a Billy", skill: "temple", roll: 4, next: "cap2_2_viaje", fail: "cap2_2_viaje_tenso" }
         ]
     },
     "cap2_2_viaje_tenso": {
-        text: "Me tropiezo un poco con la patineta al subir, y Billy resopla con fastidio. En el asiento del conductor, Billy mantenía la mirada al frente. Arrancamos con un gruñido irregular.",
+        text: "Me tropiezo un poco con el monopatín al subir, y Billy resopla con fastidio. En el asiento del conductor, Billy mantenía la mirada al frente. Arrancamos con un gruñido irregular.",
         choices: [{ text: "Escuchar sus quejas", next: "cap2_2_viaje" }]
     },
     "cap2_2_viaje": {
@@ -481,11 +481,11 @@ const storyNodes = {
         text: "La secundaria Hawkins era un largo edificio de ladrillos, sencillo y robusto, más parecido al de una cárcel del condado que al de una escuela. Mamá había dicho a Billy que me llevara y entrara conmigo para asegurarse de que tuvieran todo listo, pero él pasó volando más allá de la puerta principal y aceleró de pronto hacia el estacionamiento del bachillerato. <br><br>—¡Hey! —lo miré y golpeé con la mano en el tablero. Él sólo me dijo que me bajara.",
         choices: [
             { text: "Lanzarle una mirada de impaciencia profunda", skill: "temple", roll: 4, next: "cap2_4_clase", fail: "cap2_4_clase_tarde" },
-            { text: "Bajar rápidamente con tu patineta antes de que acelere", skill: "agilidad", roll: 4, next: "cap2_4_clase", fail: "cap2_4_clase_tarde" }
+            { text: "Bajar rápidamente con tu monopatín antes de que acelere", skill: "agilidad", roll: 4, next: "cap2_4_clase", fail: "cap2_4_clase_tarde" }
         ]
     },
     "cap2_4_clase_tarde": {
-        text: "Tardo demasiado en sacar mi mochila. Billy arranca de golpe y casi me hace caer. Estaba casi segura de que las mujeres de la oficina me harían guardar mi patineta. En California, la regla era que tenías que guardarla en tu casillero, pero aquí nadie parecía tener una opinión al respecto.",
+        text: "Tardo demasiado en sacar mi mochila. Billy arranca de golpe y casi me hace caer. Estaba casi segura de que las mujeres de la oficina me harían guardar mi monopatín. En California, la regla era que tenías que guardarla en tu casillero, pero aquí nadie parecía tener una opinión al respecto.",
         choices: [{ text: "Caminar hacia el aula", next: "cap2_4_clase" }]
     },
     "cap2_4_clase": {
@@ -504,7 +504,7 @@ const storyNodes = {
         choices: [{ text: "Mirar hacia el patio", next: "cap2_6_patio" }]
     },
 "cap2_6_patio": {
-        text: "Paseas de un lado a otro con tu patineta, ignorando a todos. El sonido de las ruedas contra el concreto es lo único que te hace sentir tú misma. No te das cuenta, pero desde la distancia, cuatro chicos te observan con una mezcla de curiosidad y sospecha. Especialmente uno con una gorra de camionero.",
+        text: "Paseas de un lado a otro con tu monopatín, ignorando a todos. El sonido de las ruedas contra el concreto es lo único que te hace sentir tú misma. No te das cuenta, pero desde la distancia, cuatro chicos te observan con una mezcla de curiosidad y sospecha. Especialmente uno con una gorra de camionero.",
         choices: [
             { text: "Continuar al Capítulo 3.", next: "cap3_1_recuerdo" }
         ]
@@ -637,7 +637,7 @@ const storyNodes = {
         choices: [{ text: "Planear una escapada nocturna", next: "cap5_4_plan_escape" }]
     },
     "cap5_4_plan_escape": {
-        text: "La noche en Hawkins es oscura y silenciosa. Necesitas aire. Miras por la ventana; hay un árbol cuyas ramas llegan cerca del techo. Podrías bajar por ahí y salir con tu patineta hacia el Arcade.",
+        text: "La noche en Hawkins es oscura y silenciosa. Necesitas aire. Miras por la ventana; hay un árbol cuyas ramas llegan cerca del techo. Podrías bajar por ahí y salir con tu monopatín hacia el Arcade.",
         choices: [
             { text: "Escabullirte por la ventana", skill: "agilidad", roll: 5, next: "cap5_5_escape_exito", fail: "cap5_5_caida_ruidosa" },
             { text: "Quedarte en cama y tratar de dormir", skill: "temple", roll: 4, next: "cap5_5_resignacion", fail: "cap5_5_pesadillas" }
@@ -751,7 +751,7 @@ const storyNodes = {
     },
     "cap7_4_amenaza_billy": {
         text: "Billy suelta una carcajada seca. 'No sabes mentir, Maxine'. Te advierte que se acabó el tiempo de juegos. Cuando sale de la habitación dando un portazo, sientes que las paredes se te echan encima.",
-        choices: [{ text: "Tomar tu patineta y huir al Palace Arcade", next: "cap7_5_escape_arcade" }]
+        choices: [{ text: "Coger tu monopatín y huir al Palace Arcade", next: "cap7_5_escape_arcade" }]
     },
     "cap7_5_escape_arcade": {
         text: "El Palace Arcade es tu santuario. Huele a palomitas quemadas y suena a sintetizadores. Vas directa a Dig Dug, pero hay un cartel de 'Fuera de servicio'. Keith, el empleado con acné y mirada de sabelotodo, te observa desde el mostrador masticando Cheetos.",
@@ -802,7 +802,7 @@ const storyNodes = {
         choices: [{ text: "Abandonar la sala", next: "cap8_4_final" }]
     },
     "cap8_4_final": {
-        text: "Las clases terminan y por un momento olvidas el vacío de la sala AV al pensar en tu patineta. Pero al salir al estacionamiento, el brillo del sol se refleja en el cromo del Camaro de Billy. La música metálica retumba desde el interior. El refugio escolar se ha terminado.",
+        text: "Las clases terminan y por un momento olvidas el vacío de la sala AV al pensar en tu monopatín. Pero al salir al estacionamiento, el brillo del sol se refleja en el cromo del Camaro de Billy. La música metálica retumba desde el interior. El refugio escolar se ha terminado.",
         choices: [{ text: "Subir al auto de Billy", next: "cap9_1_inicio" }]
     },
 
@@ -859,7 +859,7 @@ const storyNodes = {
         choices: [{ text: "Llegar a casa", next: "cap10_3_llegada" }]
     },
     "cap10_2_castigo_tabla": {
-        text: "Al llegar a la entrada de casa, Billy frena en seco. Antes de que puedas bajar, da marcha atrás bruscamente. Escuchas un crujido seco bajo el neumático. Billy ha pasado sobre tu patineta. Te quedas mirando los restos astillados; era lo único que te quedaba de San Diego.",
+        text: "Al llegar a la entrada de casa, Billy frena en seco. Antes de que puedas bajar, da marcha atrás bruscamente. Escuchas un crujido seco bajo el neumático. Billy ha pasado sobre tu monopatín. Te quedas mirando los restos astillados; era lo único que te quedaba de San Diego.",
         choices: [{ text: "Recoger los trozos con lágrimas en los ojos", next: "cap10_3_llegada" }]
     },
     "cap10_3_llegada": {
