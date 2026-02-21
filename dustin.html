@@ -136,6 +136,7 @@
 
         <div id="game-screen" class="screen">
             <div id="hud">
+            <div id="max-portrait"><img src="imagesst/dustin.jpg" width="100" alt="Dustin"></div>
                 <div>ESTRÉS: <span id="hearts" class="stress-hearts"></span></div>
                 <div style="font-size: 0.8em; color: #aaa;">INV: <span id="items-list"></span></div>
             </div>
@@ -145,7 +146,7 @@
         </div>
 
         <div id="over-screen" class="screen">
-            <h1 style="font-size: 3em;">ELIMINADO</h1>
+            <h1 style="font-size: 3em;">GAME OVER</h1>
             <p style="text-align: center;">Dustin no pudo soportar más presión.</p>
             <button class="choice-btn" onclick="location.reload()">VOLVER AL MENÚ PRINCIPAL</button>
         </div>
@@ -892,20 +893,20 @@
 
 // --- CAPÍTULO 18 ---
         "cap18_inicio": {
-            text: "Capítulo 18. Sábado 7 de Diciembre de 1985.<br><br>El día de la evaluación final ha llegado y el aire en el centro de convenciones está cargado de una 'espesa capa de ansiedad'[cite: 16]. Los jueces avanzan lentamente, fila por fila, mientras tú y Danny observan con horror cómo el saboteador ha vuelto a actuar: otros proyectos han fallado misteriosamente justo antes de ser evaluados[cite: 16].<br><br>No puedes quedarte de brazos cruzados. Con la ayuda de Eddie, que mantiene a raya a los guardias con sus historias, decides que es hora de pasar a la ofensiva. <i>'Necesito que Frodo genere algo de caos'</i>, le susurras a Danny, señalando la jaula del pato[cite: 16].",
+            text: "Capítulo 18. Sábado 7 de Diciembre de 1985.<br><br>El día de la evaluación final ha llegado y el aire en el centro de convenciones está cargado de una 'espesa capa de ansiedad'. Los jueces avanzan lentamente, fila por fila, mientras tú y Danny observan con horror cómo el saboteador ha vuelto a actuar: otros proyectos han fallado misteriosamente justo antes de ser evaluados.<br><br>No puedes quedarte de brazos cruzados. Con la ayuda de Eddie, que mantiene a raya a los guardias con sus historias, decides que es hora de pasar a la ofensiva. <i>'Necesito que Frodo genere algo de caos'</i>, le susurras a Danny, señalando la jaula del pato.",
             choices: [
                 { text: "Liberar a 'Frodo Quackins' para distraer a los jueces (Tirada Audacia: 4+)", rollTarget: 4, next: "cap18_caos_pato", failNext: "cap18_pato_timido" },
                 { text: "Intentar una reparación de emergencia en el proyecto de Anika", next: "cap18_reparacion" }
             ]
         },
         "cap18_pato_timido": {
-            text: "Frodo se niega a salir de su jaula, prefiriendo sus granos de maíz. El tiempo se agota y los jueces ya están en la mesa anterior a la de Anika. Sientes que el fracaso es inminente[cite: 16].",
+            text: "Frodo se niega a salir de su jaula, prefiriendo sus granos de maíz. El tiempo se agota y los jueces ya están en la mesa anterior a la de Anika. Sientes que el fracaso es inminente.",
             choices: [
                 { text: "Usar un señuelo para atraer a Frodo", next: "cap18_caos_pato" }
             ]
         },
         "cap18_caos_pato": {
-            text: "¡Funciona! El pato sale disparado, abriendo pestillos y derribando el 'Cuchillomóvil de Barbie' de otro stand[cite: 16]. Mientras los jueces y el público intentan atrapar al animal, tú y Danny aprovechan la confusión para revisar los cables bajo las mesas principales. Descubren que Richard Rasch, el asistente de la feria, ha estado usando un dispositivo de interferencia para arruinar los circuitos de los competidores[cite: 16, 17].",
+            text: "¡Funciona! El pato sale disparado, abriendo pestillos y derribando el 'Cuchillomóvil de Barbie' de otro stand. Mientras los jueces y el público intentan atrapar al animal, tú y Danny aprovechan la confusión para revisar los cables bajo las mesas principales. Descubren que Richard Rasch, el asistente de la feria, ha estado usando un dispositivo de interferencia para arruinar los circuitos de los competidores.",
             item: "Dispositivo de Interferencia",
             choices: [
                 { text: "Desconectar el dispositivo y regresar a tu puesto (Ir al Cap. 19)", next: "cap19_inicio" }
@@ -920,7 +921,7 @@
 
         // --- CAPÍTULO 19 ---
         "cap19_inicio": {
-            text: "Capítulo 19. Sábado 7 de Diciembre de 1985 (Tarde).<br><br>Los jueces llegan a tu mesa. El corazón te late tan fuerte que temes que rompa tus costillas. Has pasado tanto tiempo salvando los proyectos de los demás que apenas has ensayado tu propia presentación. Miras la 'Caja del Bardo' y ves a Brian, tu rival de Eastwood, observándote con una sonrisa burlona, esperando que falles[cite: 18, 19].<br><br><i>'Señor Henderson, el tiempo corre'</i>, dice uno de los jueces con un portapapeles. Es el momento de la verdad.",
+            text: "Capítulo 19. Sábado 7 de Diciembre de 1985 (Tarde).<br><br>Los jueces llegan a tu mesa. El corazón te late tan fuerte que temes que rompa tus costillas. Has pasado tanto tiempo salvando los proyectos de los demás que apenas has ensayado tu propia presentación. Miras la 'Caja del Bardo' y ves a Brian, tu rival de Eastwood, observándote con una sonrisa burlona, esperando que falles.<br><br><i>'Señor Henderson, el tiempo corre'</i>, dice uno de los jueces con un portapapeles. Es el momento de la verdad.",
             choices: [
                 { text: "Hacer una demostración técnica impecable (Tirada Tecnología: 5+)", rollTarget: 5, next: "cap19_exito_tecnico", failNext: "cap19_improvisacion" }
             ]

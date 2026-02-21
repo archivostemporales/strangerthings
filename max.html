@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stranger Things: Max, La Fugitiva</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+
+        :root {
+            --st-red: #ff3333;
+            --st-green: #00ff44;
+            --st-black: #050505;
+            --st-panel: #121212;
+            --st-sidebar: #1a1a1a;
+            --st-text: #e0e0e0;
+        }
+
+        body {
+            background-color: var(--st-black);
+            color: var(--st-text);
+            font-family: 'Courier Prime', monospace;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- BANNER SUPERIOR (INVENTARIO) --- */
+        #top-inventory-banner {
+            height: 60px;
+            background: #000;
+            border-bottom: 2px solid var(--st-red);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            gap: 15px;
+        }
+
+        .backpack-icon { font-size: 1.5em; margin-right: 10px; }
+
+        .inv-slot {
+            background: var(--st-sidebar);
+            border: 1px solid #444;
+            padding: 5px 12px;
+            font-size: 0.8em;
+            color: var(--st-red);
+        }
+
+        /* --- DISTRIBUCIÓN --- */
+        #game-layout { display: flex; flex-grow: 1; overflow: hidden; }
+
+        #sidebar {
+            width: 260px;
+            background: var(--st-sidebar);
+            border-right: 2px solid var(--st-red);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #max-portrait {
+            width: 150px; height: 150px;
+            border: 2px solid var(--st-red);
+            margin: 0 auto 20px auto;
+            background: #000;
+        }
+        #max-portrait img { width: 100%; height: 100%; object-fit: cover; }
+
+        .stat-row {
+            display: flex; justify-content: space-between;
+            background: #000; padding: 8px; margin-bottom: 5px;
+            border: 1px solid #333; font-size: 0.85em;
+        }
+
+        .stat-value { color: var(--st-red); font-weight: bold; }
+
+        /* --- ÁREA DE JUEGO --- */
+        #main-content {
+            flex-grow: 1; padding: 40px; overflow-y: auto;
+            background: linear-gradient(180deg, #121212 0%, #050505 100%);
+            position: relative;
+        }
+
+        .controls { position: absolute; top: 15px; right: 25px; display: flex; gap: 20px; z-index: 100; }
+        .ctrl-icon { cursor: pointer; opacity: 0.7; font-size: 0.9em; border: 1px solid var(--st-red); padding: 5px 10px; }
+        .ctrl-icon:hover { opacity: 1; background: var(--st-red); color: #000; }
+
+        .choice-btn {
+            display: block; width: 100%; padding: 15px; margin: 10px 0;
+            background: rgba(0,0,0,0.7); color: var(--st-text);
+            border: 1px solid var(--st-red); cursor: pointer;
+            text-align: left; font-family: inherit;
+        }
+
+        .choice-btn:hover:not(:disabled) { background: var(--st-red); color: #000; }
+
+        #dice-zone { 
+            text-align: center; height: 50px; font-size: 1.2em; 
+            font-weight: bold; margin-bottom: 20px;
+        }
+
+        .stress-hearts { color: var(--st-red); font-size: 1.1em; }
+        .screen { display: none; }
+        .active { display: block; }
+
+        .result-success { color: var(--st-green) !important; text-shadow: 0 0 10px var(--st-green); }
+        .result-fail { color: var(--st-red) !important; text-shadow: 0 0 10px var(--st-red); }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music" loop><source src="strangerthings.mp3" type="audio/mpeg"></audio>
+
+    <div id="top-inventory-banner">
+        <span class="backpack-icon">🎒</span>
+        <div id="items-slots-container" style="display: flex; gap: 10px;"></div>
+    </div>
+
+    <div id="game-layout">
+        <div id="sidebar">
+            <div id="max-portrait"><img src="imagesst/max.jpg" alt="Max"></div>
+            <div class="stat-row" style="border-color: var(--st-red);">
+                <span>ESTRÉS</span><span id="hearts" class="stress-hearts"></span>
+            </div>
+            <div style="margin-top: 20px;">
+                <div class="stat-row"><span>🛹 AGILIDAD</span><span id="stat-agi" class="stat-value"></span></div>
+                <div class="stat-row"><span>😠 TEMPLE</span><span id="stat-tem" class="stat-value"></span></div>
+                <div class="stat-row"><span>🔧 MECÁNICA</span><span id="stat-mec" class="stat-value"></span></div>
+                <div class="stat-row"><span>🎯 PRECISIÓN</span><span id="stat-pre" class="stat-value"></span></div>
+                <div class="stat-row"><span>👁️ INSTINTO</span><span id="stat-ins" class="stat-value"></span></div>
+            </div>
+        </div>
+
+        <div id="main-content">
+            <div class="controls">
+                <div class="ctrl-icon" onclick="toggleMusic()">🎵 MÚSICA: <span id="m-status">OFF</span></div>
+                <div class="ctrl-icon" onclick="toggleVoice()">🗣️ VOZ: <span id="v-status">ON</span></div>
+            </div>
+
+            <div id="menu-screen" class="screen active" style="text-align: center;">
+                <h1 style="font-size: 3em; color: var(--st-red); margin-top: 80px;">MAX, LA FUGITIVA</h1>
+                <button class="choice-btn" style="width: 250px; margin: 40px auto; text-align: center;" onclick="initGame()">INICIAR AVENTURA</button>
+            </div>
+
+            <div id="game-screen" class="screen">
+                <div id="dice-zone"></div>
+                <div id="story-container" style="font-size: 1.1em; line-height: 1.6; margin-top: 20px;"></div>
+                <div id="choices-box"></div>
+            </div>
+
+            <div id="over-screen" class="screen" style="text-align: center;">
+                <h1 style="font-size: 4em; color: var(--st-red); margin-top: 100px;">ELIMINADA</h1>
+                <button class="choice-btn" style="width: 250px; margin: 20px auto; text-align: center;" onclick="location.reload()">VOLVER AL INICIO</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const MAX_HP = 8;
+    let state = {
+        hp: MAX_HP,
+        inventory: [],
+        skills: { agilidad: 2, temple: 1, mecanica: 0, precision: 1, instinto: 1 },
+        currentNode: 'prologo'
+    };
+
+    let voiceEnabled = true;
+    const synth = window.speechSynthesis;
+    const music = document.getElementById('bg-music');
+
+    function toggleMusic() {
+        if (music.paused) { music.play(); document.getElementById('m-status').innerText = "ON"; music.volume = 0.2; }
+        else { music.pause(); document.getElementById('m-status').innerText = "OFF"; }
+    }
+
+    function toggleVoice() {
+        voiceEnabled = !voiceEnabled;
+        document.getElementById('v-status').innerText = voiceEnabled ? "ON" : "OFF";
+        if (!voiceEnabled) synth.cancel();
+    }
+
+    function leerTexto(texto) {
+        if (!voiceEnabled) return;
+        synth.cancel();
+        const limpio = texto.replace(/<[^>]*>?/gm, '');
+        const utterance = new SpeechSynthesisUtterance(limpio);
+        utterance.lang = 'es-ES';
+        utterance.pitch = 1.3; // Voz de mujer joven
+        utterance.rate = 1.0;
+        synth.speak(utterance);
+    }
+
+    function initGame() {
+        document.getElementById('menu-screen').classList.remove('active');
+        document.getElementById('game-screen').classList.add('active');
+        updateUI();
+        renderNode(state.currentNode);
+    }
+
+    function updateUI() {
+        let h = "";
+        for(let i = 0; i < MAX_HP; i++) h += (i < state.hp) ? "♥" : "♡";
+        document.getElementById('hearts').innerText = h;
+
+        const format = (n) => (n >= 0 ? `+${n}` : n);
+        document.getElementById('stat-agi').innerText = format(state.skills.agilidad);
+        document.getElementById('stat-tem').innerText = format(state.skills.temple);
+        document.getElementById('stat-mec').innerText = format(state.skills.mecanica);
+        document.getElementById('stat-pre').innerText = format(state.skills.precision);
+        document.getElementById('stat-ins').innerText = format(state.skills.instinto);
+
+        const invContainer = document.getElementById('items-slots-container');
+        invContainer.innerHTML = "";
+        state.inventory.forEach(item => {
+            const div = document.createElement('div');
+            div.className = "inv-slot";
+            div.innerText = item;
+            invContainer.appendChild(div);
+        });
+    }
+
+    function renderNode(nodeId) {
+        const node = storyNodes[nodeId];
+        state.currentNode = nodeId;
+        
+        document.getElementById('story-container').innerHTML = node.text;
+        leerTexto(node.text);
+
+        const box = document.getElementById('choices-box');
+        box.innerHTML = "";
+        
+        if (node.item && !state.inventory.includes(node.item)) {
+            if (node.item === "Refresco") {
+                if (confirm("Has encontrado un Refresco. ¿Usar para +1 vida?")) {
+                    if (state.hp < MAX_HP) state.hp++;
+                } else { state.inventory.push(node.item); }
+            } else { state.inventory.push(node.item); }
+            updateUI();
+        }
+
+        node.choices.forEach(c => {
+            const btn = document.createElement('button');
+            btn.className = "choice-btn";
+            btn.innerText = c.text + (c.skill ? ` [${c.skill.toUpperCase()}]` : "");
+            btn.onclick = () => handleChoice(c);
+            box.appendChild(btn);
+        });
+    }
+
+    function handleChoice(choice) {
+        const zone = document.getElementById('dice-zone');
+        const buttons = document.querySelectorAll('.choice-btn');
+        buttons.forEach(b => b.disabled = true); // Bloquea botones mientras dura la tirada
+
+        if (choice.roll) {
+            const dado = Math.floor(Math.random() * 6) + 1;
+            const total = dado + state.skills[choice.skill];
+            
+            if (total >= choice.roll) {
+                zone.innerText = `🎲 ÉXITO: ${dado} + ${state.skills[choice.skill]} = ${total} (Mín: ${choice.roll})`;
+                zone.className = "result-success";
+            } else {
+                zone.innerText = `🎲 FALLO: ${dado} + ${state.skills[choice.skill]} = ${total} (Mín: ${choice.roll})`;
+                zone.className = "result-fail";
+                state.hp--;
+                updateUI();
+            }
+
+            setTimeout(() => {
+                zone.innerText = "";
+                zone.className = "";
+                if (state.hp <= 0) {
+                    document.getElementById('game-screen').classList.remove('active');
+                    document.getElementById('over-screen').classList.add('active');
+                } else {
+                    renderNode(total >= (choice.roll || 0) ? choice.next : (choice.fail || choice.next));
+                }
+            }, 2000);
+        } else {
+            renderNode(choice.next);
+        }
+    }
+//************************************************************************************************************************************************
+const storyNodes = {
+    "prologo": {
+        text: "<strong>PRÓLOGO: LA ESTACIÓN DE SAN DIEGO</strong><br><br>El piso de la estación de autobuses está invadido por colillas de cigarrillos. El edificio luce un pálido color gris, como un almacén lleno de volantes arrugados. Es casi medianoche. Estoy apoyada contra una pared de casilleros; uno de ellos chorrea algo pegajoso que ya se ha adherido a mis zapatos.<br><br>Miro el bar de la esquina, donde hombres delgados fuman frente a ceniceros. Todo aquí se siente como un final, no como un principio. Mi tabla de skate es lo único que me pertenece realmente. Estoy a punto de dejar atrás el océano por el asfalto de Indiana.",
+        choices: [
+            { text: "Observar los detalles de la estación para distraerte", skill: "instinto", roll: 3, next: "prologo_detalles", fail: "prologo_nervios" },
+            { text: "Apretar tu tabla de skate y caminar hacia la salida", next: "cap1_llegada" },
+            { text: "Recordar por qué estás huyendo de California", skill: "temple", roll: 5, next: "prologo_recuerdo", fail: "prologo_nervios" }
+        ]
+    },
+    "prologo_detalles": {
+        text: "Me fijo en las máquinas expendedoras y en el brillo sucio del suelo. El aire huele a café rancio y desesperación. Esta capacidad de observar los detalles me ha servido para sobrevivir a Billy y Neil hasta ahora. Sé que en Hawkins tendré que mantener los ojos muy abiertos.",
+        choices: [{ text: "Salir al encuentro del Camaro", next: "cap1_llegada" }]
+    },
+    "prologo_recuerdo": {
+        text: "Pienso en Sam, mi padre. En la playa y en cómo la luz del sol nunca se sentía tan muerta como la de estos fluorescentes. Pero el recuerdo duele. Neil ha ganado; nos lleva a un lugar donde no conocemos a nadie, donde él tiene todo el control. La rabia me da fuerzas para no llorar.",
+        choices: [{ text: "Subir al coche con Billy y mamá", next: "cap1_llegada" }]
+    },
+    "prologo_nervios": {
+        text: "La humedad de la estación y el goteo de los casilleros me ponen de los nervios. Me siento pequeña y expuesta. El pánico empieza a subir por mi garganta antes de que pueda controlarlo.",
+        choices: [{ text: "Caminar rápido hacia el exterior", next: "cap1_llegada" }]
+    },
+    "cap1_llegada": {
+        text: "<strong>CAPÍTULO UNO: HAWKINS</strong><br><br>Hawkins es... verde. Un verde oscuro, húmedo y sofocante. No hay palmeras, solo árboles de hojas anchas que parecen cerrarse sobre nosotros. Billy conduce el Camaro como si quisiera atravesar el pueblo de un solo golpe. Mi madre mira por la ventana intentando encontrar algo bueno que decir, pero su silencio lo dice todo.<br><br>Pasamos por el centro. Veo el cine y el Palace Arcade. Billy frena de golpe en un semáforo y me mira por el retrovisor con esos ojos azules que parecen hielo. '¿Contenta, Maxine?', escupe con veneno. El odio entre nosotros es lo único que ha sobrevivido al viaje.",
+        choices: [
+            { text: "Responderle con sarcasmo para marcar terreno", skill: "temple", roll: 4, next: "cap1_sarcasmo", fail: "cap1_silencio_tenso" },
+            { text: "Mirar fijamente el Palace Arcade", skill: "instinto", roll: 3, next: "cap1_arcade_interes", fail: "cap1_silencio_tenso" },
+            { text: "Ignorarlo y centrarte en tu skate", next: "cap1_casa" }
+        ]
+    },
+    "cap1_sarcasmo": {
+        text: "—Tan contenta como tú de estar encerrado en un coche conmigo, Billy —le digo. Él aprieta el volante hasta que sus nudillos blanquean. Me ha oído, pero Neil está en el coche de delante y Billy no se atreve a hacer nada... todavía.",
+        choices: [{ text: "Seguir el camino hacia la nueva casa", next: "cap1_casa" }]
+    },
+    "cap1_arcade_interes": {
+        text: "Mis ojos se clavan en las luces del Palace. Es el único lugar que parece tener vida propia. Veo a unos chicos entrar. Quizás allí pueda desaparecer, ser simplemente 'Max' y no la hermana de un psicópata.",
+        choices: [{ text: "Llegar a la casa", next: "cap1_casa" }]
+    },
+    "cap1_silencio_tenso": {
+        text: "Bajo la mirada. No tengo fuerzas para pelear ahora. El peso de Indiana se siente como si el cielo fuera de plomo. Billy se ríe, disfrutando de mi derrota momentánea.",
+        choices: [{ text: "Llegar a la casa", next: "cap1_casa" }]
+    },
+    "cap1_casa": {
+        text: "La casa es de madera, con un porche que cruje. Neil baja del coche y empieza a dar órdenes como si estuviéramos en un cuartel. Mi madre corre a obedecer. Yo me quedo en la acera, con mi tabla bajo el brazo, sintiendo que el aire de Hawkins está demasiado quieto. <br><br>Tengo que decidir cómo entrar en este nuevo 'hogar'.",
+        choices: [
+            { text: "Subir a tu cuarto y encerrarte", skill: "agilidad", roll: 3, next: "cap1_cuarto", fail: "cap1_intercepcion_neil" },
+            { text: "Inspeccionar los alrededores de la casa", skill: "instinto", roll: 4, next: "cap1_alrededores", fail: "cap1_intercepcion_neil" }
+        ]
+    },
+    "cap1_cuarto": {
+        text: "Subo las escaleras antes de que nadie me hable. Mi cuarto es pequeño y huele a cerrado. Abro la ventana y miro hacia el bosque. Es extraño, hay una quietud que me inquieta. Saco mi caja de recuerdos y la escondo bajo el armario.",
+        choices: [{ text: "Mañana será el primer día de escuela...", next: "cap2_inicio" }]
+    },
+    "cap1_intercepcion_neil": {
+        text: "Neil me detiene en la puerta. —Maxine, ayuda a tu madre con las cajas. No quiero verte holgazaneando —dice con esa calma autoritaria. El día empieza con trabajo y obediencia.",
+        choices: [{ text: "Acatar en silencio", next: "cap2_inicio" }]
+    },
+
+"cap2_inicio": {
+        text: "<strong>CAPÍTULO DOS: EL RECUERDO DEL CAMPO DE MINIGOLF</strong><br><br>Mientras intento dormir en mi nueva habitación, mi mente regresa a California, a un día caluroso en el campo de minigolf. Recuerdo a mi padre, Sam, y cómo las cosas empezaron a torcerse. Fue allí donde Billy apareció por primera vez con su nueva imagen: una perforación en la oreja y una actitud desafiante. [cite: 30, 31, 32]<br><br>Neil lo observaba con esa mirada amarga que siempre tiene cuando algo no cumple sus estándares. —Llegas tarde —le dijo con frialdad. [cite: 34, 35] Billy me llamó 'Maxine', un nombre que odio, pero guardé silencio. [cite: 36] En aquel entonces, tontamente, pensé que tener un hermano cambiaría mi vida para mejor, que por fin tendría a alguien de mi lado. [cite: 40]<br><br>De vuelta al presente, el despertador suena. Es mi primer día en la escuela secundaria de Hawkins. Mamá entra con un suéter nuevo, intentando que parezca 'especial'. [cite: 82]",
+        choices: [
+            { text: "Rechazar el suéter y vestir tu ropa habitual", skill: "temple", roll: 4, next: "cap2_ropa_propia", fail: "cap2_ceder_mama" },
+            { text: "Intentar hablar con mamá sobre Sam", skill: "instinto", roll: 5, next: "cap2_pregunta_sam", fail: "cap2_ceder_mama" },
+            { text: "Desayunar rápido para evitar a Neil", next: "cap2_desayuno_tenso" }
+        ]
+    },
+    "cap2_ropa_propia": {
+        text: "—No voy a usar eso —le digo a mamá. Ya estoy vestida con mis jeans y mi sudadera de siempre. [cite: 80, 81] No estoy dispuesta a empezar en una escuela nueva fingiendo ser alguien que no soy. Mamá suspira y su sonrisa se desvanece, pero no insiste. Sabe que tengo el temperamento de mi padre. [cite: 83]",
+        choices: [{ text: "Bajar a la cocina", next: "cap2_desayuno_tenso" }]
+    },
+    "cap2_pregunta_sam": {
+        text: "—¿Has hablado con papá? —le pregunto en voz baja. El rostro de mamá se tensa. Ella mira hacia la puerta, temerosa de que Neil esté escuchando. —Max, estamos en Hawkins ahora. Es un nuevo comienzo —responde, evadiendo mi mirada. [cite: 82, 83] Entiendo el mensaje: Sam es un fantasma que no tiene permitido entrar en esta casa.",
+        choices: [{ text: "Bajar a la cocina", next: "cap2_desayuno_tenso" }]
+    },
+    "cap2_ceder_mama": {
+        text: "Mamá me mira con tanta esperanza que no puedo decirle que no. Me pongo el suéter, aunque me pica y me hace sentir como una muñeca de porcelana. —Te ves hermosa —dice ella, pero yo solo me siento ridícula. [cite: 82]",
+        choices: [{ text: "Bajar a la cocina", next: "cap2_desayuno_tenso" }]
+    },
+    "cap2_desayuno_tenso": {
+        text: "En la cocina, Neil está comiendo su hamburguesa con tenedor y cuchillo, con una precisión que me pone enferma. [cite: 93] —Respóndele a tu madre —dice sin mirarme cuando trato de ignorar sus preguntas sobre la escuela. [cite: 94] Siento una oleada de furia. —Mi nombre —digo, apretando los puños— es Max. <br><br>Neil deja de masticar y me dedica una mirada cargada de una amenaza silenciosa. —Maxine —repite, marcando cada sílaba—, te lo advierto. [cite: 95] El aire en la cocina se vuelve irrespirable.",
+        choices: [
+            { text: "Mantenerle la mirada sin parpadear", skill: "temple", roll: 6, next: "cap2_desafio_neil", fail: "cap2_castigo_limpieza" },
+            { text: "Bajar la cabeza y terminar de desayunar", next: "cap2_escuela_salida" },
+            { text: "Huir hacia el garaje buscando tu skate", skill: "agilidad", roll: 4, next: "cap2_huida_skate", fail: "cap2_castigo_limpieza" }
+        ]
+    },
+    "cap2_desafio_neil": {
+        text: "No aparto los ojos de los suyos. Por un segundo, veo una chispa de sorpresa en su mirada fría. Neil respira hondo, tratando de contener su temperamento. [cite: 97] —Vete a la escuela —dice finalmente—. Y no llegues tarde. —He ganado esta pequeña batalla, pero sé que el precio será alto.",
+        choices: [{ text: "Salir de la casa", next: "cap2_escuela_salida" }]
+    },
+    "cap2_huida_skate": {
+        text: "Agarro mi mochila y salgo por la puerta lateral antes de que Neil pueda reaccionar. El sonido de mis ruedas contra el asfalto de Hawkins es lo único que me devuelve la calma. Patino rápido, sintiendo el viento frío de Indiana en mi cara. [cite: 566]",
+        choices: [{ text: "Llegar a la escuela secundaria", next: "cap2_escuela_llegada" }]
+    },
+    "cap2_castigo_limpieza": {
+        text: "Neil golpea la mesa con el puño. —Ayudarás a tu madre con las cajas antes de irte. —Me paso la siguiente hora cargando peso, sintiendo cómo mis músculos se tensan. Para cuando termino, llego tarde a mi primer día. [cite: 110]",
+        choices: [{ text: "Ir a la escuela", next: "cap2_escuela_llegada" }]
+    },
+    "cap2_escuela_salida": {
+        text: "Salgo de la casa sin mirar atrás. Billy ya está en el Camaro, acelerando el motor para meterme prisa. —Sube, Maxine. No querrás que el director te reciba en la puerta —se burla. [cite: 36]",
+        choices: [{ text: "Subir al auto con Billy", next: "cap2_escuela_llegada" }]
+    },
+    "cap2_escuela_llegada": {
+        text: "La escuela secundaria de Hawkins parece un búnker de ladrillos. Al bajar del coche, noto que todo el mundo se queda mirando el Camaro... y a Billy. Él disfruta de la atención, pero yo solo quiero desaparecer. Camino hacia la entrada con mi skate bajo el brazo y veo a un grupo de cuatro chicos en bicicletas observándome. [cite: 209]<br><br>Uno de ellos, con una gorra de red, parece especialmente curioso.",
+        choices: [
+            { text: "Pasar de largo ignorándolos por completo", next: "cap3_inicio" },
+            { text: "Hacer un truco con el skate para impresionarlos", skill: "agilidad", roll: 5, next: "cap2_truco_skate", fail: "cap3_inicio" }
+        ]
+    },
+    "cap2_truco_skate": {
+        text: "Dejo caer la tabla y hago un ollie perfecto sobre un bordillo justo delante de ellos. Escucho un murmullo de asombro. —¡Vaya! —dice el de la gorra. Sigo patinando sin mirar atrás, con una pequeña sonrisa. Al menos ya saben que no soy una chica común de Hawkins.",
+        choices: [{ text: "Entrar a clase", next: "cap3_inicio" }]
+    },
+
+"cap3_inicio": {
+        text: "<strong>CAPÍTULO TRES: EL AULA DEL SR. CLARKE.</strong><br><br>Entro en la escuela secundaria de Hawkins y la sensación es asfixiante. El edificio es de un ladrillo monótono que me recuerda a una cárcel[cite: 523]. En la clase de ciencias, el Sr. Clarke me hace ponerme frente a todos. —Ah, tú debes de ser nuestra nueva estudiante de California —dice con una energía que yo no comparto[cite: 567]. <br><br>Siento las miradas. Especialmente la de cuatro chicos en la parte de atrás. El de la gorra (Lucas) y el de pelo rizado (Dustin) susurran entre ellos. El líder del grupo, Mike, me observa con una hostilidad que no entiendo. El Sr. Clarke me señala la pizarra y me pide que escriba mi nombre para que todos lo conozcan.",
+        choices: [
+            { text: "Escribir 'MAX' con letras grandes y desafiantes", skill: "temple", roll: 4, next: "cap3_pizarra_max" },
+            { text: "Escribir 'Maxine' para evitar más problemas", skill: "instinto", roll: 3, next: "cap3_pizarra_maxine" }
+        ]
+    },
+    "cap3_pizarra_max": {
+        text: "Escribo 'MAX' en mayúsculas. El roce de la tiza contra la pizarra suena como un desafío[cite: 533]. —Nadie me llama Maxine —digo con firmeza, aunque por dentro mis manos tiemblan. Me siento en un pupitre vacío al fondo, tratando de ignorar el murmullo que se extiende por el aula. Mike Wheeler sigue mirándome como si fuera una pieza de un rompecabezas que no quiere resolver.",
+        choices: [
+            { text: "Ponerte los auriculares y desconectar", skill: "agilidad", roll: 4, next: "cap3_walkman" },
+            { text: "Observar qué notas se pasan los chicos", skill: "percepcion", roll: 5, next: "cap3_notas" }
+        ]
+    },
+    "cap3_pizarra_maxine": {
+        text: "Escribo 'Maxine'. Es el nombre que Neil me impone, el nombre que odio, pero hoy no tengo fuerzas para otra batalla[cite: 531, 567]. Me siento rápido y bajo la cabeza. A pesar de mi intento de pasar desapercibida, noto que los chicos del fondo no dejan de observarme. Soy 'la chica de California', una intrusa en su mundo perfectamente cerrado.",
+        choices: [
+            { text: "Esperar a que termine la clase", next: "cap3_pasillo" }
+        ]
+    },
+    "cap3_walkman": {
+        text: "Saco mi Walkman y me pongo los auriculares. No hay música, pero los chicos no lo saben. Es mi armadura contra Hawkins[cite: 528]. A través del silencio fingido, escucho a Dustin preguntar si seré yo la que batió su récord en el Arcade. 'MadMax', dicen. Así que ya lo saben.",
+        choices: [{ text: "Salir al pasillo al sonar la campana", next: "cap3_pasillo" }]
+    },
+    "cap3_notas": {
+        text: "Me inclino un poco y veo cómo Lucas le pasa un papel a Mike. Logro leer algo sobre 'reemplazo'. El ambiente en este grupo es tenso, como si estuvieran guardando un luto o un secreto demasiado grande para este pueblo[cite: 547]. Mike arruga la nota y me lanza una mirada cargada de resentimiento.",
+        choices: [{ text: "Ignorarlos y salir de clase", next: "cap3_pasillo" }]
+    },
+    "cap3_pasillo": {
+        text: "La campana suena y salgo disparada hacia mi casillero. Hawkins es diferente a San Diego; aquí el aire es pesado y todo parece moverse más lento. De repente, Lucas se acerca. Intenta ser amable, pero Mike lo arrastra lejos antes de que pueda decir nada. <br><br>Mientras guardo mis libros, veo a Billy en el aparcamiento, apoyado en su Camaro, rodeado de chicas. Sé que me está vigilando. Sé que, si hago algo mal, Neil se enterará[cite: 554, 560].",
+        choices: [
+            { text: "Caminar hacia el Arcade para despejarte", skill: "agilidad", roll: 4, next: "cap4_inicio" },
+            { text: "Ir directamente al coche de Billy", next: "cap4_inicio" }
+        ]
+    }
+
+
+
+
+
+};
+//************************************************************************************************************************************************
+</script>
+</body>
+</html>
