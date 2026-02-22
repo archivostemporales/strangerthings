@@ -163,7 +163,7 @@
     <audio id="bg-music" loop><source src="strangerthings.mp3" type="audio/mpeg"></audio>
 
     <div id="top-inventory-banner">
-        <span class="backpack-icon">🎒</span>
+        <span class="backpack-icon">🎒</span><h1 style="font-size: 1em; color: var(--st-red);">MAX, LA FUGITIVA</h1>
         <div id="items-slots-container" style="display: flex; gap: 10px;"></div>
     </div>
 
@@ -176,10 +176,9 @@
             <div style="margin-top: 20px;">
                 <div class="stat-row"><span>🛹 AGILIDAD</span><span id="stat-agi" class="stat-value"></span></div>
                 <div class="stat-row"><span>😠 TEMPLE</span><span id="stat-tem" class="stat-value"></span></div>
-                <div class="stat-row"><span>🔧 MECÁNICA</span><span id="stat-mec" class="stat-value"></span></div>
                 <div class="stat-row"><span>🎯 PRECISIÓN</span><span id="stat-pre" class="stat-value"></span></div>
                 <div class="stat-row"><span>🧠 INSTINTO</span><span id="stat-ins" class="stat-value"></span></div>
-                <div class="stat-row"><span>👁️ PERCEPCION</span><span id="stat-per" class="stat-value"></span></div>
+                <div class="stat-row"><span>👁️ PERCEPCIÓN</span><span id="stat-per" class="stat-value"></span></div>
             </div>
         </div>
 
@@ -218,7 +217,7 @@
     let state = {
         hp: MAX_HP,
         inventory: [],
-        skills: { agilidad: 2, temple: 1, mecanica: 0, precision: 1, instinto: 1, percepcion: 0 },
+        skills: { agilidad: 2, temple: 1, precision: 1, instinto: 1, percepcion: 0 },
         currentNode: 'prologo'
     };
 
@@ -263,7 +262,6 @@
         const format = (n) => (n >= 0 ? `+${n}` : n);
         document.getElementById('stat-agi').innerText = format(state.skills.agilidad);
         document.getElementById('stat-tem').innerText = format(state.skills.temple);
-        document.getElementById('stat-mec').innerText = format(state.skills.mecanica);
         document.getElementById('stat-pre').innerText = format(state.skills.precision);
         document.getElementById('stat-per').innerText = format(state.skills.percepcion);
         document.getElementById('stat-ins').innerText = format(state.skills.instinto);
@@ -355,7 +353,7 @@ const storyNodes = {
 
 
     "prologo": {
-        text: "<strong>PRÓLOGO: LA ESTACIÓN DE AUTOBUSES. </strong><br><br>El suelo de la estación de autobuses de San Diego está prácticamente invadido por colillas de cigarrillos. Ahora sólo luce un pálido color gris, como un almacén lleno de volantes arrugados y errabundos. Es casi medianoche. Estoy apoyada contra una pared de casilleros, uno de ellos chorrea algo pegajoso que ya se ha adherido a mis zapatos. <br><br>Todo ordinario, menos mi cabello: largo y rojo, lo más brillante de mí. Tengo mi billete a Los Ángeles que pagué con veinte dólares que cogí del joyero de mamá. Quiero perderme entre la multitud, pero soy la única aquí demasiado joven para tener una licencia de conducir.",
+        text: "<strong>PRÓLOGO: LA ESTACIÓN DE AUTOBUSES. </strong><br><br>El suelo de la estación de autobuses de San Diego está prácticamente invadido por colillas de cigarrillos. Ahora sólo luce un pálido color gris, como un almacén lleno de volantes arrugados y errabundos. Es casi medianoche. Estoy apoyada contra una pared de casilleros, uno de ellos chorrea algo pegajoso que ya se ha adherido a mis zapatos. <br><br>Todo es ordinario, menos mi cabello, que es largo y rojo, es lo más brillante de mí. Tengo mi billete a Los Ángeles que pagué con veinte dólares que robé del joyero de mi madre. Quiero perderme entre la multitud, pero soy la única aquí demasiado joven para tener una licencia de conducir.",
         choices: [
             { text: "Hacerte una coleta y caminar con naturalidad", skill: "temple", roll: 3, next: "prologo_2", fail: "prologo_2_nervios" },
             { text: "Caminar rápido cerca de los casilleros ocultando tu rostro", skill: "agilidad", roll: 4, next: "prologo_2", fail: "prologo_2_nervios" },
@@ -430,27 +428,27 @@ const storyNodes = {
         ]
     },
     "cap1_4": {
-        text: "Ella sacude la suciedad de mis manos. Aclara que pregunta si 'sano fácilmente'. Antes de que pueda responder, el aire es cortado en dos por el rugido de un motor. <br><br>El Camaro azul ignora el semáforo y se detiene en la acera. Billy está recostado en el asiento del conductor. Me observa de esa manera plana, vacía y pesada, pero con un filo brillante y peligroso. Baja la ventanilla. La música de <em>Quiet Riot</em> golpea el aire. <br>—Entra —ordena.",
+        text: "Ella sacude la suciedad de mis manos. Aclara que pregunta si 'sano fácilmente'. Antes de que pueda responder, el aire es cortado en dos por el rugido de un motor. <br><br>El Chevrolet azul ignora el semáforo y se detiene en la acera. Billy está recostado en el asiento del conductor. Me observa de esa manera plana, vacía y pesada, pero con un filo brillante y peligroso. Baja la ventanilla. La música de <em>Quiet Riot</em> golpea el aire. <br>—Entra —ordena.",
         choices: [
             { text: "Coger tu monopatín sin mostrar debilidad frente a él", skill: "temple", roll: 5, next: "cap1_5", fail: "cap1_5" },
             { text: "Subir rápido para no alargar la humillación", skill: "agilidad", roll: 4, next: "cap1_5", fail: "cap1_5" }
         ]
     },
     "cap1_5": {
-        text: "Alguna vez creí que el Camaro era genial, un auto en el que podrías robar un banco. Y pensé que tener a Billy como hermanastro cambiaría mi vida. <br><br>En el auto, recuerdo a los antiguos novios perdedores de mi madre: Donnie, Vic, Gus. Luego llegó Neil, diferente, un guardia de banco que le regalaba flores. La noche que conocimos a Billy en el minigolf, llegó tarde, con un pendiente y actitud de metalero. Neil lo miró con furia contenida. 'Saluda a Maxine', me dijo Neil. Odiaba ese nombre, pero guardé silencio.",
+        text: "Alguna vez creí que el Chevrolet era genial, un auto en el que podrías robar un banco. Y pensé que tener a Billy como hermanastro cambiaría mi vida. <br><br>En el auto, recuerdo a los antiguos novios perdedores de mi madre: Donnie, Vic, Gus. Luego llegó Neil, diferente, un guardia de banco que le regalaba flores. La noche que conocimos a Billy en el minigolf, llegó tarde, con un pendiente y actitud de metalero. Neil lo miró con furia contenida. 'Saluda a Maxine', me dijo Neil. Odiaba ese nombre, pero guardé silencio.",
         choices: [
             { text: "Recordar la dinámica de miedo que Neil imponía", skill: "percepcion", roll: 4, next: "cap1_6", fail: "cap1_6" },
             { text: "Recordar la fascinación inicial que sentiste por Billy", skill: "instinto", roll: 3, next: "cap1_6", fail: "cap1_6" }
         ]
     },
     "cap1_6": {
-        text: "Esa misma noche jugamos Skee-Ball. Le pedí a Billy que me llamara 'Max'. Él rio con voz áspera y dijo: 'Bien, Mad Max, entonces'. Más tarde, junto al Camaro azul que parecía un monstruo de otro mundo, le dije que yo sabía conducir. <br><br>—Sólo eres una niña —se burló él, acercándose con su marcado olor a cigarrillos y laca—. Pero supongo que incluso las niñas pueden distinguir una buena carroza. <br><br>Fui lo suficientemente tonta para creer que los Hargrove estaban aquí para que todo fuera mejor. Que esto era una verdadera familia.",
+        text: "Esa misma noche jugamos Skee-Ball. Le pedí a Billy que me llamara 'Max'. Él rio con voz áspera y dijo: 'Bien, Mad Max, entonces'. Más tarde, junto al Chevrolet azul que parecía un monstruo de otro mundo, le dije que yo sabía conducir. <br><br>—Sólo eres una niña —se burló él, acercándose con su marcado olor a cigarrillos y laca—. Pero supongo que incluso las niñas pueden distinguir una buena carroza. <br><br>Fui lo suficientemente tonta para creer que los Hargrove estaban aquí para que todo fuera mejor. Que esto era una verdadera familia.",
         choices: [
             { text: "Dejar atrás el recuerdo y enfrentar el presente", next: "fin_capitulo_1" }
         ]
     },
     "fin_capitulo_1": {
-        text: "El rugido del Camaro me devuelve a la realidad de Hawkins. El viaje a casa acaba de empezar. <br><br><em>(Fin del Capítulo 1)</em>",
+        text: "El rugido del Chevrolet me devuelve a la realidad de Hawkins. El viaje a casa acaba de empezar. <br><br><em>(Fin del Capítulo 1)</em>",
         choices: [
             { text: "Continuar al Capítulo 2...", next: "cap2_1" } // O el nodo que conecte al siguiente capítulo en tu juego
         ]
@@ -460,7 +458,7 @@ const storyNodes = {
     // CAPÍTULO DOS
     // ==========================================
     "cap2_1": {
-        text: "<strong>CAPÍTULO DOS: EL PRIMER DÍA. </strong><br><br>Mi primer día en la secundaria Hawkins fue un martes, para entonces el curso ya tenía más de un mes de haber dado inicio. Mamá metió la cabeza en mi habitación y me dijo que me levantara. Me dio la impresión de que tal vez tener a Billy por ahí todo el tiempo comenzaba a volverla un poco loca. <br><br>Ya estaba vestida con jeans y un suéter como el que usaba todos los días. Recordé cómo mamá intentó darme algo 'especial' para hoy, pero no estaba dispuesta a asistir a mi primer día en una nueva escuela vestida como alguien más. Saqué mi mochila y mi monopatín y salí detrás de Billy. El Camaro olía como siempre, a laca para el cabello y cigarrillos.",
+        text: "<strong>CAPÍTULO DOS: EL PRIMER DÍA. </strong><br><br>Mi primer día en la secundaria Hawkins fue un martes, para entonces el curso ya tenía más de un mes de haber dado inicio. Mamá metió la cabeza en mi habitación y me dijo que me levantara. Me dio la impresión de que tal vez tener a Billy por ahí todo el tiempo comenzaba a volverla un poco loca. <br><br>Ya estaba vestida con jeans y un suéter como el que usaba todos los días. Recordé cómo mamá intentó darme algo 'especial' para hoy, pero no estaba dispuesta a asistir a mi primer día en una nueva escuela vestida como alguien más. Saqué mi mochila y mi monopatín y salí detrás de Billy. El Chevrolet olía como siempre, a laca para el cabello y cigarrillos.",
         choices: [
             { text: "Subir rápido al auto para evitar problemas", skill: "agilidad", roll: 3, next: "cap2_2_viaje", fail: "cap2_2_viaje_tenso" },
             { text: "Tomarte tu tiempo, demostrando que no le temes a Billy", skill: "temple", roll: 4, next: "cap2_2_viaje", fail: "cap2_2_viaje_tenso" }
@@ -655,12 +653,12 @@ const storyNodes = {
         ]
     },
     "cap5_5_resignacion": {
-        text: "Decides que no vale la pena el riesgo. Te quedas mirando el techo, escuchando el motor del Camaro de Billy a lo lejos. Mañana será otro día igual de gris.",
+        text: "Decides que no vale la pena el riesgo. Te quedas mirando el techo, escuchando el motor del Chevrolet de Billy a lo lejos. Mañana será otro día igual de gris.",
         choices: [{ text: "Fin del Capítulo 5. Continuar...", next: "cap6_1_inicio" }]
     },
 
 "cap5_5_pesadillas": {
-        text: "El sueño te atrapa, pero no es un refugio. Sueñas con el ruido del mar de California mezclándose con los gritos de Neil y el estruendo del Camaro. Te ves a ti misma corriendo por un pasillo infinito donde todas las puertas están cerradas con llave. Te despiertas empapada en sudor, con el corazón martilleando en el pecho. Hawkins te está devorando lentamente.",
+        text: "El sueño te atrapa, pero no es un refugio. Sueñas con el ruido del mar de California mezclándose con los gritos de Neil y el estruendo del Chevrolet. Te ves a ti misma corriendo por un pasillo infinito donde todas las puertas están cerradas con llave. Te despiertas empapada en sudor, con el corazón martilleando en el pecho. Hawkins te está devorando lentamente.",
         choices: [{ text: "Tratar de calmarte y esperar al amanecer", next: "cap6_1_inicio" }]
     },
 
@@ -708,7 +706,7 @@ const storyNodes = {
     },
 
     "cap6_3_escape": {
-        text: "Bajas la cabeza y terminas tu cena mecánicamente. El sabor de la comida es como ceniza en tu boca. Neil y Susan (tu madre) intercambian palabras triviales sobre la mudanza, ignorando la tensión que casi hace estallar las paredes. Billy te lanza una última mirada de advertencia antes de levantarse y tomar las llaves del Camaro.",
+        text: "Bajas la cabeza y terminas tu cena mecánicamente. El sabor de la comida es como ceniza en tu boca. Neil y Susan (tu madre) intercambian palabras triviales sobre la mudanza, ignorando la tensión que casi hace estallar las paredes. Billy te lanza una última mirada de advertencia antes de levantarse y coger las llaves del Chevrolet.",
         choices: [{ text: "Subir a tu cuarto y encerrarte", next: "cap6_4_habitacion" }]
     },
 
@@ -802,7 +800,7 @@ const storyNodes = {
         choices: [{ text: "Abandonar la sala", next: "cap8_4_final" }]
     },
     "cap8_4_final": {
-        text: "Las clases terminan y por un momento olvidas el vacío de la sala AV al pensar en tu monopatín. Pero al salir al estacionamiento, el brillo del sol se refleja en el cromo del Camaro de Billy. La música metálica retumba desde el interior. El refugio escolar se ha terminado.",
+        text: "Las clases terminan y por un momento olvidas el vacío de la sala AV al pensar en tu monopatín. Pero al salir al estacionamiento, el brillo del sol se refleja en el cromo del Chevrolet de Billy. La música metálica retumba desde el interior. El refugio escolar se ha terminado.",
         choices: [{ text: "Subir al auto de Billy", next: "cap9_1_inicio" }]
     },
 
@@ -844,7 +842,7 @@ const storyNodes = {
     // CAPÍTULO DIEZ: EL PRECIO DE LA CURIOSIDAD
     // ==========================================
     "cap10_1_inicio": {
-        text: "<strong>CAPÍTULO DIEZ: EL PRECIO DE LA CURIOSIDAD. </strong><br><br>Al alejarte de Lucas, Billy te espera apoyado en el Camaro. Te pregunta con voz peligrosamente ecuánime quién es ese chico. Sabes que en Hawkins, Billy busca cualquier excusa para ejercer control. El viaje a casa es un infierno de velocidad y música a todo volumen; Billy conduce como si quisiera matar a alguien.",
+        text: "<strong>CAPÍTULO DIEZ: EL PRECIO DE LA CURIOSIDAD. </strong><br><br>Al alejarte de Lucas, Billy te espera apoyado en el Chevrolet. Te pregunta con voz peligrosamente ecuánime quién es ese chico. Sabes que en Hawkins, Billy busca cualquier excusa para ejercer control. El viaje a casa es un infierno de velocidad y música a todo volumen; Billy conduce como si quisiera matar a alguien.",
         choices: [
             { text: "Enfrentar a Billy: 'Solo es un chico de la escuela'", skill: "temple", roll: 5, next: "cap10_2_enfrentamiento", fail: "cap10_2_castigo_tabla" },
             { text: "Cerrar los ojos y esperar a llegar vivos", skill: "instinto", roll: 4, next: "cap10_2_viaje_tenso", fail: "cap10_2_castigo_tabla" }
@@ -855,7 +853,7 @@ const storyNodes = {
         choices: [{ text: "Llegar a casa", next: "cap10_3_llegada" }]
     },
     "cap10_2_viaje_tenso": {
-        text: "Te pegas al asiento mientras el Camaro derrapa en las curvas. Billy fuma en silencio, pero su mandíbula está apretada. El silencio es casi peor que sus gritos.",
+        text: "Te pegas al asiento mientras el Chevrolet derrapa en las curvas. Billy fuma en silencio, pero su mandíbula está apretada. El silencio es casi peor que sus gritos.",
         choices: [{ text: "Llegar a casa", next: "cap10_3_llegada" }]
     },
     "cap10_2_castigo_tabla": {
@@ -1013,14 +1011,14 @@ const storyNodes = {
     // CAPÍTULO QUINCE: LA CAZA DE BILLY
     // ==========================================
     "cap15_1_inicio": {
-        text: "<strong>CAPÍTULO QUINCE: LA CAZA DE BILLY. </strong><br><br>Mientras estás en casa de los Byers, no dejas de pensar en Billy. Él ha estado recorriendo las calles de Hawkins como un depredador, buscándote bajo las órdenes de Neil. Sabes que si te encuentra aquí, con 'esa gente', las consecuencias serán devastadoras. De repente, escuchas el rugido inconfundible del motor del Camaro acercándose a la casa.",
+        text: "<strong>CAPÍTULO QUINCE: LA CAZA DE BILLY. </strong><br><br>Mientras estás en casa de los Byers, no dejas de pensar en Billy. Él ha estado recorriendo las calles de Hawkins como un depredador, buscándote bajo las órdenes de Neil. Sabes que si te encuentra aquí, con 'esa gente', las consecuencias serán devastadoras. De repente, escuchas el rugido inconfundible del motor del Chevrolet acercándose a la casa.",
         choices: [
             { text: "Salir a enfrentarlo antes de que entre", skill: "temple", roll: 6, next: "cap15_2_cara_a_cara", fail: "cap15_2_miedo" },
             { text: "Esconderte y esperar que Steve lo maneje", skill: "instinto", roll: 4, next: "cap15_3_pelea_steve", fail: "cap15_3_pelea_steve" }
         ]
     },
     "cap15_2_cara_a_cara": {
-        text: "Sales al porche. Las luces del Camaro te ciegan. Billy baja del auto, destilando una rabia pura y contenida. 'Súbete al auto, Maxine', dice con esa voz que promete dolor. Te mantienes firme, aunque tus rodillas tiemblan.",
+        text: "Sales al porche. Las luces del Chevrolet te ciegan. Billy baja del auto, destilando una rabia pura y contenida. 'Súbete al auto, Maxine', dice con esa voz que promete dolor. Te mantienes firme, aunque tus rodillas tiemblan.",
         choices: [{ text: "Negarte a irte", next: "cap15_4_conflicto" }]
     },
     "cap15_2_miedo": {
@@ -1040,7 +1038,7 @@ const storyNodes = {
     },
     "cap15_5_final_exito": {
         text: "¡ZAS! Clavas la jeringuilla en el cuello de Billy. Sus ojos se abren con sorpresa antes de desplomarse. Recoges el bate con clavos y lo golpeas contra el suelo, justo entre sus piernas. '¡Déjanos en paz o te juro que te mato!', gritas. El silencio es absoluto. Mike te mira con un respeto que nunca antes habías visto.",
-        choices: [{ text: "Tomar las llaves del Camaro y salir de allí", next: "cap16_1_inicio" }]
+        choices: [{ text: "Coger las llaves del Chevrolet y salir de allí", next: "cap16_1_inicio" }]
     },
     "cap15_5_final_caos": {
         text: "Billy es demasiado rápido. Te aparta de un empujón y continúa su asalto. La casa de los Byers se convierte en un campo de batalla hasta que logran reducirlo entre varios. Te sientes agotada, pero la determinación de proteger a tus nuevos amigos es más fuerte que tu miedo.",
@@ -1052,14 +1050,14 @@ const storyNodes = {
     // CAPÍTULO DIECISÉIS: EL SEDANTE Y LA LLAVE
     // ==========================================
     "cap16_1_inicio": {
-        text: "<strong>CAPÍTULO DIECISÉIS: EL SEDANTE Y LA LLAVE. </strong><br><br>Billy yace inconsciente en el suelo de la casa de los Byers después de que le inyectaras el sedante. El silencio es absoluto mientras el grupo te mira con una mezcla de asombro y miedo. Tienes la llave del Camaro en la mano y, por primera vez, el poder ha cambiado de bando. Steve Harrington se recupera del suelo, limpiándose la sangre de la cara.",
+        text: "<strong>CAPÍTULO DIECISÉIS: EL SEDANTE Y LA LLAVE. </strong><br><br>Billy yace inconsciente en el suelo de la casa de los Byers después de que le inyectaras el sedante. El silencio es absoluto mientras el grupo te mira con una mezcla de asombro y miedo. Tienes la llave del Chevrolet en la mano y, por primera vez, el poder ha cambiado de bando. Steve Harrington se recupera del suelo, limpiándose la sangre de la cara.",
         choices: [
             { text: "Tomar el mando: 'Vamos a los túneles'", skill: "temple", roll: 5, next: "cap16_2_liderazgo", fail: "cap16_2_duda" },
             { text: "Asegurarte de que Billy no despierte pronto", skill: "percepcion", roll: 4, next: "cap16_3_asegurar", fail: "cap16_3_descuido" }
         ]
     },
 "cap16_2_liderazgo": {
-        text: "Metes a todos en el Camaro. Tus pies apenas llegan a los pedales, pero pisas el acelerador con una rabia liberadora. Los chicos gritan mientras derrapas para salir del camino de entrada. '¡No nos va a alcanzar!', exclamas. Por un momento, el motor ruge con tu propia voz.",
+        text: "Metes a todos en el Chevrolet. Tus pies apenas llegan a los pedales, pero pisas el acelerador con una rabia liberadora. Los chicos gritan mientras derrapas para salir del camino de entrada. '¡No nos va a alcanzar!', exclamas. Por un momento, el motor ruge con tu propia voz.",
         choices: [{ text: "Dirigirte al campo de calabazas de Merrill", next: "cap17_1_inicio" }]
     },
     "cap16_2_duda": {
@@ -1067,8 +1065,8 @@ const storyNodes = {
         choices: [{ text: "Subir al auto como pasajera", next: "cap17_1_inicio" }]
     },
     "cap16_3_asegurar": {
-        text: "Revisas los bolsillos de Billy y tomas su encendedor. Sabes que sin su auto y sin su orgullo, Billy es solo un matón herido. Te sientes más ligera, como si una parte de la Max fugitiva hubiera regresado.",
-        choices: [{ text: "Subir al Camaro", next: "cap17_1_inicio" }]
+        text: "Revisas los bolsillos de Billy y coges su encendedor. Sabes que sin su auto y sin su orgullo, Billy es solo un matón herido. Te sientes más ligera, como si una parte de la Max fugitiva hubiera regresado.",
+        choices: [{ text: "Subir al Chevrolet", next: "cap17_1_inicio" }]
     },
     "cap16_3_descuido": {
         text: "En tu prisa por salir, olvidas cerrar la puerta de la casa. El viento frío entra, recordándote que en Hawkins nada permanece oculto por mucho tiempo.",
@@ -1128,7 +1126,7 @@ const storyNodes = {
         choices: [{ text: "Mirar hacia el futuro", next: "fin_absoluto" }]
     },
     "epi_billy_derrotado": {
-        text: "Desde la ventana, ves el Camaro. Billy está allí, pero ya no tiene esa aura de depredador. Desde la noche del sedante, sabe que no eres una presa fácil. Has marcado tu territorio en la casa de los Hargrove.",
+        text: "Desde la ventana, ves el Chevrolet. Billy está allí, pero ya no tiene esa aura de depredador. Desde la noche del sedante, sabe que no eres una presa fácil. Has marcado tu territorio en la casa de los Hargrove.",
         choices: [
             { text: "Entrar al gimnasio con la cabeza alta", skill: "temple", roll: 4, next: "epi_baile_lucas", fail: "epi_baile_lucas" }
         ]
