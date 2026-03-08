@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú principal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=EB+Garamond:wght@800&family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --st-red: #d11141;
+            --st-red-glow: #ff0040;
+            --upside-blue: #66fcf1;
+            --dark-bg: #050505;
+            --panel-bg: rgba(15, 15, 15, 0.9);
+            --typewriter: 'Special Elite', serif;
+            --clean-font: 'Segoe UI', sans-serif;
+            --gold: #ffd700;
+        }
+
+        body::before {
+            content: " "; display: block; position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 9999; background-size: 100% 3px, 3px 100%; pointer-events: none;
+        }
+
+        body {
+            background-color: var(--dark-bg); color: #e0e0e0;
+            font-family: var(--typewriter); margin: 0; padding: 40px 20px;
+            min-height: 100vh; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+        }
+
+        header {
+            text-align: center; margin-bottom: 40px;
+            text-shadow: 0 0 20px var(--st-red-glow);
+        }
+
+        header h1 {
+            margin: 0; font-family: 'EB Garamond', serif;
+            color: transparent; -webkit-text-stroke: 2px var(--st-red);
+            font-size: 4rem; letter-spacing: 8px; text-transform: uppercase;
+        }
+        
+        header p {
+            color: var(--upside-blue); font-size: 1.2rem; margin-top: -10px;
+            letter-spacing: 2px;
+        }
+
+        .menu-container {
+            background: var(--panel-bg); border: 2px solid #333;
+            padding: 30px; width: 100%; max-width: 600px;
+            box-shadow: 0 0 30px rgba(209, 17, 65, 0.2);
+            position: relative; z-index: 10;
+        }
+
+        .season-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 15px 0; border-bottom: 1px dashed #444; gap: 10px;
+        }
+        .season-row:last-child { border-bottom: none; }
+
+        .season-info {
+            display: flex; flex-direction: column; flex-grow: 1;
+        }
+
+        .season-title {
+            font-family: 'EB Garamond', serif; font-size: 1.5rem;
+            color: #fff; text-transform: uppercase; letter-spacing: 2px;
+        }
+
+        .season-desc {
+            font-size: 0.8rem; color: #888; margin-top: 5px;
+        }
+
+        .btn-group {
+            display: flex; gap: 10px;
+        }
+
+        .btn {
+            background: #000; color: #eee; border: 1px solid #444;
+            padding: 10px 15px; font-family: var(--clean-font); cursor: pointer;
+            font-size: 0.8rem; text-transform: uppercase; font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-play { border-color: var(--st-red); color: var(--st-red); width: 100px; }
+        .btn-play:hover { background: var(--st-red); color: #000; box-shadow: 0 0 10px var(--st-red-glow); }
+
+        .btn-play.locked { border-color: #555; color: #555; }
+        .btn-play.locked:hover { background: #333; color: #fff; box-shadow: none; border-color: #777; }
+
+        .btn-fichas { border-color: var(--upside-blue); color: var(--upside-blue); }
+        .btn-fichas:hover { background: var(--upside-blue); color: #000; box-shadow: 0 0 10px var(--upside-blue); }
+
+        /* Estilo para el botón flotante de música */
+        #music-toggle {
+            position: fixed; bottom: 20px; right: 20px;
+            border-radius: 50%; width: 60px; height: 60px;
+            text-align: center; font-size: 1.5rem;
+            display: flex; align-items: center; justify-content: center;
+            border: 2px solid var(--st-red);
+            box-shadow: 0 0 15px var(--st-red-glow);
+            z-index: 100;
+        }
+        #music-toggle.off {
+            border-color: #555; color: #555; box-shadow: none;
+        }
+    </style>
+</head>
+<body onclick="iniciarAudio()">
+
+    <header>
+        <h1>STRANGER THINGS</h1>
+        <p>CAMPAÑA HAWKINS</p>
+    </header>
+
+    <div class="menu-container">
+        <div class="season-row">
+            <div class="season-info">
+                <span class="season-title">🚲 Temporada 1</span>
+                <span class="season-desc">El monstruo sin rostro. (Desbloqueado)</span>
+            </div>
+            <div class="btn-group">
+
+		<button class="btn btn-fichas" onclick="window.open('fichas/fichas1.html', '_blank')">FICHAS</button>
+                <button class="btn btn-play" onclick="window.location.href='escena_1_1.html'">JUGAR</button>
+            </div>
+        </div>
+
+        <div class="season-row">
+            <div class="season-info">
+                <span class="season-title" style="color: #aaa;">🛹 Temporada 2</span>
+                <span class="season-desc">El Azotamentes. (Requiere código)</span>
+            </div>
+            <div class="btn-group">
+		<button class="btn btn-fichas" onclick="window.open('fichas/fichas2.html', '_blank')">FICHAS</button>
+                <button class="btn btn-play locked" onclick="accesoTemporada(2, '2222', 'escena_2_1.html')">🔒 JUGAR</button>
+            </div>
+        </div>
+
+        <div class="season-row">
+            <div class="season-info">
+                <span class="season-title" style="color: #aaa;">🍦 Temporada 3</span>
+                <span class="season-desc">Verano del 85. (Requiere código)</span>
+            </div>
+            <div class="btn-group">
+		<button class="btn btn-fichas" onclick="window.open('fichas/fichas3.html', '_blank')">FICHAS</button>
+                <button class="btn btn-play locked" onclick="accesoTemporada(3, '3333', 'escena_3_1.html')">🔒 JUGAR</button>
+            </div>
+        </div>
+
+        <div class="season-row">
+            <div class="season-info">
+                <span class="season-title" style="color: #aaa;">🕰️ Temporada 4</span>
+                <span class="season-desc">Vecna. (Requiere código)</span>
+            </div>
+            <div class="btn-group">
+		<button class="btn btn-fichas" onclick="window.open('fichas/fichas4.html', '_blank')">FICHAS</button>
+                <button class="btn btn-play locked" onclick="accesoTemporada(4, '4444', 'escena_4_1.html')">🔒 JUGAR</button>
+            </div>
+        </div>
+
+        <div class="season-row">
+            <div class="season-info">
+                <span class="season-title" style="color: #aaa;">🎲 Temporada 5</span>
+                <span class="season-desc">El final. (Requiere código)</span>
+            </div>
+            <div class="btn-group">
+		<button class="btn btn-fichas" onclick="window.open('fichas/fichas5.html', '_blank')">FICHAS</button>
+                <button class="btn btn-play locked" onclick="accesoTemporada(5, '5555', 'escena_5_1.html')">🔒 JUGAR</button>
+            </div>
+        </div>
+    </div>
+
+    <button id="music-toggle" class="btn" onclick="toggleMusic(event)">📻</button>
+
+    <audio id="audioMenu" src="audio\strangerthings.mp3" loop></audio>
+    <audio id="audioClick" src="audio\log.mp3"></audio>
+	<audio id="audioClick" src="audio/clic.mp3"></audio>
+
+    <script>
+        let musicEnabled = true;
+        let started = false;
+
+        function iniciarAudio() {
+            if (!started) {
+                const music = document.getElementById('audioMenu');
+                music.play().catch(e => console.log("Esperando interacción..."));
+                started = true;
+            }
+        }
+
+        function toggleMusic(e) {
+            e.stopPropagation(); // Evita que el clic en el botón active el onclick del body
+            const music = document.getElementById('audioMenu');
+            const btn = document.getElementById('music-toggle');
+            
+            musicEnabled = !musicEnabled;
+            
+            if (musicEnabled) {
+                music.play();
+                btn.classList.remove('off');
+                btn.innerText = "📻";
+            } else {
+                music.pause();
+                btn.classList.add('off');
+                btn.innerText = "🔇";
+            }
+        }
+
+        function accesoTemporada(tempNum, codigoCorrecto, rutaDestino) {
+            document.getElementById('audioClick').play().catch(()=>{});
+            
+            let codigoIngresado = prompt(`ACCESO RESTRINGIDO - TEMPORADA ${tempNum}\nIntroduce el código de 4 dígitos:`);
+            
+            if (codigoIngresado === codigoCorrecto) {
+                alert(`Código aceptado. Cargando Temporada ${tempNum}...`);
+                window.location.href = rutaDestino;
+            } else if (codigoIngresado !== null) {
+                alert("CÓDIGO INCORRECTO. Acceso denegado.");
+            }
+        }
+
+function playClick() {
+    const sfx = document.getElementById('audioClick');
+    if (sfx) {
+        sfx.currentTime = 0; 
+        sfx.play().catch(() => {}); // El catch evita errores si el usuario aún no ha interactuado
+    }
+}
+document.addEventListener('click', playClick);
+
+    </script>
+</body>
+</html>
