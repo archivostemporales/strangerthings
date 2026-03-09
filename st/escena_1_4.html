@@ -374,7 +374,7 @@ function showEnding() {
     if(successes >= 5) {
         sceneImg.src = "images/146b.jpg"; 
         title = "FINAL BUENO";
-        desc = "Tenéis la ubicación exacta de Will.";
+        desc = "Tenéis la ubicación exacta de Will. Ganáis una recompensa.";
     } 
     // Condición 2: Final Normal (Exactamente 3 éxitos y 3 fallos)
     else if(successes === 3 || successes === 4) {
@@ -386,7 +386,7 @@ function showEnding() {
     else {
         sceneImg.src = "images/gameover.gif";
         title = "FINAL MALO";
-        desc = "Demasiados fallos.";
+        desc = "Demasiados fallos. Debéis repetir el capítulo.";
     }
 
     document.getElementById('text-content').innerHTML = `<strong>${title}</strong><br>Éxitos: ${successes} | Fallos: ${failures}`;

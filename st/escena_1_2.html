@@ -375,7 +375,7 @@ function showEnding() {
     if(successes >= 5) {
         sceneImg.src = "images/126b.jpg"; 
         title = "FINAL BUENO";
-        desc = " Once confía plenamente en vosotros";
+        desc = " Once confía plenamente en vosotros. Ganáis una recompensa.";
     } 
     // Condición 2: Final Normal (Exactamente 3 éxitos y 3 fallos)
     else if(successes === 3 || successes === 4) {
@@ -387,7 +387,7 @@ function showEnding() {
     else {
         sceneImg.src = "images/gameover.gif";
         title = "FINAL MALO";
-        desc = " Vuestros padres y el gobierno sospechan.";
+        desc = " Vuestros padres y el gobierno sospechan. Debéis repetir el capítulo.";
     }
 
     document.getElementById('text-content').innerHTML = `<strong>${title}</strong><br>Éxitos: ${successes} | Fallos: ${failures}`;

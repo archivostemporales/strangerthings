@@ -374,7 +374,7 @@ function showEnding() {
     if(successes >= 5) {
         sceneImg.src = "images/156b.jpg"; 
         title = "FINAL BUENO";
-        desc = "Steve, con su bate de clavos, se ha unido al grupo.";
+        desc = "Steve, con su bate de clavos, se ha unido al grupo. Ganáis una recompensa.";
     } 
     // Condición 2: Final Normal (Exactamente 3 éxitos y 3 fallos)
     else if(successes === 3 || successes === 4) {
@@ -386,7 +386,7 @@ function showEnding() {
     else {
         sceneImg.src = "gameover.gif";
         title = "FINAL MALO";
-        desc = "Demasiados fallos.";
+        desc = "Demasiados fallos. Debéis repetir el capítulo.";
     }
 
     document.getElementById('text-content').innerHTML = `<strong>${title}</strong><br>Éxitos: ${successes} | Fallos: ${failures}`;
