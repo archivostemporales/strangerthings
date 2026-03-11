@@ -86,7 +86,10 @@
         .result-window {
             margin: 10px 0; background: #000; border: 2px double var(--vecna-red);
             height: 70px; display: flex; align-items: center; justify-content: center;
-            font-family: 'Bangers', cursive; font-size: 3rem; color: var(--vecna-red);
+font-family: 'Courier New', Courier, monospace;
+font-size: 3.5rem; /* Subimos un poco el tamaño para que se vea mejor */
+color: var(--vecna-red);
+text-shadow: 0 0 15px var(--vecna-red);
             text-shadow: 0 0 15px var(--vecna-red);
         }
 
@@ -312,7 +315,7 @@ function renderStep() {
                 const numTemp = foto.replace(/[^0-9]/g, ''); 
                 banner.innerHTML += `
                     <div class="char-box">
-                        <a href="fichas/${nombreBase}${numTemp}.html" target="_blank" class="char-link">
+                        <a href="fichas/${nombreBase}${numTemp}.jpg" target="_blank" class="char-link">
                             <img src="images/${foto}" class="char-img">
                         </a>
                         <span class="char-name">${nombreBase.toUpperCase()}</span>
