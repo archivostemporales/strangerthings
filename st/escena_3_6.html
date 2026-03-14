@@ -134,6 +134,7 @@ text-shadow: 0 0 15px var(--vecna-red);
 </div>
 
     <audio id="audioMusic" src="audio/action.mp3" loop></audio>
+    <audio id="audioClick" src="audio/clic.mp3"></audio>
     <audio id="audioDice" src="audio/dados.mp3"></audio>
 
     <header><h1>T3 - E6: LA BATALLA DE STARCOURT</h1></header>
@@ -390,7 +391,7 @@ function showEnding() {
     else if(successes === 3 || successes === 4) {
         sceneImg.src = "images/366b.gif";
         title = "FINAL NORMAL: LA BRECHA RESIDUAL";
-        desc = "El portal se cerró, pero Billy murió sin perdón y una grieta sigue palpitando bajo el centro comercial. La amenaza no se ha ido, solo espera.Tres meses después, Once lee la carta de Hopper: 'Mantén la puerta abierta diez centímetros'. Aún hay esperanza. [Código Temporada 4: 4444]";
+        desc = "El portal se cerró, pero Billy murió sin perdón y una grieta sigue palpitando bajo el centro comercial. La amenaza no se ha ido, solo espera. Tres meses después, Once lee la carta de Hopper: 'Mantén la puerta abierta diez centímetros'. Aún hay esperanza. [Código Temporada 4: 4444]";
     } 
     // Condición 3: Final Malo (Menos de 3 éxitos)
     else {
@@ -449,6 +450,17 @@ function showEnding() {
 
 
         function goBack() { if(confirm("¿Volver al menú?")) window.location.href = "menu.html"; }
+
+/* ************************************** SONIDO CLICK ************************************** */
+function playClick() {
+    const clickSfx = document.getElementById('audioClick');
+    if (clickSfx) {
+        clickSfx.currentTime = 0; // Reinicia el sonido para que suene en cada clic rápido
+        clickSfx.play().catch(() => {}); // El catch evita errores si el navegador bloquea el audio
+    }
+}
+document.addEventListener('click', playClick);
+
     </script>
 </body>
 </html>

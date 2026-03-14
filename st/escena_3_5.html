@@ -134,6 +134,7 @@ text-shadow: 0 0 15px var(--vecna-red);
 </div>
 
     <audio id="audioMusic" src="audio/middle.mp3" loop></audio>
+    <audio id="audioClick" src="audio/clic.mp3"></audio>
     <audio id="audioDice" src="audio/dados.mp3"></audio>
 
     <header><h1>T3 - E5: EL ASEDIO A LA CABAÑA</h1></header>
@@ -448,6 +449,17 @@ function showEnding() {
 
 
         function goBack() { if(confirm("¿Volver al menú?")) window.location.href = "menu.html"; }
+
+/* ************************************** SONIDO CLICK ************************************** */
+function playClick() {
+    const clickSfx = document.getElementById('audioClick');
+    if (clickSfx) {
+        clickSfx.currentTime = 0; // Reinicia el sonido para que suene en cada clic rápido
+        clickSfx.play().catch(() => {}); // El catch evita errores si el navegador bloquea el audio
+    }
+}
+document.addEventListener('click', playClick);
+
     </script>
 </body>
 </html>
