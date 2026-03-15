@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ********************************************* TEMPORADA ********************************************* -->
     <title>TEMPORADA 1 - FICHAS</title>
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@800&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
@@ -65,13 +67,16 @@
 <body onclick="playClick()">
 
     <div class="terminal-control">
-        <h1>TEMPORADA 1</h1>
+
+<!-- ********************************************* TEMPORADA ********************************************* -->
+
+        <h1>TEMPORADA 1 </h1>
         <div class="btn-group">
-            <button class="btn-master" onclick="guardarPartida()">💾 GUARDAR PARTIDA (.txt)</button>
-            <button class="btn-master" onclick="document.getElementById('input-cargar').click()">📂 CARGAR PARTIDA (.txt)</button>
+            <button class="btn-master" onclick="guardarPartida()">💾 GUARDAR PARTIDA</button>
+            <button class="btn-master" onclick="document.getElementById('input-cargar').click()">📂 CARGAR PARTIDA</button>
             <input type="file" id="input-cargar" accept=".txt" onchange="cargarPartida(this)">
         </div>
-        <p style="font-family:'Special Elite'; font-size: 0.7rem; color: #888; margin-top: 15px;">Guarda el archivo en tu carpeta /saves para no perderlo.</p>
+<!--         <p style="font-family:'Special Elite'; font-size: 0.7rem; color: #888; margin-top: 15px;">Guarda el archivo en tu carpeta /saves para no perderlo.</p> -->
     </div>
 
     <div class="grid-personajes" id="contenedor"></div>
@@ -115,10 +120,10 @@
             contenedor.appendChild(ficha);
         });
 
-        // --- LÓGICA DE GUARDADO UNIVERSAL ---
+        // --- LÓGICA DE GUARDADO UNIVERSAL --- ****************************************************************************
 
         function guardarPartida() {
-            let nombreArchivo = prompt("Nombre del archivo de guardado:", "partida_stranger");
+            let nombreArchivo = prompt("Nombre del archivo de guardado:", "temporada1");
             if (!nombreArchivo) return;
 
             let datos = [];
@@ -142,7 +147,7 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
             
-            alert("✅ Archivo generado. Guárdalo en tu carpeta /saves.");
+            alert("✅ Archivo generado.");
         }
 
         function cargarPartida(input) {
