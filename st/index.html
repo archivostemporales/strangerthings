@@ -6,6 +6,57 @@
     <title>Menú principal - Stranger Things</title>
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=EB+Garamond:wght@800&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
+
+/* Estilos para los Modales */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: none; /* Oculto por defecto */
+    align-items: center; justify-content: center;
+    z-index: 20000;
+}
+
+.modal-content {
+    background: #0a0a0a;
+    border: 2px solid var(--st-red);
+    box-shadow: 0 0 30px var(--st-red-glow);
+    padding: 30px;
+    text-align: center;
+    max-width: 400px; width: 90%;
+    animation: flicker 0.2s infinite alternate; /* Efecto sutil de parpadeo */
+}
+
+@keyframes flicker {
+    from { box-shadow: 0 0 20px var(--st-red-glow); }
+    to { box-shadow: 0 0 35px var(--st-red-glow); }
+}
+
+.modal-content h2 {
+    color: var(--st-red);
+    font-family: 'EB Garamond', serif;
+    letter-spacing: 3px;
+}
+
+#modal-input {
+    background: #000;
+    border: 1px solid var(--upside-blue);
+    color: var(--upside-blue);
+    font-family: var(--typewriter);
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 10px;
+    width: 150px;
+    margin: 20px 0;
+    outline: none;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
         :root {
             --st-red: #d11141;
             --st-red-glow: #ff0040;
@@ -250,19 +301,51 @@
             }
         }
 
-        // Función para gestionar el acceso restringido a las temporadas
-        function accesoTemporada(tempNum, codigoCorrecto, rutaDestino) {
-            document.getElementById('audioClick').play().catch(()=>{});
-            
-            let codigoIngresado = prompt(`ACCESO RESTRINGIDO - TEMPORADA ${tempNum}\nIntroduce el código de 4 dígitos:`);
-            
-            if (codigoIngresado === codigoCorrecto) {
-                alert(`Código aceptado. Cargando Temporada ${tempNum}...`);
-                window.location.href = rutaDestino;
-            } else if (codigoIngresado !== null) {
-                alert("CÓDIGO INCORRECTO. Acceso denegado.");
-            }
-        }
+let temporadaPendiente = null;
+let codigoRequerido = "";
+let destinoPendiente = "";
+
+// Abrir el modal de acceso
+function accesoTemporada(tempNum, codigoCorrecto, rutaDestino) {
+    playClick();
+    temporadaPendiente = tempNum;
+    codigoRequerido = codigoCorrecto;
+    destinoPendiente = rutaDestino;
+
+    document.getElementById('modal-titulo').innerText = `ACCESO RESTRINGIDO - T${tempNum}`;
+    document.getElementById('modal-input').value = "";
+    document.getElementById('modal-acceso').style.display = 'flex';
+    document.getElementById('modal-input').focus();
+}
+
+// Verificar si el código es correcto
+function verificarCodigo() {
+    const input = document.getElementById('modal-input').value;
+    if (input === codigoRequerido) {
+        cerrarModal();
+        abrirAlerta("SISTEMA", `Código aceptado. Iniciando Temporada ${temporadaPendiente}...`);
+        setTimeout(() => {
+            window.location.href = destinoPendiente;
+        }, 1500);
+    } else {
+        abrirAlerta("ERROR", "CÓDIGO INCORRECTO. Intento registrado en el laboratorio.");
+    }
+}
+
+function cerrarModal() {
+    document.getElementById('modal-acceso').style.display = 'none';
+}
+
+// Funciones para el modal de Alerta (Reemplaza a alert)
+function abrirAlerta(titulo, mensaje) {
+    document.getElementById('alerta-titulo').innerText = titulo;
+    document.getElementById('alerta-mensaje').innerText = mensaje;
+    document.getElementById('modal-alerta').style.display = 'flex';
+}
+
+function cerrarAlerta() {
+    document.getElementById('modal-alerta').style.display = 'none';
+}
 
 
 function playClick() {
@@ -275,5 +358,26 @@ function playClick() {
 document.addEventListener('click', playClick);
 
     </script>
+
+<div id="modal-acceso" class="modal-overlay">
+    <div class="modal-content">
+        <h2 id="modal-titulo">ACCESO RESTRINGIDO</h2>
+        <p id="modal-mensaje">Introduce el código de seguridad:</p>
+        <input type="text" id="modal-input" maxlength="4" placeholder="0000">
+        <div class="modal-buttons">
+            <button class="btn btn-play" onclick="verificarCodigo()">ACEPTAR</button>
+            <button class="btn" onclick="cerrarModal()">CANCELAR</button>
+        </div>
+    </div>
+</div>
+
+<div id="modal-alerta" class="modal-overlay">
+    <div class="modal-content">
+        <h2 id="alerta-titulo">AVISO DEL SISTEMA</h2>
+        <p id="alerta-mensaje"></p>
+        <button class="btn btn-play" onclick="cerrarAlerta()">ENTENDIDO</button>
+    </div>
+</div>
+
 </body>
 </html>
