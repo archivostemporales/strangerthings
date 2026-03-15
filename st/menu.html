@@ -158,13 +158,25 @@
         #music-toggle.off {
             border-color: #555; color: #555; box-shadow: none;
         }
+
+/* Animación de entrada con glitch */
+.modal-content {
+    animation: flicker 0.2s infinite alternate, glitchEntrada 0.3s ease-out;
+}
+
+@keyframes glitchEntrada {
+    0% { transform: scale(0.9) skew(10deg); opacity: 0; filter: brightness(2); }
+    50% { transform: scale(1.05) skew(-5deg); filter: brightness(1.5); }
+    100% { transform: scale(1) skew(0deg); opacity: 1; filter: brightness(1); }
+}
+
     </style>
 </head>
 <body onclick="iniciarAudio()">
 
     <header>
         <h1>STRANGER THINGS</h1>
-        <p>CAMPAÑA HAWKINS</p>
+        <p>CAMPAÑA UTRERA</p>
     </header>
 
     <div class="menu-container">
@@ -229,7 +241,8 @@
 
     <audio id="audioMenu" src="audio\strangerthings.mp3" loop></audio>
     <audio id="audioClick" src="audio\log.mp3"></audio>
-	<audio id="audioClick" src="audio/clic.mp3"></audio>
+<audio id="audioStatic" src="audio/static.mp3"></audio>
+<audio id="audioClick" src="audio/clic.mp3"></audio>
 
     <script>
         let musicEnabled = true;
@@ -265,9 +278,15 @@ let temporadaPendiente = null;
 let codigoRequerido = "";
 let destinoPendiente = "";
 
-// Abrir el modal de acceso
+// Abrir el modal de acceso con sonido de estática
 function accesoTemporada(tempNum, codigoCorrecto, rutaDestino) {
-    playClick();
+    // Reproducir sonido de interferencia
+    const staticSfx = document.getElementById('audioStatic');
+    if (staticSfx) {
+        staticSfx.currentTime = 0;
+        staticSfx.play().catch(()=>{});
+    }
+
     temporadaPendiente = tempNum;
     codigoRequerido = codigoCorrecto;
     destinoPendiente = rutaDestino;
@@ -276,6 +295,19 @@ function accesoTemporada(tempNum, codigoCorrecto, rutaDestino) {
     document.getElementById('modal-input').value = "";
     document.getElementById('modal-acceso').style.display = 'flex';
     document.getElementById('modal-input').focus();
+}
+
+// Abrir alertas también con sonido
+function abrirAlerta(titulo, mensaje) {
+    const staticSfx = document.getElementById('audioStatic');
+    if (staticSfx) {
+        staticSfx.currentTime = 0;
+        staticSfx.play().catch(()=>{});
+    }
+
+    document.getElementById('alerta-titulo').innerText = titulo;
+    document.getElementById('alerta-mensaje').innerText = mensaje;
+    document.getElementById('modal-alerta').style.display = 'flex';
 }
 
 // Verificar si el código es correcto
@@ -296,12 +328,7 @@ function cerrarModal() {
     document.getElementById('modal-acceso').style.display = 'none';
 }
 
-// Funciones para el modal de Alerta (Reemplaza a alert)
-function abrirAlerta(titulo, mensaje) {
-    document.getElementById('alerta-titulo').innerText = titulo;
-    document.getElementById('alerta-mensaje').innerText = mensaje;
-    document.getElementById('modal-alerta').style.display = 'flex';
-}
+
 
 function cerrarAlerta() {
     document.getElementById('modal-alerta').style.display = 'none';
