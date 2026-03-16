@@ -138,6 +138,7 @@ text-shadow: 0 0 15px var(--vecna-red);
     <audio id="audioClick" src="audio/clic.mp3"></audio>
     <audio id="audioThunder" src="audio/thunder.mp3"></audio>
     <audio id="audioExplosion" src="audio/explosion.mp3"></audio>
+    <audio id="audioRays" src="audio/rays.mp3"></audio>
 
     <header><h1>T2 - E6: EL PORTAL</h1></header>
      <div class="main-wrapper">
@@ -305,8 +306,9 @@ function renderStep() {
 
     // --- LÓGICA DEL TELÉFONO (NUEVO) ---
     // El Acto 6 es la posición 5 (porque empezamos a contar desde 0)
+    // ----------------------------------
     if (step === 1) { 
-        const tlf = document.getElementById('audioTelefono');
+        const tlf = document.getElementById('audioRays');
         if (tlf) tlf.play().catch(() => {}); 
     }
     // ----------------------------------
