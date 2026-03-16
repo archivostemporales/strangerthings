@@ -137,6 +137,8 @@ text-shadow: 0 0 15px var(--vecna-red);
     <audio id="audioMusic" src="audio/forest.mp3" loop></audio>
     <audio id="audioDice" src="audio/dados.mp3"></audio>
 	<audio id="audioClick" src="audio/clic.mp3"></audio>
+<audio id="audioDemogorgon" src="audio/demogorgon.mp3"></audio>
+
 <!--***********************************************************************************************-->
     <header><h1>T1-E3: LUCES NAVIDEÑAS</h1></header>
 <!--***********************************************************************************************-->
@@ -300,7 +302,15 @@ function comenzarTodo() {
 function renderStep() {
     if(step >= trama.length) { showEnding(); return; }
     const data = trama[step];
-    
+
+    // --- LÓGICA DE SONIDO (NUEVO) ---
+    // El Acto 6 es la posición 5 (porque empezamos a contar desde 0)
+    if (step === 5) { 
+        const tlf = document.getElementById('audioDemogorgon');
+        if (tlf) tlf.play().catch(() => {}); 
+    }
+    // ----------------------------------
+
     document.getElementById('scene-img').src = data.img;
     document.getElementById('text-content').innerText = data.text;
 

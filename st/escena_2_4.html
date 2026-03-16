@@ -137,6 +137,11 @@ text-shadow: 0 0 15px var(--vecna-red);
     <audio id="audioMusic" src="audio/hospital.mp3" loop></audio>
     <audio id="audioDice" src="audio/dados.mp3"></audio>
 	<audio id="audioClick" src="audio/clic.mp3"></audio>
+	<audio id="audioMonitor" src="audio/hospital_monitor.mp3"></audio>
+	<audio id="audioDemodogs" src="audio/demodogs.mp3"></audio>
+	<audio id="audioDemogorgon" src="audio/demogorgon.mp3"></audio>
+
+
 <!--***********************************************************************************************-->
     <header><h1>T2 - E4: EL ESPÍA</h1></header>
 <!--***********************************************************************************************-->
@@ -301,6 +306,39 @@ function comenzarTodo() {
 function renderStep() {
     if(step >= trama.length) { showEnding(); return; }
     const data = trama[step];
+
+    // --- LÓGICA DEL TELÉFONO (NUEVO) ---
+    // El Acto 6 es la posición 5 (porque empezamos a contar desde 0)
+    if (step === 0) { 
+        const mon = document.getElementById('audioMonitor');
+        if (mon) mon.play().catch(() => {}); 
+    }
+    // ----------------------------------
+    if (step === 1) { 
+        const mon = document.getElementById('audioMonitor');
+        if (mon) mon.play().catch(() => {}); 
+    }
+    // ----------------------------------
+    if (step === 2) { 
+        const mon = document.getElementById('audioMonitor');
+        if (mon) mon.play().catch(() => {}); 
+    }
+    // ----------------------------------
+    if (step === 3) { 
+        const mon = document.getElementById('audioMonitor');
+        if (mon) mon.play().catch(() => {}); 
+    }
+    // ----------------------------------
+    if (step === 4) { 
+        const demo = document.getElementById('audioDemogorgon');
+        if (demo) demo.play().catch(() => {}); 
+    }
+    // ----------------------------------
+    if (step === 5) { 
+        const dem = document.getElementById('audioDemodogs');
+        if (dem) dem.play().catch(() => {});  
+    }
+    // ----------------------------------
     
     document.getElementById('scene-img').src = data.img;
     document.getElementById('text-content').innerText = data.text;

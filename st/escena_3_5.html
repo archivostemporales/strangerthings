@@ -136,6 +136,11 @@ text-shadow: 0 0 15px var(--vecna-red);
     <audio id="audioMusic" src="audio/middle.mp3" loop></audio>
     <audio id="audioClick" src="audio/clic.mp3"></audio>
     <audio id="audioDice" src="audio/dados.mp3"></audio>
+    <audio id="audioCar" src="audio/car.mp3"></audio>
+    <audio id="audioDemogorgon" src="audio/demogorgon_roar.mp3"></audio>
+    <audio id="audioReload" src="audio/reload.mp3"></audio>
+    <audio id="audioShotgun" src="audio/shotgun.mp3"></audio>
+    <audio id="audioThunder" src="audio/thunder.mp3"></audio>
 
     <header><h1>T3 - E5: EL ASEDIO A LA CABAÑA</h1></header>
      <div class="main-wrapper">
@@ -304,6 +309,50 @@ function comenzarTodo() {
 function renderStep() {
     if(step >= trama.length) { showEnding(); return; }
     const data = trama[step];
+
+    // --- LÓGICA DEL TELÉFONO (NUEVO) ---
+    // El Acto 6 es la posición 5 (porque empezamos a contar desde 0)
+    if (step === 0) { 
+        const tlf = document.getElementById('audioShotgun');
+        if (tlf) tlf.play().catch(() => {}); 
+    }
+    // ----------------------------------
+    // El Acto 6 es la posición 5 (porque empezamos a contar desde 0)
+    if (step === 0) { 
+        const tlf = document.getElementById('audioDemogorgon');
+        if (tlf) tlf.play().catch(() => {}); 
+    }
+    // ----------------------------------
+    // El Acto 6 es la posición 5 (porque empezamos a contar desde 0)
+    if (step === 1) { 
+        const tlf = document.getElementById('audioDemogorgon');
+        if (tlf) tlf.play().catch(() => {}); 
+    }
+    // ----------------------------------
+    // El Acto 6 es la posición 5 (porque empezamos a contar desde 0)
+    if (step === 2) { 
+        const tlf = document.getElementById('audioReload');
+        if (tlf) tlf.play().catch(() => {}); 
+    }
+    // ----------------------------------
+    // El Acto 6 es la posición 5 (porque empezamos a contar desde 0)
+    if (step === 3) { 
+        const tlf = document.getElementById('audioThunder');
+        if (tlf) tlf.play().catch(() => {}); 
+    }
+    // ----------------------------------
+    // El Acto 6 es la posición 5 (porque empezamos a contar desde 0)
+    if (step === 4) { 
+        const tlf = document.getElementById('audioDemogorgon');
+        if (tlf) tlf.play().catch(() => {}); 
+    }
+    // ----------------------------------
+    // El Acto 6 es la posición 5 (porque empezamos a contar desde 0)
+    if (step === 5) { 
+        const tlf = document.getElementById('audioCar');
+        if (tlf) tlf.play().catch(() => {}); 
+    }
+    // ----------------------------------
     
     document.getElementById('scene-img').src = data.img;
     document.getElementById('text-content').innerText = data.text;

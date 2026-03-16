@@ -137,6 +137,11 @@ text-shadow: 0 0 15px var(--vecna-red);
     <audio id="audioMusic" src="audio/lab.mp3" loop></audio>
     <audio id="audioDice" src="audio/dados.mp3"></audio>
 	<audio id="audioClick" src="audio/clic.mp3"></audio>
+	<audio id="audioComputer" src="audio/computer.mp3"></audio>
+	<audio id="audioCar" src="audio/car.mp3"></audio>
+	<audio id="audioDemodogs" src="audio/demodogs.mp3"></audio>
+	<audio id="audioDemogorgon" src="audio/demogorgon.mp3"></audio>
+
 <!--***********************************************************************************************-->
     <header><h1>T2 - E5: EL LABORATORIO</h1></header>
 <!--***********************************************************************************************-->
@@ -302,6 +307,29 @@ function comenzarTodo() {
 function renderStep() {
     if(step >= trama.length) { showEnding(); return; }
     const data = trama[step];
+
+    // --- LÓGICA DEL TELÉFONO (NUEVO) ---
+    // El Acto 6 es la posición 5 (porque empezamos a contar desde 0)
+    if (step === 0) { 
+        const tlf = document.getElementById('audioComputer');
+        if (tlf) tlf.play().catch(() => {}); 
+    }
+    // ----------------------------------
+    if (step === 2) { 
+        const tlf = document.getElementById('audioDemogorgon');
+        if (tlf) tlf.play().catch(() => {}); 
+    }
+    // ----------------------------------
+    if (step === 3) { 
+        const tlf = document.getElementById('audioCar');
+        if (tlf) tlf.play().catch(() => {}); 
+    }
+    // ----------------------------------
+    if (step === 5) { 
+        const tlf = document.getElementById('audioDemodogs');
+        if (tlf) tlf.play().catch(() => {}); 
+    }
+    // ----------------------------------
     
     document.getElementById('scene-img').src = data.img;
     document.getElementById('text-content').innerText = data.text;

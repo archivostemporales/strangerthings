@@ -136,6 +136,9 @@ text-shadow: 0 0 15px var(--vecna-red);
     <audio id="audioMusic" src="audio/action.mp3" loop></audio>
     <audio id="audioClick" src="audio/clic.mp3"></audio>
     <audio id="audioDice" src="audio/dados.mp3"></audio>
+    <audio id="audioReactor" src="audio/reactor.mp3"></audio>
+    <audio id="audioDemogorgon" src="audio/demogorgon_roar.mp3"></audio>
+    <audio id="audioGun" src="audio/gun.mp3"></audio>
 
     <header><h1>T3 - E6: LA BATALLA DE STARCOURT</h1></header>
      <div class="main-wrapper">
@@ -302,6 +305,34 @@ function comenzarTodo() {
 function renderStep() {
     if(step >= trama.length) { showEnding(); return; }
     const data = trama[step];
+
+    // --- LÓGICA DEL TELÉFONO (NUEVO) ---
+    // El Acto 6 es la posición 5 (porque empezamos a contar desde 0)
+    if (step === 0) { 
+        const tlf = document.getElementById('audioDemogorgon');
+        if (tlf) tlf.play().catch(() => {}); 
+    }
+    // ----------------------------------
+    if (step === 1) { 
+        const tlf = document.getElementById('audioGun');
+        if (tlf) tlf.play().catch(() => {}); 
+    }
+    // ----------------------------------
+    if (step === 2) { 
+        const tlf = document.getElementById('audioDemogorgon');
+        if (tlf) tlf.play().catch(() => {}); 
+    }
+    // ----------------------------------
+    if (step === 3) { 
+        const tlf = document.getElementById('audioReactor');
+        if (tlf) tlf.play().catch(() => {}); 
+    }
+    // ----------------------------------
+    if (step === 4) { 
+        const tlf = document.getElementById('audioDemogorgon');
+        if (tlf) tlf.play().catch(() => {}); 
+    }
+    // ----------------------------------
     
     document.getElementById('scene-img').src = data.img;
     document.getElementById('text-content').innerText = data.text;
