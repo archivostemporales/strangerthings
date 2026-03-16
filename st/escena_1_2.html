@@ -137,6 +137,8 @@ text-shadow: 0 0 15px var(--vecna-red);
     <audio id="audioMusic" src="audio/mansion.mp3" loop></audio>
     <audio id="audioDice" src="audio/dados.mp3"></audio>
 	<audio id="audioClick" src="audio/clic.mp3"></audio>
+	<audio id="audioCar" src="audio/car.mp3"></audio>
+
 <!--***********************************************************************************************-->
     <header><h1>T1 - E2: LA CHICA RARA DE LA CALLE MAPLE</h1></header>
 <!--***********************************************************************************************-->
@@ -300,6 +302,18 @@ function comenzarTodo() {
 function renderStep() {
     if(step >= trama.length) { showEnding(); return; }
     const data = trama[step];
+
+    // --- LÓGICA  ---
+    if (step === 4) { 
+        const snd = document.getElementById('audioCar');
+        if (snd) snd.play().catch(() => {}); 
+    }
+    // ----------------------------------
+    if (step === 5) { 
+        const snd = document.getElementById('audioCar');
+        if (snd) snd.play().catch(() => {}); 
+    }
+    // ----------------------------------
     
     document.getElementById('scene-img').src = data.img;
     document.getElementById('text-content').innerText = data.text;

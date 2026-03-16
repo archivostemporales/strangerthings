@@ -306,15 +306,7 @@ function comenzarTodo() {
 function renderStep() {
     if(step >= trama.length) { showEnding(); return; }
     const data = trama[step];
-
-    // --- LÓGICA DEL TELÉFONO (NUEVO) ---
-    // El Acto 6 es la posición 5 (porque empezamos a contar desde 0)
-    if (step === 0) { 
-        const tlf = document.getElementById('audioMonitor');
-        if (tlf) tlf.play().catch(() => {}); 
-    }
-    // ----------------------------------
-    
+  
     document.getElementById('scene-img').src = data.img;
     document.getElementById('text-content').innerText = data.text;
 
