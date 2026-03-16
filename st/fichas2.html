@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ********************************************* TEMPORADA ********************************************* -->
+    <title>TEMPORADA 2 - FICHAS</title>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@800&family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --vecna-red: #b30000;
+            --bone-white: #e0d8c3;
+            --dark-bg: #050505;
+            --panel-bg: rgba(30, 0, 0, 0.85);
+            --gold: #ffd700;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--bone-white);
+            font-family: 'EB Garamond', serif;
+            margin: 0; padding: 20px;
+            background-image: radial-gradient(circle, #200000 0%, #050505 100%);
+            min-height: 100vh;
+        }
+
+        .terminal-control {
+            background: rgba(0,0,0,0.9);
+            border: 2px solid var(--vecna-red);
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto 30px auto;
+            text-align: center;
+            box-shadow: 0 0 20px var(--vecna-red);
+            border-radius: 10px;
+        }
+
+        h1 { color: var(--vecna-red); font-size: 2.2rem; text-shadow: 0 0 10px var(--vecna-red); letter-spacing: 5px; margin-top: 0; text-transform: uppercase; }
+
+        .btn-group { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+
+        .btn-master {
+            background: transparent; color: var(--gold); border: 1px solid var(--gold);
+            padding: 12px 24px; font-family: 'Special Elite', sans-serif; cursor: pointer; transition: 0.3s;
+            font-size: 0.9rem; text-transform: uppercase;
+        }
+
+        .btn-master:hover { background: var(--gold); color: black; box-shadow: 0 0 15px var(--gold); }
+
+        .grid-personajes { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 25px; max-width: 1400px; margin: 0 auto; }
+        .ficha-personaje { background: var(--panel-bg); border: 2px solid var(--vecna-red); display: flex; padding: 20px; border-radius: 8px; }
+        
+        .foto-perfil { width: 100px; height: 100px; border: 3px solid var(--bone-white); object-fit: cover; cursor: pointer; margin-right: 20px; transition: 0.3s; }
+        .foto-perfil:hover { border-color: var(--gold); transform: scale(1.05); box-shadow: 0 0 15px var(--vecna-red); }
+
+        .nombre { font-size: 1.8rem; color: var(--gold); display: block; margin-bottom: 10px; }
+        .cuadradito { width: 22px; height: 22px; border: 2px solid var(--vecna-red); cursor: pointer; display: inline-block; margin-right: 5px; background: rgba(0,0,0,0.3); }
+        .cuadradito.marcado { background-color: var(--vecna-red); box-shadow: 0 0 10px var(--vecna-red); }
+        .inventario { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid var(--vecna-red); color: #fff; font-family: 'Special Elite'; padding: 8px; resize: vertical; box-sizing: border-box; }
+        label { font-family: 'Special Elite'; font-size: 0.7rem; display: block; margin-bottom: 5px; opacity: 0.7; }
+
+        /* Input oculto para cargar */
+        #input-cargar { display: none; }
+    </style>
+</head>
+<body onclick="playClick()">
+
+    <div class="terminal-control">
+
+<!-- ********************************************* TEMPORADA ********************************************* -->
+
+        <h1>TEMPORADA 2 </h1>
+        <div class="btn-group">
+            <button class="btn-master" onclick="guardarPartida()">💾 GUARDAR PARTIDA</button>
+            <button class="btn-master" onclick="document.getElementById('input-cargar').click()">📂 CARGAR PARTIDA</button>
+            <input type="file" id="input-cargar" accept=".txt" onchange="cargarPartida(this)">
+        </div>
+<!--         <p style="font-family:'Special Elite'; font-size: 0.7rem; color: #888; margin-top: 15px;">Guarda el archivo en tu carpeta /saves para no perderlo.</p> -->
+    </div>
+
+    <div class="grid-personajes" id="contenedor"></div>
+
+    <audio id="audioClick" src="audio/clic.mp3"></audio>
+
+    <script>
+        const personajes = [
+            { id: "once", nombre: "ONCE", img: "once2.jpg" },
+            { id: "mike", nombre: "MIKE", img: "mike2.jpg" },
+            { id: "will", nombre: "WILL", img: "will2.jpg" },
+            { id: "dustin", nombre: "DUSTIN", img: "dustin2.jpg" },
+            { id: "lucas", nombre: "LUCAS", img: "lucas2.jpg" },
+            { id: "max", nombre: "MAX", img: "max2.jpg" },
+            { id: "jonathan", nombre: "JONATHAN", img: "jonathan2.jpg" },
+            { id: "nancy", nombre: "NANCY", img: "nancy2.jpg" },
+            { id: "steve", nombre: "STEVE", img: "steve2.jpg" },
+            { id: "hopper", nombre: "HOPPER", img: "hopper2.jpg" },
+            { id: "joyce", nombre: "JOYCE", img: "joyce2.jpg" },
+            { id: "bob", nombre: "BOB", img: "bob2.jpg" }
+        ];
+
+        const contenedor = document.getElementById('contenedor');
+        personajes.forEach(p => {
+            const ficha = document.createElement('div');
+            ficha.className = 'ficha-personaje';
+            const nomBase = p.img.split('.')[0];
+            ficha.innerHTML = `
+                <div class="foto-link">
+                    <a href="fichas/${nomBase}.jpg" target="_blank">
+                        <img src="images/${p.img}" class="foto-perfil" title="Click para ver ficha">
+                    </a>
+                </div>
+                <div style="flex-grow:1">
+                    <span class="nombre">${p.nombre}</span>
+                    <label>ESTRÉS</label>
+                    <div style="margin-bottom:15px">
+                        ${[1,2,3,4,5].map(() => `<div class="cuadradito" onclick="this.classList.toggle('marcado')"></div>`).join('')}
+                    </div>
+                    <label>INVENTARIO</label>
+                    <textarea class="inventario" rows="2"></textarea>
+                </div>
+            `;
+            contenedor.appendChild(ficha);
+        });
+
+        // --- LÓGICA DE GUARDADO UNIVERSAL --- ****************************************************************************
+
+        function guardarPartida() {
+            let nombreArchivo = prompt("Nombre del archivo de guardado:", "temporada2");
+            if (!nombreArchivo) return;
+
+            let datos = [];
+            document.querySelectorAll('.ficha-personaje').forEach(ficha => {
+                let estres = "";
+                ficha.querySelectorAll('.cuadradito').forEach(c => estres += c.classList.contains('marcado') ? "1" : "0");
+                datos.push({ estres, inv: ficha.querySelector('.inventario').value });
+            });
+
+            // Convertir a string Base64
+            const contenido = btoa(unescape(encodeURIComponent(JSON.stringify(datos))));
+            
+            // Método de descarga forzada (Plan B)
+            const blob = new Blob([contenido], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = nombreArchivo + ".txt";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert("✅ Archivo generado.");
+        }
+
+        function cargarPartida(input) {
+            const archivo = input.files[0];
+            if (!archivo) return;
+
+            const lector = new FileReader();
+            lector.onload = function(e) {
+                try {
+                    const contenido = e.target.result;
+                    const datos = JSON.parse(decodeURIComponent(escape(atob(contenido))));
+                    const fichas = document.querySelectorAll('.ficha-personaje');
+
+                    datos.forEach((d, i) => {
+                        let cuadrados = fichas[i].querySelectorAll('.cuadradito');
+                        for (let j = 0; j < 5; j++) {
+                            if (d.estres[j] === "1") cuadrados[j].classList.add('marcado');
+                            else cuadrados[j].classList.remove('marcado');
+                        }
+                        fichas[i].querySelector('.inventario').value = d.inv;
+                    });
+                    alert("📂 Partida cargada: " + archivo.name);
+                } catch (err) {
+                    alert("❌ Error: El archivo no es un guardado válido.");
+                }
+                input.value = ""; // Limpiar para permitir cargar el mismo archivo luego
+            };
+            lector.readAsText(archivo);
+        }
+
+        function playClick() {
+            const sfx = document.getElementById('audioClick');
+            if(sfx) { sfx.currentTime = 0; sfx.play().catch(()=>{}); }
+        }
+    </script>
+</body>
+</html>
