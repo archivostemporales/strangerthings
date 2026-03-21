@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>T3-E1: Verano roto y ratas rabiosas</title>
+    <title>T4-E7: La masacre en el laboratorio de Hawkins</title>
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=EB+Garamond:wght@800&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -104,7 +104,6 @@ text-shadow: 0 0 15px var(--vecna-red);
             background: rgba(255, 215, 0, 0.05); color: var(--gold); display: none;
             text-align: center; font-weight: bold;
         }
-
 /* --- NUEVOS ESTILOS PARA LA PANTALLA DE INICIO --- */
 #splash-screen {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -125,7 +124,6 @@ text-shadow: 0 0 15px var(--vecna-red);
     0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
     20%, 24%, 55% { opacity: 0.3; text-shadow: none; }
 }
-
     </style>
 </head>
 <body>
@@ -133,28 +131,35 @@ text-shadow: 0 0 15px var(--vecna-red);
     <button class="btn-inicio-central">INICIAR</button>
 </div>
 
-    <audio id="audioMusic" src="audio/upside.mp3" loop></audio>
+<!-- ************************************** AUDIOS ************************************** -->
     <audio id="audioClick" src="audio/clic.mp3"></audio>
+    <audio id="audioMusic" src="audio/upside.mp3" loop></audio>
     <audio id="audioDice" src="audio/dados.mp3"></audio>
-    <audio id="audioRats" src="audio/rats.mp3"></audio>
+    <audio id="audioBats" src="audio/bats.mp3"></audio>
+    <audio id="audioScream" src="audio/mans_scream.mp3"></audio>
+    <audio id="audioVecna" src="audio/vecna_nancy.mp3"></audio>
 
-    <header><h1>T3 - E1: VERANO ROTO Y RATAS RABIOSAS</h1></header>
+    <header><h1>T4 - E7: LA MASACRE EN EL LABORATORIO DE HAWKINS</h1></header>
      <div class="main-wrapper">
 <aside class="side-panel" id="banner-personajes">
  
-            <div class="char-box"><a href="fichas/once3.jpg" target="_blank" class="char-link"><img src="images/once3.jpg" class="char-img"></a><span class="char-name">ONCE</span></div>
-            <div class="char-box"><a href="fichas/mike3.jpg" target="_blank" class="char-link"><img src="images/mike3.jpg" class="char-img"></a><span class="char-name">MIKE</span></div>
-            <div class="char-box"><a href="fichas/will3.jpg" target="_blank" class="char-link"><img src="images/will3.jpg" class="char-img"></a><span class="char-name">WILL</span></div>
-            <div class="char-box"><a href="fichas/dustin3.jpg" target="_blank" class="char-link"><img src="images/dustin3.jpg" class="char-img"></a><span class="char-name">DUSTIN</span></div>
-            <div class="char-box"><a href="fichas/lucas3.jpg" target="_blank" class="char-link"><img src="images/lucas3.jpg" class="char-img"></a><span class="char-name">LUCAS</span></div>
-            <div class="char-box"><a href="fichas/max3.jpg" target="_blank" class="char-link"><img src="images/max3.jpg" class="char-img"></a><span class="char-name">MAX</span></div>
-            <div class="char-box"><a href="fichas/erica3.jpg" target="_blank" class="char-link"><img src="images/erica3.jpg" class="char-img"></a><span class="char-name">ERICA</span></div>
-            <div class="char-box"><a href="fichas/jonathan3.jpg" target="_blank" class="char-link"><img src="images/jonathan3.jpg" class="char-img"></a><span class="char-name">JONATHAN</span></div>
-            <div class="char-box"><a href="fichas/nancy3.jpg" target="_blank" class="char-link"><img src="images/nancy3.jpg" class="char-img"></a><span class="char-name">NANCY</span></div>
-            <div class="char-box"><a href="fichas/steve3.jpg" target="_blank" class="char-link"><img src="images/steve3.jpg" class="char-img"></a><span class="char-name">STEVE</span></div>
-            <div class="char-box"><a href="fichas/robin3.jpg" target="_blank" class="char-link"><img src="images/robin3.jpg" class="char-img"></a><span class="char-name">ROBIN</span></div>
-            <div class="char-box"><a href="fichas/hopper3.jpg" target="_blank" class="char-link"><img src="images/hopper3.jpg" class="char-img"></a><span class="char-name">HOPPER</span></div>
-            <div class="char-box"><a href="fichas/joyce3.jpg" target="_blank" class="char-link"><img src="images/joyce3.jpg" class="char-img"></a><span class="char-name">JOYCE</span></div>
+
+            <div class="char-box"><a href="fichas/once4.jpg" target="_blank" class="char-link"><img src="images/once4.jpg" class="char-img"></a><span class="char-name">ONCE</span></div>
+            <div class="char-box"><a href="fichas/will4.jpg" target="_blank" class="char-link"><img src="images/will4.jpg" class="char-img"></a><span class="char-name">WILL</span></div>
+            <div class="char-box"><a href="fichas/mike4.jpg" target="_blank" class="char-link"><img src="images/mike4.jpg" class="char-img"></a><span class="char-name">MIKE</span></div>
+            <div class="char-box"><a href="fichas/dustin4.jpg" target="_blank" class="char-link"><img src="images/dustin4.jpg" class="char-img"></a><span class="char-name">DUSTIN</span></div>
+            <div class="char-box"><a href="fichas/lucas4.jpg" target="_blank" class="char-link"><img src="images/lucas4.jpg" class="char-img"></a><span class="char-name">LUCAS</span></div>
+            <div class="char-box"><a href="fichas/max4.jpg" target="_blank" class="char-link"><img src="images/max4.jpg" class="char-img"></a><span class="char-name">MAX</span></div>
+            <div class="char-box"><a href="fichas/jonathan4.jpg" target="_blank" class="char-link"><img src="images/jonathan4.jpg" class="char-img"></a><span class="char-name">JONATHAN</span></div>
+            <div class="char-box"><a href="fichas/nancy4.jpg" target="_blank" class="char-link"><img src="images/nancy4.jpg" class="char-img"></a><span class="char-name">NANCY</span></div>
+            <div class="char-box"><a href="fichas/steve4.jpg" target="_blank" class="char-link"><img src="images/steve4.jpg" class="char-img"></a><span class="char-name">STEVE</span></div>
+            <div class="char-box"><a href="fichas/robin4.jpg" target="_blank" class="char-link"><img src="images/robin4.jpg" class="char-img"></a><span class="char-name">ROBIN</span></div>
+            <div class="char-box"><a href="fichas/eddie4.jpg" target="_blank" class="char-link"><img src="images/eddie4.jpg" class="char-img"></a><span class="char-name">EDDIE</span></div>
+            <div class="char-box"><a href="fichas/erica4.jpg" target="_blank" class="char-link"><img src="images/erica4.jpg" class="char-img"></a><span class="char-name">ERICA</span></div>
+            <div class="char-box"><a href="fichas/hopper4.jpg" target="_blank" class="char-link"><img src="images/hopper4.jpg" class="char-img"></a><span class="char-name">HOPPER</span></div>
+            <div class="char-box"><a href="fichas/joyce4.jpg" target="_blank" class="char-link"><img src="images/joyce4.jpg" class="char-img"></a><span class="char-name">JOYCE</span></div>
+            <div class="char-box"><a href="fichas/murray4.jpg" target="_blank" class="char-link"><img src="images/murray4.jpg" class="char-img"></a><span class="char-name">MURRAY</span></div>
+
 
 
 
@@ -162,14 +167,14 @@ text-shadow: 0 0 15px var(--vecna-red);
         </aside>
 
         <main style="display: flex; flex-direction: column;">
-		<img id="scene-img" src="images/st3.gif" class="scene-frame">
+		<img id="scene-img" src="images/471.gif" class="scene-frame">
             <div class="narrative-text">
                 <div id="text-content">
 
 
 
 
-                   Hawkins, 1985. El verano del amor está a punto de convertirse en el verano del horror. Mientras Mike y Once están en el Starcourt, una anomalía electromagnética azota el pueblo, y miles de ratas corren hacia una vieja fábrica.
+    Los secretos del Proyecto Nina finalmente salen a la luz. Mientras el grupo en Hawkins intenta rescatar a Nancy, Steve, Robin y Eddie del Mundo del Revés, Once revive el día más sangriento de su vida.
 
 
 
@@ -183,7 +188,7 @@ text-shadow: 0 0 15px var(--vecna-red);
         </main>
 
         <aside class="side-panel">
-            <label style="font-size: 1rem; color: var(--vecna-red); text-align: center;">DADOS</label>
+            <label style="font-size: 0.6rem; color: var(--vecna-red); text-align: center;">DADOS</label>
             <div class="dice-grid">
                 <button class="dice-btn" onclick="roll(4)">d4</button>
                 <button class="dice-btn" onclick="roll(6)">d6</button>
@@ -223,72 +228,72 @@ text-shadow: 0 0 15px var(--vecna-red);
 
 // *********************************************************** ACTOS ************************************************************************************
 
-            {
-                text: "ACTO 1: El Corte Eléctrico. Mike y Once están en el cine del Starcourt cuando de repente, las luces parpadean. Una onda de choque recorre el edificio y Once siente una presencia en el Vacío.",
-        img: "images/311.jpg",
-participantes: ["once3.jpg", "mike3.jpg"],
-                options: [
-                    { label: "Once: Buscar el origen de la perturbación en el Vacío", attr: "Agallas", dif: 9 },
-                    { label: "Escapar a un sitio seguro", attr: "Evasión", dif: 9 }
-                ],
-                win: "Once ve a Billy en el Vacío. Lográis salir sin ser vistos por Hopper, que patrulla fuera.",
-                lose: "La onda deja a Once aturdida y Mike tropieza en la huida. (+1 Adversidad)"
-            },
-            {
-                text: "ACTO 2: La Llamada. Nancy y Jonathan investigan una queja en la granja Driscoll. El sótano huele a putrefacción y hay sacos de fertilizante devorados.",
-        img: "images/312.jpg",
-participantes: ["nancy3.jpg", "jonathan3.jpg"],
-                options: [
-                    { label: "Investigar el oscuro sótano", attr: "Cerebro", dif: 9 },
-                    { label: "Forzar la puerta del sótano que se ha atascado", attr: "Músculo", dif: 9 }
-                ],
-                win: "Bajáis y descubrís que las ratas han explotado, dejando una masa viscosa que se mueve por sí sola.",
-                lose: "Bajáis y descubrís que las ratas han explotado, dejando una masa viscosa que se mueve por sí sola. Respiráis gases tóxicos. (+1 Adversidad)"
-            },
-            {
-                text: "ACTO 3: El Horror Viscoso. La masa de ratas muertas empieza a arrastrarse fuera de la granja.",
-        img: "images/313.webp",
-participantes: ["nancy3.jpg", "jonathan3.jpg"],
-                options: [
-                    { label: "Fotografiar la masa moviéndose", attr: "Cerebro", dif: 9 },
-                    { label: "Calmar a la Sra. Driscoll", attr: "Encanto", dif: 9 }
-                ],
-                win: "¡Evidencia fotográfica conseguida! Calmáis a la anciana y obtenéis la pista de 'el hombre de hierro'.",
-                lose: "Atraéis a una rata que casi os muerde. (+1 Adversidad)"
-            },
-            {
-                text: "ACTO 4: La Conexión Telepática. El Azotamentes ha vuelto. Billy mira a Once y susurra: 'Tú nos dejaste entrar'.",
-        img: "images/314.jpg",
-participantes: ["once3.jpg", "mike3.jpg"],
-                options: [
-                    { label: "Romper la conexión gritando", attr: "Agallas", dif: 9 },
-                    { label: "Contactar con la pandilla para avisarlos", attr: "Encanto", dif: 9 }
-                ],
-                win: "Once rompe el vínculo.",
-                lose: "Once sufre una hemorragia nasal. (+1 Adversidad)"
-            },
-            {
-                text: "ACTO 5: Anomalía Magnética. En la granja, todos los imanes de las neveras apuntan hacia una sola dirección: La fábrica de acero.",
-        img: "images/315.png",
-participantes: ["nancy3.jpg", "jonathan3.jpg"],
-                options: [
-                    { label: "Deducir la fuente electromagnética", attr: "Cerebro", dif: 9 },
-                    { label: "Escapar del sótano antes de que emerja el monstruo", attr: "Evasión", dif: 9 }
-                ],
-                win: "Derribáis la puerta a tiempo. Sabéis exactamente a dónde ha ido la criatura.",
-                lose: "Quedáis aturdidos por los vapores químicos. (+1 Adversidad)"
-            },
-            {
-                text: "ACTO 6: La fuga. La situación se descontrola. Tenéis que huir del Starcourt sin levantar sospechas.",
-        img: "images/316.png",
-participantes: ["once3.jpg", "mike3.jpg"],
-                options: [
-                    { label: "Once usa un impulso mental para abrir una puerta", attr: "Agallas", dif: 9 },
-                    { label: "Encontrar el coche de Billy en el parking", attr: "Evasión", dif: 9 }
-                ],
-                win: "Huis del Starcourt y localizáis el coche de Billy, cubierto de ratas muertas. El misterio acaba de empezar.",
-                lose: "La seguridad del Starcourt os detiene. La bronca de Hopper es monumental. (+1 Adversidad)"
-            }
+    {
+        text: "ACTO 1: BATALLA EN EL BOSQUE SOMBRÍO. Atrapados en el Mundo del Revés y rodeados por Demobats, Nancy, Robin y Eddie deben proteger a un Steve herido mientras buscan un lugar seguro para reagruparse.",
+        img: "images/471.gif",
+participantes: ["nancy4.jpg", "eddie4.jpg", "robin4.jpg", "steve4.jpg"],
+        options: [
+            { label: "Liderar la defensa con remos y armas", attr: "Pelea", dif: 10 },
+            { label: "Huir a través de la maleza", attr: "Evasión", dif: 10 }
+        ],
+        win: "Lográis repeler a los murciélagos y poneros a salvo en el bosque. Steve recibe primeros auxilios básicos de Nancy.",
+        lose: "Los Demobats os superan. Debéis huir desesperadamente dejando equipo atrás y Steve está perdiendo demasiada sangre. (+1 Adversidad)"
+    },
+    {
+        text: "ACTO 2: EL PORTAL DE LA CARAVANA. Dustin contacta con el grupo que está en el Mundo del Revés usando luces. Se reúnen en la versión alternativa de la caravana de Eddie, donde el portal de la muerte de Chrissy ofrece una vía de escape.",
+        img: "images/472.jpg",
+participantes: ["robin4.jpg", "dustin4.jpg"],
+        options: [
+            { label: "Cruzar el portal", attr: "Agallas", dif: 10 },
+            { label: "Estabilizar el campo magnético del portal", attr: "Cerebro", dif: 10 }
+        ],
+        win: "Cruzan con éxito. El portal se mantiene estable.",
+        lose: "El portal es inestable. El cruce es traumático. (+1 Adversidad)"
+    },
+    {
+        text: "ACTO 3: LA LIBERACIÓN DE UNO. En sus recuerdos de 1979, Once decide ayudar al 'ordenanza amistoso' a escapar quitándole el inhibidor de su cuello, creyendo que él la salvará de Brenner.",
+        img: "images/473.jpg",
+participantes: ["once4.jpg"],
+        options: [
+            { label: "Usar sus poderes con precisión quirúrgica", attr: "Agallas", dif: 10 },
+            { label: "Confiar ciegamente en el ordenanza", attr: "Encanto", dif: 10 }
+        ],
+        win: "El chip 'Soteria' es extraído con éxito. El ordenanza recupera sus poderes devastadores y comienza a eliminar a los guardias.",
+        lose: "Dudas en el último momento, pero le extraes el chip con éxito. El ordenanza recupera sus poderes devastadores y comienza a eliminar a los guardias. (+1 Adversidad)"
+    },
+    {
+        text: "ACTO 4: EL TRANCE DE NANCY. Justo cuando Nancy se dispone a cruzar el portal de la caravana, su mente es secuestrada por Vecna. Ella cae en un trance profundo donde se ve obligada a revivir la muerte de su amiga Barb.",
+        img: "images/474.jpg",
+participantes: ["nancy4.jpg"],
+        options: [
+            { label: "Enfrentar la culpa por la muerte de Barb", attr: "Agallas", dif: 10 },
+            { label: "Intentar despertarse", attr: "Evasión", dif: 10 }
+        ],
+        win: "Nancy resiste la visión inicial, permitiéndole ver pistas sobre el pasado de Vecna mientras recorre sus recuerdos.",
+        lose: "Vecna domina la mente de Nancy. Ella queda atrapada indefensa ante el villano. (+1 Adversidad)"
+    },
+    {
+        text: "ACTO 5: LA IDENTIDAD DE VECNA. El ordenanza le revela a Once que él es en realidad Henry Creel, el hijo de Victor. Le confiesa cómo mató a su familia, y cómo Brenner intentó replicar sus poderes.",
+        img: "images/475.jpg",
+participantes: ["once4.jpg"],
+        options: [
+            { label: "Rechazar la oferta de unirse a Henry", attr: "Agallas", dif: 10 },
+            { label: "Comprender la magnitud de la traición", attr: "Cerebro", dif: 10 }
+        ],
+        win: "Once se mantiene firme en sus principios humanos. Henry, ahora furioso, se prepara para el duelo final.",
+        lose: "El discurso de Henry debilita la resolución de Once. Ella se siente abrumada por la oscuridad de su origen. (+1 Adversidad)"
+    },
+    {
+        text: "ACTO 6: EL ORIGEN DEL PORTAL. Once y Uno se enfrentan en la habitación del arcoíris. Usando su recuerdo más feliz (el amor de su madre), Once logra desintegrar a Henry Creel, lanzándolo a otra dimensión.",
+        img: "images/476.jpg",
+participantes: ["once4.jpg"],
+        options: [
+            { label: "Canalizar el amor puro contra el odio", attr: "Agallas", dif: 10 },
+            { label: "Empujar a Henry a través del espejo", attr: "Pelea", dif: 10 }
+        ],
+        win: "Henry es enviado al vacío, transformándose en Vecna durante la caída. Once ha recuperado su memoria y sus poderes completamente.",
+        lose: "Henry casi destruye a Once, pero es enviado al vacío, transformándose en Vecna durante la caída. Once ha recuperado su memoria y sus poderes completamente. (+1 Adversidad)"
+    }
 
 // **********************************************************************************************************************************************
         ];
@@ -304,11 +309,19 @@ function renderStep() {
     if(step >= trama.length) { showEnding(); return; }
     const data = trama[step];
 
-    // --- LÓGICA DEL TELÉFONO (NUEVO) ---
-    // El Acto 6 es la posición 5 (porque empezamos a contar desde 0)
-    if (step === 2) { 
-        const tlf = document.getElementById('audioRats');
-        if (tlf) tlf.play().catch(() => {}); 
+    if (step === 0) { 
+        const snd = document.getElementById('audioBats');
+        if (snd) snd.play().catch(() => {}); 
+    }
+    // ----------------------------------
+    if (step === 0) { 
+        const snd = document.getElementById('audioScream');
+        if (snd) snd.play().catch(() => {}); 
+    }
+    // ----------------------------------
+    if (step === 3) { 
+        const snd = document.getElementById('audioVecna');
+        if (snd) snd.play().catch(() => {}); 
     }
     // ----------------------------------
     
@@ -377,44 +390,39 @@ function avanzarActo() {
 }
 
 
-
-
-
 // ******************************************* FINALES **************************************************************************
-
 function showEnding() {
     const card = document.getElementById('final-card');
-    const sceneImg = document.getElementById('scene-img'); // Referencia a la imagen
+    const sceneImg = document.getElementById('scene-img');
     card.style.display = "block";
     let title = "", desc = "";
-
-    // Condición 1: Final Bueno (4 o más éxitos)
+    
+    // Condición 1: Final Bueno
     if(successes >= 5) {
-        sceneImg.src = "images/316b.png"; 
-        title = "FINAL BUENO: INVESTIGADORES EXPERTOS";
-        desc = "Habéis conectado las piezas. Sabéis que el Azotamentes está reuniendo un nuevo cuerpo y que Billy está infectado. Ganáis una recompensa.";
+        sceneImg.src = "images/476b.gif"; 
+        title = "FINAL BUENO: LA VERDAD OS HARÁ LIBRES";
+        desc = "Habéis sobrevivido al Mundo del Revés y Once ha derrotado a Uno en el pasado. Ahora sabéis que Vecna es Henry Creel. Nancy tiene la pieza final del rompecabezas para ganar la guerra. Ganáis una recompensa.";
     } 
-    // Condición 2: Final Normal (Exactamente 3 éxitos y 3 fallos)
+    // Condición 2: Final Normal
     else if(successes === 3 || successes === 4) {
-        sceneImg.src = "images/316b.png";
-        title = "FINAL NORMAL: PISTAS A MEDIAS";
-        desc = "Habéis visto cosas que no podéis explicar. Las ratas explotan y Billy actúa raro, pero aún no sabéis qué está pasando.";
+        sceneImg.src = "images/476b.gif";
+        title = "FINAL NORMAL: UN PRECIO MUY ALTO";
+        desc = "La mayoría ha escapado, pero Nancy sigue bajo el control de Vecna. Once ha recuperado sus poderes, pero a costa de liberar un mal que no comprende del todo.";
     } 
-    // Condición 3: Final Malo (Menos de 3 éxitos)
+    // Condición 3: Final Malo
     else {
         sceneImg.src = "images/gameover.gif";
-        title = "FINAL MALO: CAOS Y PARANOIA";
-        desc = "El grupo está dividido. Jonathan está herido, Hopper está furioso con Mike, y el monstruo de la fábrica sigue creciendo en las sombras sin que lo sepáis. Debéis repetir el capítulo.";
+        title = "FINAL MALO: EL ASCENSO DE VECNA";
+        desc = "Nancy está perdida, Steve está moribundo y Once ha sido superada emocionalmente por Henry Creel. El primer portal se ha abierto de par en par y el fin de Hawkins ha comenzado. Debéis repetir el capítulo.";
     }
 
     document.getElementById('text-content').innerHTML = `<strong>${title}</strong><br>Éxitos: ${successes} | Fallos: ${failures}`;
     card.innerText = desc;
     
-    // Lógica de botones
     let canProgress = (successes >= 4) || (successes === 3 && failures === 3);
     if(canProgress) {
         document.getElementById('options-container').innerHTML = `
-            <button class="btn" style="text-align:center; border-color:var(--gold); color:var(--gold);" onclick="window.location.href='escena_3_2.html'">⏭️ SIGUIENTE CAPÍTULO</button>
+            <button class="btn" style="text-align:center; border-color:var(--gold); color:var(--gold);" onclick="window.location.href='escena_4_8.html'">⏭️ SIGUIENTE CAPÍTULO</button>
         `;
     } else {
         document.getElementById('options-container').innerHTML = `
@@ -423,6 +431,7 @@ function showEnding() {
     }
     speak(title + ". " + desc);
 }
+
 
 // **********************************************************************************************************************************************
 
@@ -457,16 +466,6 @@ function showEnding() {
 
 
         function goBack() { if(confirm("¿Volver al menú?")) window.location.href = "menu.html"; }
-
-function playClick() {
-    const clickSfx = document.getElementById('audioClick');
-    if (clickSfx) {
-        clickSfx.currentTime = 0; // Reinicia el sonido para que suene en cada clic rápido
-        clickSfx.play().catch(() => {}); // El catch evita errores si el navegador bloquea el audio
-    }
-}
-document.addEventListener('click', playClick);
-
     </script>
 </body>
 </html>

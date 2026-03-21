@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>T3-E1: Verano roto y ratas rabiosas</title>
+    <title>T4-E9: El plan</title>
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=EB+Garamond:wght@800&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -104,7 +104,6 @@ text-shadow: 0 0 15px var(--vecna-red);
             background: rgba(255, 215, 0, 0.05); color: var(--gold); display: none;
             text-align: center; font-weight: bold;
         }
-
 /* --- NUEVOS ESTILOS PARA LA PANTALLA DE INICIO --- */
 #splash-screen {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -125,7 +124,6 @@ text-shadow: 0 0 15px var(--vecna-red);
     0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
     20%, 24%, 55% { opacity: 0.3; text-shadow: none; }
 }
-
     </style>
 </head>
 <body>
@@ -133,28 +131,32 @@ text-shadow: 0 0 15px var(--vecna-red);
     <button class="btn-inicio-central">INICIAR</button>
 </div>
 
-    <audio id="audioMusic" src="audio/upside.mp3" loop></audio>
+<!-- ************************************** AUDIOS ************************************** -->
     <audio id="audioClick" src="audio/clic.mp3"></audio>
+    <audio id="audioMusic" src="audio/master.mp3" loop></audio>
     <audio id="audioDice" src="audio/dados.mp3"></audio>
-    <audio id="audioRats" src="audio/rats.mp3"></audio>
+    <audio id="audioDemogorgon" src="audio/demogorgon_roar.mp3"></audio>
 
-    <header><h1>T3 - E1: VERANO ROTO Y RATAS RABIOSAS</h1></header>
+    <header><h1>T4 - E9: EL PLAN</h1></header>
      <div class="main-wrapper">
 <aside class="side-panel" id="banner-personajes">
  
-            <div class="char-box"><a href="fichas/once3.jpg" target="_blank" class="char-link"><img src="images/once3.jpg" class="char-img"></a><span class="char-name">ONCE</span></div>
-            <div class="char-box"><a href="fichas/mike3.jpg" target="_blank" class="char-link"><img src="images/mike3.jpg" class="char-img"></a><span class="char-name">MIKE</span></div>
-            <div class="char-box"><a href="fichas/will3.jpg" target="_blank" class="char-link"><img src="images/will3.jpg" class="char-img"></a><span class="char-name">WILL</span></div>
-            <div class="char-box"><a href="fichas/dustin3.jpg" target="_blank" class="char-link"><img src="images/dustin3.jpg" class="char-img"></a><span class="char-name">DUSTIN</span></div>
-            <div class="char-box"><a href="fichas/lucas3.jpg" target="_blank" class="char-link"><img src="images/lucas3.jpg" class="char-img"></a><span class="char-name">LUCAS</span></div>
-            <div class="char-box"><a href="fichas/max3.jpg" target="_blank" class="char-link"><img src="images/max3.jpg" class="char-img"></a><span class="char-name">MAX</span></div>
-            <div class="char-box"><a href="fichas/erica3.jpg" target="_blank" class="char-link"><img src="images/erica3.jpg" class="char-img"></a><span class="char-name">ERICA</span></div>
-            <div class="char-box"><a href="fichas/jonathan3.jpg" target="_blank" class="char-link"><img src="images/jonathan3.jpg" class="char-img"></a><span class="char-name">JONATHAN</span></div>
-            <div class="char-box"><a href="fichas/nancy3.jpg" target="_blank" class="char-link"><img src="images/nancy3.jpg" class="char-img"></a><span class="char-name">NANCY</span></div>
-            <div class="char-box"><a href="fichas/steve3.jpg" target="_blank" class="char-link"><img src="images/steve3.jpg" class="char-img"></a><span class="char-name">STEVE</span></div>
-            <div class="char-box"><a href="fichas/robin3.jpg" target="_blank" class="char-link"><img src="images/robin3.jpg" class="char-img"></a><span class="char-name">ROBIN</span></div>
-            <div class="char-box"><a href="fichas/hopper3.jpg" target="_blank" class="char-link"><img src="images/hopper3.jpg" class="char-img"></a><span class="char-name">HOPPER</span></div>
-            <div class="char-box"><a href="fichas/joyce3.jpg" target="_blank" class="char-link"><img src="images/joyce3.jpg" class="char-img"></a><span class="char-name">JOYCE</span></div>
+
+            <div class="char-box"><a href="fichas/once4.jpg" target="_blank" class="char-link"><img src="images/once4.jpg" class="char-img"></a><span class="char-name">ONCE</span></div>
+            <div class="char-box"><a href="fichas/will4.jpg" target="_blank" class="char-link"><img src="images/will4.jpg" class="char-img"></a><span class="char-name">WILL</span></div>
+            <div class="char-box"><a href="fichas/mike4.jpg" target="_blank" class="char-link"><img src="images/mike4.jpg" class="char-img"></a><span class="char-name">MIKE</span></div>
+            <div class="char-box"><a href="fichas/dustin4.jpg" target="_blank" class="char-link"><img src="images/dustin4.jpg" class="char-img"></a><span class="char-name">DUSTIN</span></div>
+            <div class="char-box"><a href="fichas/lucas4.jpg" target="_blank" class="char-link"><img src="images/lucas4.jpg" class="char-img"></a><span class="char-name">LUCAS</span></div>
+            <div class="char-box"><a href="fichas/max4.jpg" target="_blank" class="char-link"><img src="images/max4.jpg" class="char-img"></a><span class="char-name">MAX</span></div>
+            <div class="char-box"><a href="fichas/jonathan4.jpg" target="_blank" class="char-link"><img src="images/jonathan4.jpg" class="char-img"></a><span class="char-name">JONATHAN</span></div>
+            <div class="char-box"><a href="fichas/nancy4.jpg" target="_blank" class="char-link"><img src="images/nancy4.jpg" class="char-img"></a><span class="char-name">NANCY</span></div>
+            <div class="char-box"><a href="fichas/steve4.jpg" target="_blank" class="char-link"><img src="images/steve4.jpg" class="char-img"></a><span class="char-name">STEVE</span></div>
+            <div class="char-box"><a href="fichas/robin4.jpg" target="_blank" class="char-link"><img src="images/robin4.jpg" class="char-img"></a><span class="char-name">ROBIN</span></div>
+            <div class="char-box"><a href="fichas/eddie4.jpg" target="_blank" class="char-link"><img src="images/eddie4.jpg" class="char-img"></a><span class="char-name">EDDIE</span></div>
+            <div class="char-box"><a href="fichas/erica4.jpg" target="_blank" class="char-link"><img src="images/erica4.jpg" class="char-img"></a><span class="char-name">ERICA</span></div>
+            <div class="char-box"><a href="fichas/hopper4.jpg" target="_blank" class="char-link"><img src="images/hopper4.jpg" class="char-img"></a><span class="char-name">HOPPER</span></div>
+            <div class="char-box"><a href="fichas/joyce4.jpg" target="_blank" class="char-link"><img src="images/joyce4.jpg" class="char-img"></a><span class="char-name">JOYCE</span></div>
+            <div class="char-box"><a href="fichas/murray4.jpg" target="_blank" class="char-link"><img src="images/murray4.jpg" class="char-img"></a><span class="char-name">MURRAY</span></div>
 
 
 
@@ -162,15 +164,14 @@ text-shadow: 0 0 15px var(--vecna-red);
         </aside>
 
         <main style="display: flex; flex-direction: column;">
-		<img id="scene-img" src="images/st3.gif" class="scene-frame">
+		<img id="scene-img" src="images/490.gif" class="scene-frame">
             <div class="narrative-text">
                 <div id="text-content">
 
 
 
 
-                   Hawkins, 1985. El verano del amor está a punto de convertirse en el verano del horror. Mientras Mike y Once están en el Starcourt, una anomalía electromagnética azota el pueblo, y miles de ratas corren hacia una vieja fábrica.
-
+    Es el momento del todo o nada. El grupo ejecuta un plan desesperado en tres frentes: Max sirve de cebo en la Casa Creel, Eddie y Dustin distraen a la horda en el Mundo del Revés, y Once intenta luchar desde el vacío. El destino de Hawkins pende de un hilo.
 
 
 
@@ -183,7 +184,7 @@ text-shadow: 0 0 15px var(--vecna-red);
         </main>
 
         <aside class="side-panel">
-            <label style="font-size: 1rem; color: var(--vecna-red); text-align: center;">DADOS</label>
+            <label style="font-size: 0.6rem; color: var(--vecna-red); text-align: center;">DADOS</label>
             <div class="dice-grid">
                 <button class="dice-btn" onclick="roll(4)">d4</button>
                 <button class="dice-btn" onclick="roll(6)">d6</button>
@@ -223,72 +224,72 @@ text-shadow: 0 0 15px var(--vecna-red);
 
 // *********************************************************** ACTOS ************************************************************************************
 
-            {
-                text: "ACTO 1: El Corte Eléctrico. Mike y Once están en el cine del Starcourt cuando de repente, las luces parpadean. Una onda de choque recorre el edificio y Once siente una presencia en el Vacío.",
-        img: "images/311.jpg",
-participantes: ["once3.jpg", "mike3.jpg"],
-                options: [
-                    { label: "Once: Buscar el origen de la perturbación en el Vacío", attr: "Agallas", dif: 9 },
-                    { label: "Escapar a un sitio seguro", attr: "Evasión", dif: 9 }
-                ],
-                win: "Once ve a Billy en el Vacío. Lográis salir sin ser vistos por Hopper, que patrulla fuera.",
-                lose: "La onda deja a Once aturdida y Mike tropieza en la huida. (+1 Adversidad)"
-            },
-            {
-                text: "ACTO 2: La Llamada. Nancy y Jonathan investigan una queja en la granja Driscoll. El sótano huele a putrefacción y hay sacos de fertilizante devorados.",
-        img: "images/312.jpg",
-participantes: ["nancy3.jpg", "jonathan3.jpg"],
-                options: [
-                    { label: "Investigar el oscuro sótano", attr: "Cerebro", dif: 9 },
-                    { label: "Forzar la puerta del sótano que se ha atascado", attr: "Músculo", dif: 9 }
-                ],
-                win: "Bajáis y descubrís que las ratas han explotado, dejando una masa viscosa que se mueve por sí sola.",
-                lose: "Bajáis y descubrís que las ratas han explotado, dejando una masa viscosa que se mueve por sí sola. Respiráis gases tóxicos. (+1 Adversidad)"
-            },
-            {
-                text: "ACTO 3: El Horror Viscoso. La masa de ratas muertas empieza a arrastrarse fuera de la granja.",
-        img: "images/313.webp",
-participantes: ["nancy3.jpg", "jonathan3.jpg"],
-                options: [
-                    { label: "Fotografiar la masa moviéndose", attr: "Cerebro", dif: 9 },
-                    { label: "Calmar a la Sra. Driscoll", attr: "Encanto", dif: 9 }
-                ],
-                win: "¡Evidencia fotográfica conseguida! Calmáis a la anciana y obtenéis la pista de 'el hombre de hierro'.",
-                lose: "Atraéis a una rata que casi os muerde. (+1 Adversidad)"
-            },
-            {
-                text: "ACTO 4: La Conexión Telepática. El Azotamentes ha vuelto. Billy mira a Once y susurra: 'Tú nos dejaste entrar'.",
-        img: "images/314.jpg",
-participantes: ["once3.jpg", "mike3.jpg"],
-                options: [
-                    { label: "Romper la conexión gritando", attr: "Agallas", dif: 9 },
-                    { label: "Contactar con la pandilla para avisarlos", attr: "Encanto", dif: 9 }
-                ],
-                win: "Once rompe el vínculo.",
-                lose: "Once sufre una hemorragia nasal. (+1 Adversidad)"
-            },
-            {
-                text: "ACTO 5: Anomalía Magnética. En la granja, todos los imanes de las neveras apuntan hacia una sola dirección: La fábrica de acero.",
-        img: "images/315.png",
-participantes: ["nancy3.jpg", "jonathan3.jpg"],
-                options: [
-                    { label: "Deducir la fuente electromagnética", attr: "Cerebro", dif: 9 },
-                    { label: "Escapar del sótano antes de que emerja el monstruo", attr: "Evasión", dif: 9 }
-                ],
-                win: "Derribáis la puerta a tiempo. Sabéis exactamente a dónde ha ido la criatura.",
-                lose: "Quedáis aturdidos por los vapores químicos. (+1 Adversidad)"
-            },
-            {
-                text: "ACTO 6: La fuga. La situación se descontrola. Tenéis que huir del Starcourt sin levantar sospechas.",
-        img: "images/316.png",
-participantes: ["once3.jpg", "mike3.jpg"],
-                options: [
-                    { label: "Once usa un impulso mental para abrir una puerta", attr: "Agallas", dif: 9 },
-                    { label: "Encontrar el coche de Billy en el parking", attr: "Evasión", dif: 9 }
-                ],
-                win: "Huis del Starcourt y localizáis el coche de Billy, cubierto de ratas muertas. El misterio acaba de empezar.",
-                lose: "La seguridad del Starcourt os detiene. La bronca de Hopper es monumental. (+1 Adversidad)"
-            }
+    {
+        text: "ACTO 1: EL CONCIERTO DE EDDIE. Para atraer a los Demobats y despejar el camino a la Casa Creel, Eddie toca 'Master of Puppets' en el tejado de su caravana. La horda de murciélagos se dirige hacia ellos en masa.",
+        img: "images/491.gif",
+participantes: ["eddie4.jpg", "dustin4.jpg"],
+        options: [
+            { label: "Tocar la guitarra con pasión electrizante", attr: "Encanto", dif: 10 },
+            { label: "Reforzar las defensas de la caravana", attr: "Cerebro", dif: 10 }
+        ],
+        win: "El plan funciona perfectamente. Los murciélagos están rodeando la caravana, permitiendo que el equipo de asalto avance sin ser detectado.",
+        lose: "Los murciélagos están rodeando la caravana, permitiendo que el equipo de asalto avance sin ser detectado. (+1 Adversidad)"
+    },
+    {
+        text: "ACTO 2: MAX EN EL VACÍO. Max se quita los cascos para que Vecna entre en su mente. Ella se retira a su recuerdo más profundo y seguro para ganar tiempo, pero Vecna es más rápido de lo esperado.",
+        img: "images/492.jpg",
+participantes: ["max4.jpg", "lucas4.jpg"],
+        options: [
+            { label: "Max: Mantener la mente en blanco y pura", attr: "Agallas", dif: 10 },
+            { label: "Lucas: Proteger el cuerpo físico de Max", attr: "Músculo", dif: 10 }
+        ],
+        win: "Max logra esconderse en sus recuerdos felices lo suficiente para que Once localice la conexión desde Nevada e intervenga en la visión.",
+        lose: "Vecna invade el refugio mental de Max casi al instante. Ella queda a merced del villano antes de que Once pueda llegar. (+1 Adversidad)"
+    },
+    {
+        text: "ACTO 3: EL ÚLTIMO CONCIERTO DE EDDIE MUNSON. Los murciélagos están a punto de entrar en el mundo real. Eddie decide no huir y se queda atrás para ganar más segundos valiosos, enfrentándose a la horda él solo.",
+        img: "images/493.gif",
+participantes: ["eddie4.jpg"],
+        options: [
+            { label: "Luchar como un verdadero héroe", attr: "Pelea", dif: 10 },
+            { label: "Correr para distraer a la horda", attr: "Evasión", dif: 10 }
+        ],
+        win: "Eddie aguanta heroicamente. Aunque finalmente es superado por el número de enemigos. Cae herido de muerte antes de ver el final de la batalla. Eddie ha salvado a Dustin y a Hawkins.",
+        lose: "Eddie es superado por el número de enemigos. Cae herido de muerte antes de ver el final de la batalla. (+1 Adversidad)"
+    },
+    {
+        text: "ACTO 4: ONCE CONTRA VECNA. Once entra en la mente de Max para enfrentarse a Vecna. La batalla mental es devastadora. Vecna revela que él siempre estuvo detrás de todo, incluso del Azotamentes.",
+        img: "images/494.jpg",
+participantes: ["once4.jpg", "max4.jpg"],
+        options: [
+            { label: "Once: Proyectar una explosión de energía", attr: "Agallas", dif: 10 },
+            { label: "Max: Dar ánimos a Once desde el mundo real", attr: "Encanto", dif: 10 }
+        ],
+        win: "Once tiene la fuerza necesaria para liberarse de las ataduras de Vecna y contraatacar con un poder renovado.",
+        lose: "Vecna inmoviliza a Once y la obliga a mirar cómo tortura a Max. El poder de Once flaquea ante la desesperación. (+1 Adversidad)"
+    },
+    {
+        text: "ACTO 5: FUEGO EN RUSIA. Hopper debe enfrentarse a un enjambre de Demodogs y a un Demogorgon en la prisión rusa para herir a la mente colmena en el momento preciso.",
+        img: "images/495.webp",
+participantes: ["hopper4.jpg", "murray4.jpg", "joyce4.jpg"],
+        options: [
+            { label: "Hopper: Usar la espada contra el Demogorgon", attr: "Músculo", dif: 10 },
+            { label: "Joyce o Murray: Quemar la masa de partículas", attr: "Cerebro", dif: 10 }
+        ],
+        win: "Hopper decapita al Demogorgon en una hazaña legendaria. El daño a la mente colmena debilita a Vecna en Hawkins justo a tiempo.",
+        lose: "Las criaturas rusas casi matan a Hopper. El ataque se retrasa y la mente colmena sigue enviando fuerza a Vecna. (+1 Adversidad)"
+    },
+    {
+        text: "ACTO 6: EL ASALTO FINAL. Nancy, Steve y Robin alcanzan el cuerpo físico de Vecna en el ático de la Casa Creel. Deben quemarlo y dispararle antes de que logre completar su cuarta muerte.",
+        img: "images/496.gif",
+participantes: ["nancy4.jpg", "steve4.jpg", "robin4.jpg"],
+        options: [
+            { label: "Disparar con la escopeta recortada", attr: "Pelea", dif: 18 },
+            { label: "Lanzar cócteles molotov", attr: "Agallas", dif: 18 }
+        ],
+        win: "Vecna arde y Nancy lo expulsa por la ventana tras varios disparos. El villano es derrotado temporalmente, aunque el portal se abre.",
+        lose: "Los tentáculos de la casa os retienen demasiado tiempo. Vecna logra completar parte de su plan antes de que podáis herirlo. (+1 Adversidad)"
+    }
 
 // **********************************************************************************************************************************************
         ];
@@ -304,11 +305,10 @@ function renderStep() {
     if(step >= trama.length) { showEnding(); return; }
     const data = trama[step];
 
-    // --- LÓGICA DEL TELÉFONO (NUEVO) ---
-    // El Acto 6 es la posición 5 (porque empezamos a contar desde 0)
-    if (step === 2) { 
-        const tlf = document.getElementById('audioRats');
-        if (tlf) tlf.play().catch(() => {}); 
+    // --- LÓGICA  ---
+    if (step === 4) { 
+        const snd = document.getElementById('audioDemogorgon');
+        if (snd) snd.play().catch(() => {}); 
     }
     // ----------------------------------
     
@@ -375,46 +375,39 @@ function avanzarActo() {
     step++;
     renderStep();
 }
-
-
-
-
-
 // ******************************************* FINALES **************************************************************************
-
 function showEnding() {
     const card = document.getElementById('final-card');
-    const sceneImg = document.getElementById('scene-img'); // Referencia a la imagen
+    const sceneImg = document.getElementById('scene-img');
     card.style.display = "block";
     let title = "", desc = "";
 
-    // Condición 1: Final Bueno (4 o más éxitos)
+    // Condición 1: Final Bueno
     if(successes >= 5) {
-        sceneImg.src = "images/316b.png"; 
-        title = "FINAL BUENO: INVESTIGADORES EXPERTOS";
-        desc = "Habéis conectado las piezas. Sabéis que el Azotamentes está reuniendo un nuevo cuerpo y que Billy está infectado. Ganáis una recompensa.";
+        sceneImg.src = "images/496b.gif"; 
+        title = "FINAL BUENO: HAWKINS RESISTE";
+        desc = "Habéis derrotado a Vecna y evitado la destrucción total. Aunque las cicatrices son profundas y Max está en coma, el grupo se ha reunido y Once está lista para lo que venga. Eddie será recordado como un héroe. Ganáis una recompensa. [Código Temporada 4: 4444]";
     } 
-    // Condición 2: Final Normal (Exactamente 3 éxitos y 3 fallos)
+    // Condición 2: Final Normal
     else if(successes === 3 || successes === 4) {
-        sceneImg.src = "images/316b.png";
-        title = "FINAL NORMAL: PISTAS A MEDIAS";
-        desc = "Habéis visto cosas que no podéis explicar. Las ratas explotan y Billy actúa raro, pero aún no sabéis qué está pasando.";
+        sceneImg.src = "images/496b.gif";
+        title = "FINAL NORMAL: UNA VICTORIA AMARGA";
+        desc = "Habéis derrotado a Vecna y evitado la destrucción total. Aunque las cicatrices son profundas y Max está en coma, el grupo se ha reunido y Once está lista para lo que venga. Eddie será recordado como un héroe. Ganáis una recompensa. Habéis salvado a vuestros amigos, pero el Mundo del Revés ha comenzado a filtrarse en nuestra realidad. [Código Temporada 4: 4444]";
     } 
-    // Condición 3: Final Malo (Menos de 3 éxitos)
+    // Condición 3: Final Malo
     else {
         sceneImg.src = "images/gameover.gif";
-        title = "FINAL MALO: CAOS Y PARANOIA";
-        desc = "El grupo está dividido. Jonathan está herido, Hopper está furioso con Mike, y el monstruo de la fábrica sigue creciendo en las sombras sin que lo sepáis. Debéis repetir el capítulo.";
+        title = "FINAL MALO: EL APOCALIPSIS DE VECNA";
+        desc = "El plan ha fallado. Vecna ha ganado esta ronda, los cuatro portales se han unido y Hawkins está cayendo en la oscuridad. Hay que reagruparse y volver a intentarlo. Debéis repetir el capítulo.";
     }
 
     document.getElementById('text-content').innerHTML = `<strong>${title}</strong><br>Éxitos: ${successes} | Fallos: ${failures}`;
     card.innerText = desc;
     
-    // Lógica de botones
     let canProgress = (successes >= 4) || (successes === 3 && failures === 3);
     if(canProgress) {
         document.getElementById('options-container').innerHTML = `
-            <button class="btn" style="text-align:center; border-color:var(--gold); color:var(--gold);" onclick="window.location.href='escena_3_2.html'">⏭️ SIGUIENTE CAPÍTULO</button>
+            <button class="btn" style="text-align:center; border-color:var(--gold); color:var(--gold);" onclick="window.location.href='menu.html'">🏠 MENÚ PRINCIPAL</button>
         `;
     } else {
         document.getElementById('options-container').innerHTML = `
@@ -457,16 +450,6 @@ function showEnding() {
 
 
         function goBack() { if(confirm("¿Volver al menú?")) window.location.href = "menu.html"; }
-
-function playClick() {
-    const clickSfx = document.getElementById('audioClick');
-    if (clickSfx) {
-        clickSfx.currentTime = 0; // Reinicia el sonido para que suene en cada clic rápido
-        clickSfx.play().catch(() => {}); // El catch evita errores si el navegador bloquea el audio
-    }
-}
-document.addEventListener('click', playClick);
-
     </script>
 </body>
 </html>
