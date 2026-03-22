@@ -246,7 +246,7 @@ text-shadow: 0 0 15px var(--vecna-red);
          img: "images/163.jpg",
 	participantes: ["hopper1.jpg", "joyce1.jpg", "will1.jpg"],
                options: [
-                    { label: "Hopper mantiene el ritmo cardíaco perfecto (RCP)", attr: "Cerebro", dif: 7 },
+                    { label: "Hopper mantiene el ritmo cardíaco perfecto (RCP)", attr: "Músculo", dif: 7 },
                     { label: "Joyce le implora que despierte", attr: "Encanto", dif: 7 }
                 ],
                 win: "¡Will escupe un limo negro y toma una gran bocanada de aire! ¡Está vivo!",
@@ -401,13 +401,13 @@ function showEnding() {
     // Condición 2: Final Normal (Exactamente 3 éxitos y 3 fallos)
     else if(successes === 3 || successes === 4) {
         sceneImg.src = "images/166b.gif";
-        title = "FINAL AGRIDULCE: CICATRICES";
+        title = "FINAL NORMAL: CICATRICES";
         desc = "Derrotasteis a la bestia y Will ha vuelto a casa. Sin embargo, el grupo está fracturado. El laboratorio lo encubrió todo. Once ha desaparecido. Tenéis un trauma que no se borrará fácilmente. [Código Temporada 2: 2222]";
     } 
     // Condición 3: Final Malo (Menos de 3 éxitos)
     else {
         sceneImg.src = "images/gameover.gif";
-        title = "FINAL OSCURO: EL PRECIO DEL MUNDO DEL REVÉS";
+        title = "FINAL MALO: EL PRECIO DEL MUNDO DEL REVÉS";
         desc = "Will está vivo, pero el aire tóxico del Revés lo ha cambiado para siempre... algo crece en su interior. Once se sacrificó, pero la brecha sigue abierta y el peligro acecha. Demasiados fallos. Debéis repetir el capítulo.";
     }
 
