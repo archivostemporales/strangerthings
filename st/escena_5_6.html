@@ -169,7 +169,9 @@ text-shadow: 0 0 15px var(--vecna-red);
             <img id="scene-img" src="images/560.jpg" class="scene-frame">
             <div class="narrative-text">
                 <div id="text-content">
-                    El Upside Down es un agujero de gusano a punto de colapsar. Mientras Nancy y Jonathan se sinceran atrapados en el Laboratorio, el Hospital de Hawkins se convierte en un campo de batalla contra los Demodogs.
+
+                    El Mundo del Revés es un agujero de gusano a punto de colapsar. Mientras Nancy y Jonathan se sinceran atrapados en el Laboratorio, el Hospital de Hawkins se convierte en un campo de batalla contra los Demodogs.
+
                 </div>
                 <div id="options-container">
                     <button class="btn" style="text-align:center" onclick="renderStep()">COMENZAR CAPÍTULO</button>
@@ -210,18 +212,18 @@ text-shadow: 0 0 15px var(--vecna-red);
 
         const trama = [
             {
-                text: "ACTO 1: LA MATERIA EXÓTICA. El disparo de Nancy al orbe ha fracturado la dimensión. Dustin revela que el Mundo del Revés no es un mundo, sino un puente temporal que se colapsa.",
+                text: "ACTO 1: LA MATERIA EXÓTICA. El disparo de Nancy al orbe ha fracturado la dimensión. Dustin revela que el Mundo del Revés no es un mundo, sino un puente temporal que se está colapsando.",
 img: "images/561.jpg", // <--- Añade esto
 participantes: ["dustin5.jpg", "steve5.jpg"],
                 options: [
                     { label: "Analizar los diarios de Brenner", attr: "Cerebro", dif: 11 },
-                    { label: "Evacuar el área inestable", attr: "Evasión", dif: 11 }
+                    { label: "Evacuar el área", attr: "Evasión", dif: 11 }
                 ],
                 win: "Dustin comprende la física del agujero de gusano. Logran estabilizarse temporalmente antes de que la gravedad los succione. Aunque el laboratorio empieza a licuarse a su alrededor, atrapándolos en un líquido llamado goo.",
                 lose: "La onda de choque los noquea. El laboratorio empieza a licuarse a su alrededor, atrapándolos en un líquido llamado goo. (+1 Adversidad)"
             },
             {
-                text: "ACTO 2: EL ORIGEN DE LA SOMBRA. En una caverna de Camazotz, Max y Holly presencian un recuerdo de 1959: un joven Henry liberando partículas del Mind Flayer de un maletín.",
+                text: "ACTO 2: EL ORIGEN DE LA SOMBRA. En una caverna de Camazotz, Max y Holly presencian un recuerdo de 1959: un joven Henry liberando partículas del Azotamentes de un maletín.",
 img: "images/562.jpg", // <--- Añade esto
 participantes: ["holly5.jpg", "max5.jpg"],
                 options: [
@@ -250,8 +252,8 @@ participantes: ["lucas5.jpg", "robin5.jpg"],
                     { label: "Patear a los Demodogs", attr: "Pelea", dif: 11 },
                     { label: "Usar el intercomunicador", attr: "Evasión", dif: 11 }
                 ],
-                win: "Robin alerta a todos por el altavoz mientras Lucas bloquea la puerta del ascensor. Logran llegar al sótano de lavandería.",
-                lose: "Un guardia muere ante sus ojos y los Demodogs dañan la radio de Lucas. La conexión con Max se debilita. (+1 Adversidad)"
+                win: "Robin alerta a todos por el altavoz mientras Lucas bloquea la puerta del ascensor. Logran llegar a la lavandería que está en el sótano.",
+                lose: "Lucas bloquea la puerta del ascensor. Logran llegar a la lavandería que está en el sótano. La conexión con Max se debilita. (+1 Adversidad)"
             },
             {
                 text: "ACTO 5: EL VALOR DE KAREN WHEELER. En el sótano, los perros rodean al grupo. Karen Wheeler aparece, usando tanques de oxígeno como bombas improvisadas.",
@@ -262,15 +264,15 @@ participantes: ["lucas5.jpg", "robin5.jpg"],
                     { label: "Mantener la radio encendida", attr: "Cerebro", dif: 11 }
                 ],
                 win: "¡Boom! Los monstruos son aniquilados por la explosión. Karen rescata a los chicos demostrando que es una verdadera Wheeler.",
-                lose: "La explosión es defectuosa. La lavandería se incendia y Karen resulta herida protegiendo a Lucas y Max. (+1 Adversidad)"
+                lose: "La explosión es defectuosa. La lavandería se incendia y Karen resulta herida protegiendo a Lucas y Max, pero consigue acabar con los Demodogs. (+1 Adversidad)"
             },
             {
-                text: "ACTO 6: EL RETORNO AL CUERPO. Max y Holly alcanzan sus respectivos portales en el Mindscape. Max debe saltar hacia la voz de Lucas para despertar.",
+                text: "ACTO 6: EL RETORNO AL CUERPO. Max y Holly alcanzan sus respectivos portales en la Guarida Mental. Max debe ir hacia la voz de Lucas para despertarse.",
 img: "images/566.jpg", // <--- Añade esto
 participantes: ["holly5.jpg", "max5.jpg"],
                 options: [
-                    { label: "Max: Saltar hacia el portal de Lucas", attr: "Agallas", dif: 11 },
-                    { label: "Holly: Recordar su figura de D&D", attr: "Cerebro", dif: 11 }
+                    { label: "Max: Saltar hacia el portal con Lucas", attr: "Agallas", dif: 11 },
+                    { label: "Holly: Recordar su figurita de Dragones y Mazmorras", attr: "Cerebro", dif: 11 }
                 ],
                 win: "Max despierta en los brazos de Lucas en el hospital. Holly logra cruzar su propio portal. El reencuentro es inminente.",
                 lose: "Max duda un segundo, pero despierta en los brazos de Lucas en el hospital. (+1 Adversidad)"
@@ -377,7 +379,7 @@ function showEnding() {
         sceneImg.src = "images/566b.jpg";
         card.innerHTML = `
             <h2 style="color:#00ff00">FINAL BUENO: DESPERTAR EN EL CAOS</h2>
-            <p>Max ha despertado y Holly está en camino. Karen Wheeler ha salvado al grupo y Jonathan y Nancy han encontrado una paz necesaria. La resistencia está lista. Recibís una recompensa.</p>`;
+            <p>Max ha despertado y Holly está en camino. Karen Wheeler ha salvado al grupo. Jonathan y Nancy han encontrado una paz necesaria. La resistencia está lista. Recibís una recompensa.</p>`;
         
         optionsContainer.innerHTML = `
             <button class="btn" style="text-align:center; border-color:var(--gold); color:var(--gold);" onclick="window.location.href='escena_5_7.html'">⏭️ SIGUIENTE CAPÍTULO</button>`;
@@ -387,7 +389,7 @@ function showEnding() {
         sceneImg.src = "images/566b.jpg";
         card.innerHTML = `
             <h2 style="color:var(--gold)">FINAL NORMAL: SUPERVIVIENTES ROTOS</h2>
-            <p>Habéis escapado, pero con heridas graves. Karen está herida y Max está en un estado frágil. Vecna sabe que habéis descubierto el secreto del maletín.</p>`;
+            <p>Habéis escapado, pero con heridas graves. Karen está herida y Max está en un estado muy delicado. Vecna sabe que habéis descubierto el secreto del maletín.</p>`;
         
         optionsContainer.innerHTML = `
             <button class="btn" style="text-align:center; border-color:var(--gold); color:var(--gold);" onclick="window.location.href='escena_5_7.html'">⏭️ SIGUIENTE CAPÍTULO</button>`;
@@ -397,7 +399,7 @@ function showEnding() {
         sceneImg.src = "images/gameover.gif"; // Nota: Usé el nombre 531c.jpg que indicaste
         card.innerHTML = `
             <h2 style="color:var(--vecna-red)">FINAL MALO: EL PUENTE SE ROMPE</h2>
-            <p>El colapso dimensional os ha superado. Max sigue perdida y la explosión en el hospital ha sido un desastre. Hawkins está a punto de ser devorada. Debéis repetir el capítulo.</p>`;
+            <p>El colapso dimensional os ha superado. La explosión en el hospital ha sido un desastre. Hawkins está a punto de ser devorada. Debéis repetir el capítulo.</p>`;
         
         optionsContainer.innerHTML = `
             <button class="btn" style="text-align:center; border-color:var(--vecna-red);" onclick="location.reload()">🔄 REINICIAR CAPÍTULO</button>`;

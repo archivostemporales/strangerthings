@@ -173,7 +173,9 @@ text-shadow: 0 0 15px var(--vecna-red);
             <img id="scene-img" src="images/550.jpg" class="scene-frame">
             <div class="narrative-text">
                 <div id="text-content">
-                    Vecna ha reunido a sus doce "vasijas" en Camazotz. Mientras Will intenta hackear la mente colmena usando electricidad, Dustin y Nancy descubren un secreto mortal en el laboratorio que podría destruirlo todo.
+
+                    Vecna ha reunido a sus doce "vasijas" en Camazotz. Mientras el grupo intenta hackear la mente colmena usando electricidad, Dustin y Nancy descubren un secreto mortal en el laboratorio que podría destruirlo todo.
+
                 </div>
                 <div id="options-container">
                     <button class="btn" style="text-align:center" onclick="renderStep()">COMENZAR CAPÍTULO</button>
@@ -214,26 +216,26 @@ text-shadow: 0 0 15px var(--vecna-red);
 
         const trama = [
             {
-                text: "ACTO 1: EL PASADO DE KALI. En la iglesia del cementerio, Kali revela a Once y Hopper que la Dra. Kay está replicando los experimentos de Brenner, usando sangre de Kali para infundirla en mujeres embarazadas.",
+                text: "ACTO 1: EL PASADO DE KALI. En la iglesia del cementerio, Kali revela a Once y Hopper que la doctora Kay está replicando los experimentos de Brenner, usando sangre de Kali para infundirla en mujeres embarazadas.",
 img: "images/551.jpg", // <--- Añade esto
 participantes: ["kali5.jpg", "once5.jpg"],
                 options: [
                     { label: "Kali: Proyectar visión del futuro", attr: "Agallas", dif: 11 },
                     { label: "Once: Analizar la verdad de Kali", attr: "Cerebro", dif: 11 }
                 ],
-                win: "Kali muestra a Once que ella es el espécimen perfecto para reiniciar el programa. Hopper decide que deben actuar de inmediato contra la Dra. Kay.",
-                lose: "La visión es tan traumática que Once colapsa. El grupo pierde tiempo valioso mientras Kali se cierra en su desprecio por la humanidad. (+1 Estrés)"
+                win: "Kali muestra a Once que ella es el espécimen perfecto para reiniciar el programa. Hopper decide que deben actuar de inmediato contra la doctora Kay.",
+                lose: "Kali muestra a Once que ella es el espécimen perfecto para reiniciar el programa. La visión es tan traumática que Once colapsa. (+1 Adversidad)"
             },
             {
-                text: "ACTO 2: EL EXPERIMENTO DE LA RADIO. Intentan electrificar el cadáver de un Demogorgon para activar las partículas del Azotamentes y permitir que Will entre en la mente colmena.",
+                text: "ACTO 2: EL EXPERIMENTO DE LA RADIO. El grupo intenta electrificar el cadáver de un Demogorgon para activar las partículas del Azotamentes y permitir que Will entre en la mente colmena.",
 img: "images/552.jpg", // <--- Añade esto
 participantes: ["robin5.jpg", "mike5.jpg", "will5.jpg"],
                 options: [
                     { label: "Robin: Calibrar el voltaje", attr: "Cerebro", dif: 11 },
-                    { label: "Will: Tapping en el subconsciente", attr: "Agallas", dif: 11 }
+                    { label: "Will: Sumergirse en el subconsciente", attr: "Agallas", dif: 11 }
                 ],
                 win: "¡Funciona! Will accede a la mente de Vecna. Descubre que las doce vasijas están en Camazotz y localiza a Derek y Max.",
-                lose: "El cadáver estalla en llamas. Will sufre una descarga psíquica que lo deja sordo temporalmente. El experimento es un fracaso parcial. (+1 Adversidad)"
+                lose: "El cadáver estalla en llamas. Will accede a la mente de Vecna. Descubre que las doce vasijas están en Camazotz y localiza a Derek y Max. (+1 Adversidad)"
             },
             {
                 text: "ACTO 3: CONFLICTO EN EL LABORATORIO. Dustin y Steve recorren el ala de los niños. La tensión por la muerte de Eddie Munson estalla en una pelea física entre ambos.",
@@ -255,18 +257,18 @@ participantes: ["holly5.jpg", "max5.jpg"],
                     { label: "Seguir el rastro de la memoria", attr: "Agallas", dif: 11 }
                 ],
                 win: "Holly encuentra la brecha. Descubren que Vecna la vigilaba desde mucho antes del ataque. Logran abrir una ventana al mundo real. Aunque Vecna las intercepta en la escalera.",
-                lose: "Vecna las intercepta en la escalera. (+1 Adversidad)"
+                lose: "Logran abrir una ventana al mundo real. Vecna las intercepta en la escalera. (+1 Adversidad)"
             },
             {
-                text: "ACTO 5: EL CONTRAATAQUE DE WILL. Will, conectado al Demogorgon, interviene en el Mindscape justo cuando Vecna va a matar a Max. Usa su voluntad para herir al villano.",
+                text: "ACTO 5: EL CONTRAATAQUE DE WILL. Will, conectado al Demogorgon, interviene en la Guarida Mental justo cuando Vecna va a matar a Max. Usa su voluntad para herir al villano.",
 img: "images/555.gif", // <--- Añade esto
 participantes: ["will5.jpg", "holly5.jpg", "max5.jpg"],
                 options: [
                     { label: "Romper la pierna de Vecna", attr: "Pelea", dif: 11 },
                     { label: "Will: Entrar en la mente colmena", attr: "Agallas", dif: 11 }
                 ],
-                win: "Will quiebra la forma física de Vecna, liberando a Max. Las chicas escapan por la ventana mientras partículas del Mind Flayer bañan el cielo.",
-                lose: "Vecna es demasiado fuerte y expulsa a Will de su mente. Will queda inconsciente y Max sufre daños permanentes. (+1 Adversidad)"
+                win: "Will quiebra la forma física de Vecna, liberando a Max. Las chicas escapan por la ventana mientras partículas del Azotamentes bañan el cielo.",
+                lose: "Will quiebra la forma física de Vecna, liberando a Max. Las chicas escapan por la ventana. Will queda inconsciente y Max sufre daños. (+1 Adversidad)"
             },
             {
                 text: "ACTO 6: EL GENERADOR DEL ESCUDO. En el tejado del laboratorio, Nancy y Jonathan encuentran un orbe de materia exótica. Dustin grita por la radio que destruirlo nos matará a todos.",
@@ -276,8 +278,8 @@ participantes: ["nancy5.jpg", "jonathan5.jpg", "dustin5.jpg"],
                     { label: "Nancy: Disparar al orbe de materia exótica", attr: "Pelea", dif: 11 },
                     { label: "Jonathan: Impedir el disparo", attr: "Encanto", dif: 11 }
                 ],
-                win: "Nancy dispara. El orbe explota, desactivando el escudo de Vecna en todo Hawkins, pero la onda expansiva os lanza al vacío.",
-                lose: "Jonathan duda y el orbe emite un pulso que vaporiza parte del tejado. El escudo sigue activo y estáis atrapados. (+1 Estrés)"
+                win: "Jonathan no impide que Nancy dispare. El orbe explota, desactivando el escudo de Vecna en todo Hawkins.",
+                lose: "Jonathan duda y no impide que Nancy dispare. El orbe emite un pulso que vaporiza parte del tejado. El escudo sigue activo y estáis atrapados. (+1 Adversidad)"
             }
         ];
 
@@ -381,7 +383,7 @@ function showEnding() {
     
     // FINAL 1: ÉXITO TOTAL (5 o más éxitos)
     if (successes >= 5) {
-        sceneImg.src = "images/556.jpg";
+        sceneImg.src = "images/556b.webp";
         card.innerHTML = `
             <h2 style="color:#00ff00">FINAL BUENO</h2>
             <p> Habéis expuesto a Vecna. Max y Holly están a salvo y Will ha demostrado ser un arma formidable. Hawkins tiene una oportunidad. Recibís una recompensa.</p>`;
@@ -391,7 +393,7 @@ function showEnding() {
     } 
     // FINAL 2: (3 o 4 éxitos)
     else if (successes >= 3) {
-        sceneImg.src = "images/556.jpg";
+        sceneImg.src = "images/556b.webp";
         card.innerHTML = `
             <h2 style="color:var(--gold)">FINAL NORMAL</h2>
             <p> El escudo ha caído pero Dustin y Steve están malheridos. Vecna está furioso y Will ha quedado exhausto. La guerra final comienza ahora.</p>`;
@@ -404,7 +406,7 @@ function showEnding() {
         sceneImg.src = "images/gameover.gif"; 
         card.innerHTML = `
             <h2 style="color:var(--vecna-red)">FINAL MALO</h2>
-            <p> Vecna ha recuperado el control. Max está perdida, Will está roto y el escudo sigue protegiendo la base de Henry. Debéis repetir el capítulo.</p>`;
+            <p> Vecna ha recuperado el control. Will está roto. Debéis repetir el capítulo.</p>`;
         
         optionsContainer.innerHTML = `
             <button class="btn" style="text-align:center; border-color:var(--vecna-red);" onclick="location.reload()">🔄 REINICIAR CAPÍTULO</button>`;
