@@ -179,7 +179,11 @@ text-shadow: 0 0 15px var(--vecna-red);
 
             <div class="narrative-text">
                 <div id="text-content">
-                    El Demogorgon ha destrozado la casa de los Wheeler. Ted y Karen están en estado crítico y Holly ha sido arrastrada al Upside Down. La verdadera motivación de Vecna empieza a revelarse, y el tiempo corre en contra.
+
+
+                    El Demogorgon ha destrozado la casa de los Wheeler. Ted y Karen están en estado crítico y Holly ha sido arrastrada al Mundo del Revés. El tiempo corre en contra.
+
+
                 </div>
                 <div id="options-container">
                     <button class="btn" style="text-align:center" onclick="renderStep()">COMENZAR CAPÍTULO</button>
@@ -222,36 +226,36 @@ text-shadow: 0 0 15px var(--vecna-red);
         const trama = [
             {
                 img: "images/521.jpg",                
-		text: "ACTO 1: LA PERSECUCIÓN EN EL VACÍO. Once cruza el portal en la casa Wheeler y usa sus poderes para rastrear a Holly en el Upside Down, encontrándose inesperadamente con Hopper.",
+		text: "ACTO 1: LA PERSECUCIÓN EN EL VACÍO. Once cruza el portal en la casa de los Wheeler y usa sus poderes para rastrear a Holly en el Mundo del Revés, encontrándose inesperadamente con Hopper.",
 participantes: ["once5.jpg", "hopper5.jpg"],
                 options: [
-                    { label: "Once: Rastrear sangre del monstruo", attr: "Cerebro", dif: 11 },
-                    { label: "Hopper: Rastrear huellas físicas", attr: "Sigilo", dif: 11 }
+                    { label: "Once: Rastrear al monstruo", attr: "Agallas", dif: 11 },
+                    { label: "Hopper: Rastrear huellas físicas", attr: "Cerebro", dif: 11 }
                 ],
-                win: "Encuentran un rastro de sangre del Demogorgon (herido por Karen) y comienzan a seguirlo. Once ignora las quejas de Hopper de estar actuando por instinto.",
-                lose: "Pierden tiempo discutiendo. Las patrullas militares casi los detectan en el Upside Down y el rastro de sangre empieza a secarse. (+1 Adversidad)"
+                win: "Encontráis un rastro de sangre del Demogorgon (herido por Karen) y comienzáis a seguirlo.",
+                lose: "Perdéis tiempo discutiendo. Las patrullas militares casi os detectan en el Mundo del Revés y el rastro de sangre del monstruo empieza a secarse. (+1 Adversidad)"
             },
             {
                 img: "images/522.jpg",
-                text: "ACTO 2: INFILTRACIÓN EN EL HOSPITAL. Mike y Nancy necesitan hablar con su madre herida para obtener pistas sobre 'Mr. Whatsit', pero la seguridad y los médicos bloquean el paso.",
+                text: "ACTO 2: INFILTRACIÓN EN EL HOSPITAL. Mike y Nancy necesitan hablar con su madre herida para obtener pistas sobre el 'señor Qué', pero la seguridad y los médicos bloquean el paso.",
 participantes: ["nancy5.jpg", "mike5.jpg"],
                 options: [
                     { label: "Disfrazarse", attr: "Evasión", dif: 11 },
                     { label: "Distraer a los guardias", attr: "Encanto", dif: 11 }
                 ],
-                win: "Vestidos de celadores, logran llegar a la habitación de la UCI de Karen Wheeler en secreto.",
-                lose: "Un médico casi los descubre, obligándolos a esconderse en un armario de suministros y perder un tiempo precioso. (+1 Estrés)"
+                win: "Lográis llegar en secreto a la habitación de la UCI donde está vuestra madre.",
+                lose: "Un médico casi os descubre, obligándoos a esconderos en un armario de suministros y perder un tiempo precioso. Pero llegáis a la habitación de vuestra madre. (+1 Adversidad)"
             },
             {
                 img: "images/523.jpg",
-                text: "ACTO 3: EL INTERROGATORIO SILENCIOSO. Karen, entubada, solo puede comunicarse escribiendo en una libreta. Necesitan respuestas sobre el amigo imaginario de Holly.",
+                text: "ACTO 3: EL INTERROGATORIO SILENCIOSO. Karen, entubada, sólo puede comunicarse escribiendo en una libreta. Necesitan respuestas sobre el amigo imaginario de Holly. El señor Qué.",
 participantes: ["nancy5.jpg", "mike5.jpg"],
                 options: [
                     { label: "Hacer las preguntas correctas", attr: "Cerebro", dif: 11 },
                     { label: "Reconfortar a Karen", attr: "Encanto", dif: 11 }
                 ],
-                win: "Karen deletrea un nombre: 'H-E-N-R-Y'. Se dan cuenta de que Vecna (Henry Creel) se ganó la confianza de Holly usando su apariencia humana original.",
-                lose: "Karen sufre un ataque de pánico por el trauma de la visión del Demogorgon, y las enfermeras entran, obligándolos a huir. (+1 Adversidad)"
+                win: "Karen deletrea un nombre: 'HENRY'. Os dais cuenta de que Vecna (Henry Creel) se ganó la confianza de vuestra hermana Holly usando su apariencia humana original.",
+                lose: "Karen deletrea un nombre: 'HENRY'. Después sufre un ataque de pánico por el trauma de la visión del Demogorgon, y las enfermeras entran, obligándoos a huir. (+1 Adversidad)"
             },
             {
                 img: "images/524.jpg",
@@ -261,30 +265,30 @@ participantes: ["robin5.jpg", "will5.jpg"],
                     { label: "Mentir", attr: "Encanto", dif: 11 },
                     { label: "Salir sin ser visto", attr: "Evasión", dif: 11 }
                 ],
-                win: "El engaño funciona. Will y Robin huyen hacia Hawkins Elementary, siguiendo el origen geográfico de la visión de Will.",
-                lose: "Joyce sospecha y lanza una advertencia por radio. Ahora Steve y Dustin están alertados y el grupo empieza a desconfiar entre sí. (+1 Estrés)"
+                win: "El engaño funciona. Huis hacia la escuela de primaria de Hawkins. Siguiendo la pista de la visión de Will.",
+                lose: "Casi os pilla Joyce, pero huis hacia la escuela de primaria de Hawkins. (+1 Adversidad)"
             },
             {
                 img: "images/525.jpg",
-                text: "ACTO 5: EL ORIGEN DE LA VISIÓN. En la escuela primaria, Will se sube al tiovivo. Sabe que debe conectarse de nuevo con la colmena para ver a través de Vecna, aunque sea peligroso.",
+                text: "ACTO 5: EL ORIGEN DE LA VISIÓN. En la escuela de primaria, Will se sube al tiovivo. Sabe que debe conectarse de nuevo con la colmena para ver a través de Vecna, aunque sea peligroso.",
 participantes: ["will5.jpg", "robin5.jpg"],
                 options: [
                     { label: "Will: Forzar la conexión mental", attr: "Agallas", dif: 11 },
                     { label: "Robin: Mantener a Will anclado a la realidad", attr: "Cerebro", dif: 11 }
                 ],
-                win: "Will ve a Derek Turnbow (el matón de Holly). Se da cuenta de que la visión no era un ataque aleatorio: Vecna está seleccionando a sus próximos objetivos uno por uno.",
-                lose: "La conexión es demasiado fuerte. Vecna percibe a Will y le envía un pulso psíquico doloroso, dejándolo temporalmente cegado. (+1 Adversidad)"
+                win: "Will ve a Derek Turnbow (el abusón). Te das cuenta de que no fue un ataque al azar. Vecna está seleccionando a sus próximos objetivos uno por uno.",
+                lose: "La conexión es demasiado fuerte. Vecna percibe a Will y le envía un pulso psíquico doloroso. Ves a Derek Turnbow (el abusón). Vecna está seleccionando a sus objetivos. (+1 Adversidad)"
             },
             {
                 img: "images/526.jpg",
-                text: "ACTO 6: EL MURO DE CARNE. En el Upside Down, Hopper y Once llegan al final del rastro de sangre, pero su camino está bloqueado por una gigantesca pared de tejido vivo.",
+                text: "ACTO 6: EL MURO DE CARNE. En el Mundo del Revés, Hopper y Once llegan al final del rastro de sangre, pero su camino está bloqueado por una gigantesca pared de tejido vivo.",
 participantes: ["once5.jpg", "hopper5.jpg"],
                 options: [
                     { label: "Once: Abrir la pared con poderes", attr: "Agallas", dif: 11 },
                     { label: "Hopper: Volar la pared con explosivos", attr: "Pelea", dif: 11 }
                 ],
-                win: "Logran abrir una brecha en la pared de carne. Al otro lado encuentran la bota de Holly. Vecna la tiene oculta detrás de un velo psíquico.",
-                lose: "La pared es impenetrable. Once se agota intentando romperla y se da cuenta de que no puede localizar a Holly en el Vacío. Están atascados."
+                win: "La pared es impenetrable. Os agotáis intentando romperla.",
+                lose: "La pared es impenetrable. Os agotáis intentando romperla. Estáis atascados. (+1 Adversidad)"
             }
         ];
 
@@ -415,19 +419,19 @@ function avanzarActo() {
                 // FINAL 1 (BUENO)
                 finalImg.src = "images/526.jpg";
                 card.style.borderColor = "#00ff00";
-                card.innerHTML = "FINAL BUENO: EL ENGAÑO REVELADO<br>Habéis descubierto que 'Henry Creel' manipuló a Holly. Con Once cruzando el muro y Will conociendo el próximo objetivo, estáis un paso por delante del monstruo.";
+                card.innerHTML = "FINAL BUENO: EL ENGAÑO REVELADO<br>Habéis descubierto que 'Henry Creel' manipuló a Holly. Con Will conociendo el próximo objetivo, estáis un paso por delante del monstruo. Recibís una recompensa.";
                 document.getElementById('options-container').innerHTML = `<button class="btn" style="text-align:center; color:var(--gold);" onclick="window.location.href='escena_5_3.html'">⏭️ SIGUIENTE CAPÍTULO</button>`;
             } else if (successes === 3 || successes === 4) {
                 // FINAL 2 (NORMAL)
                 finalImg.src = "images/526.jpg";
                 card.style.borderColor = "var(--gold)";
-                card.innerHTML = "FINAL NORMAL: A CIEGAS<br>Tenéis pistas fragmentadas, pero la pared de carne resiste y Will sufre secuelas del enlace mental. Holly sigue a merced de 'Mr. Whatsit'. Debéis intentarlo de nuevo.";
+                card.innerHTML = "FINAL NORMAL: A CIEGAS<br>Tenéis pistas fragmentadas, pero la pared de carne resiste. Will conoce el próximo objetivo. Holly sigue a merced del 'señor Qué'.";
                 document.getElementById('options-container').innerHTML = `<button class="btn" style="text-align:center; border-color:var(--gold); color:var(--gold);" onclick="window.location.href='escena_5_3.html'">🔄 SIGUIENTE CAPÍTULO</button>`;
             } else {
                 // FINAL 3 (MALO)
                 finalImg.src = "images/gameover.gif";
                 card.style.borderColor = "var(--vecna-red)";
-                card.innerHTML = "FINAL MALO: LA TRAMPA SE CIERRA<br>Vecna os ha engañado. Holly entra sonriendo en la réplica de la Mansión Creel en el Upside Down. No tenéis pistas y Once está exhausta. Vuelve a rodar.";
+                card.innerHTML = "FINAL MALO: LA TRAMPA SE CIERRA<br>Vecna os ha engañado. Holly entra sonriendo en la réplica de la Mansión Creel. No tenéis pistas y Once está exhausta. Debéis repetir el capítulo.";
                 document.getElementById('options-container').innerHTML = `<button class="btn" style="text-align:center;" onclick="location.reload()">🔄 REINTENTAR ESCENA</button>`;
             }
             speak(card.innerText);

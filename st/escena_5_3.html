@@ -387,20 +387,20 @@ function showEnding() {
     // Condición 1: Final Bueno
     if(successes >= 5) {
         sceneImg.src = "images/536b.jpg"; 
-        title = "VICTORIA: EL PLAN TURNBOW FUNCIONA";
-        desc = "Habéis marcado al Demogorgon y Once conoce la ubicación de la base militar. Lo más importante: Holly ha encontrado a Max en el Mindscape.";
+        title = "FINAL BUENO: EL PLAN TURNBOW FUNCIONA";
+        desc = "Habéis marcado al Demogorgon y Once conoce la ubicación de la base militar. Lo más importante: Holly ha encontrado a Max en Guarida Mental de Vecna. Recibís una recompensa.";
     } 
     // Condición 2: Final Normal
     else if(successes === 3 || successes === 4) {
         sceneImg.src = "images/536b.jpg";
-        title = "TABLAS: UNA VICTORIA AMARGA";
+        title = "FINAL NORMAL: UNA VICTORIA AMARGA";
         desc = "El Demogorgon sabe dónde estáis y el grupo de la granja corre peligro. Sin embargo, el encuentro entre Holly y Max ofrece una última oportunidad.";
     } 
     // Condición 3: Final Malo
     else {
         sceneImg.src = "images/gameover.gif";
-        title = "DERROTA: LA TRAMPA SE CIERRA SOBRE VOSOTROS";
-        desc = "Todo ha salido mal. Turnbow es ahora un cementerio de esperanzas. Debéis reintentar el capítulo.";
+        title = "FINAL MALO: LA TRAMPA SE CIERRA SOBRE VOSOTROS";
+        desc = "Todo ha salido mal. Turnbow es ahora un cementerio de esperanzas. Debéis repetir el capítulo.";
     }
 
     document.getElementById('text-content').innerHTML = `<strong>${title}</strong><br>Éxitos: ${successes} | Fallos: ${failures}`;

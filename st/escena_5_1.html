@@ -170,7 +170,11 @@ text-shadow: 0 0 15px var(--vecna-red);
             <img id="scene-img" src="images/st5.gif" class="scene-frame">
             <div class="narrative-text">
                 <div id="text-content">
+
+
                     Noviembre de 1987. Hawkins es una zona militarizada en cuarentena. El grupo planea una peligrosa incursión hacia el Mundo del Revés. Las piezas están en el tablero y el reloj vuelve a correr.
+
+
                 </div>
                 <div id="options-container">
                     <button class="btn" style="text-align:center" onclick="renderStep()">COMENZAR CAPÍTULO</button>
@@ -225,36 +229,36 @@ participantes: ["steve5.jpg", "jonathan5.jpg"],
             },
             {
                 img: "images/512.jpg",
-                text: "ACTO 2: EMBOSCADA EN EL CEMENTERIO. Mientras limpia la tumba de Eddie, Dustin es acorralado por Andy y los matones, que están furiosos.",
-participantes: ["dustin5.jpg", "lucas5.jpg"],
+                text: "ACTO 2: EMBOSCADA EN EL CEMENTERIO. Mientras limpia la tumba de Eddie, Dustin es acorralado por Andy y sus matones, que están furiosos con él.",
+participantes: ["dustin5.jpg"],
                 options: [
-                    { label: "Lanzar disolvente a la cara", attr: "Pelea", dif: 11 },
+                    { label: "Lanzar disolvente a la cara de Andy", attr: "Pelea", dif: 11 },
                     { label: "Amenazar a Andy", attr: "Agallas", dif: 11 }
                 ],
-                win: "Dustin se defiende ferozmente. Aunque recibe una paliza, escupe a Andy y demuestra que el Hellfire no morirá hoy.",
-                lose: "Andy y sus amigos propinan una paliza brutal a Dustin. Su equipo de radio queda dañado antes de la misión. (+1 Estrés)"
+                win: "Dustin se defiende ferozmente. Aunque recibe una paliza, les demuestra que el Club Fuego Infernal nunca morirá.",
+                lose: "Andy y sus amigos propinan una paliza brutal a Dustin. (+1 Adversidad)"
             },
             {
                 img: "images/513.jpg",
-                text: "ACTO 3: INFILTRACIÓN EN EL MAC-Z. Los militares están quemando las compuertas. Es el momento de que Hopper se cuele en uno de los camiones de transporte.",
+                text: "ACTO 3: INFILTRACIÓN EN LA ZONA MILITAR. Los militares están quemando las compuertas. Es el momento de que Hopper se cuele en uno de los camiones de transporte.",
 participantes: ["hopper5.jpg", "mike5.jpg"],
                 options: [
-                    { label: "Hopper: Moverse entre las sombras", attr: "Sigilo", dif: 11 },
-                    { label: "Mike: Coordinar tiempos por radio", attr: "Cerebro", dif: 11 }
+                    { label: "Hopper: Moverse entre las sombras", attr: "Evasión", dif: 11 },
+                    { label: "Mike: Coordinar sus movimientos por radio", attr: "Cerebro", dif: 11 }
                 ],
                 win: "Con precisión milimétrica, Hopper se escurre en el último camión justo antes de que cruce hacia el Mundo del Revés.",
-                lose: "Un soldado casi detecta a Hopper, obligándole a abandonar parte de su equipo y munición para entrar al camión. (+1 Adversidad)"
+                lose: "Un soldado casi detecta a Hopper, obligándole a abandonar parte de su equipo y munición. Pero logra colarse en el último camión. (+1 Adversidad)"
             },
             {
                 img: "images/514.jpg",
-                text: "ACTO 4: CAOS EN EL OTRO LADO. ¡El convoy es atacado! Un Demogorgon masacra a los soldados y el camión de Hopper se estrella contra un árbol.",
+                text: "ACTO 4: CAOS EN EL OTRO LADO. ¡El convoy es atacado! Un Demogorgon masacra a los soldados y el camión donde iba Hopper se estrella contra un árbol.",
 participantes: ["hopper5.jpg", "steve5.jpg"],
                 options: [
-                    { label: "Hopper: Sobrevivir y escapar", attr: "Agallas", dif: 11 },
+                    { label: "Hopper: Aguantar el golpe", attr: "Músculo", dif: 11 },
                     { label: "Steve: Mantener el rastreo desde la furgoneta", attr: "Cerebro", dif: 11 }
                 ],
-                win: "Hopper sale de los escombros herido pero vivo, logrando evadir a la bestia mientras Steve no pierde su señal.",
-                lose: "Hopper recibe un roce de bala en el caos y su rastreador se rompe. Queda completamente aislado en la dimensión oscura. (+1 Estrés)"
+                win: "Hopper sale de los escombros herido pero vivo, logrando evadir a la bestia, mientras Steve no pierde su señal.",
+                lose: "Una bala roza a Hopper durante el caos. (+1 Adversidad)"
             },
             {
                 img: "images/515.jpg",
@@ -262,20 +266,20 @@ participantes: ["hopper5.jpg", "steve5.jpg"],
 participantes: ["will5.jpg", "joyce5.jpg"],
                 options: [
                     { label: "Will: Soportar la conexión mental", attr: "Agallas", dif: 11 },
-                    { label: "Joyce: Sacar a Will del trance a bofetadas", attr: "Pelea", dif: 11 }
+                    { label: "Joyce: Sacar a Will del trance", attr: "Encanto", dif: 11 }
                 ],
-                win: "Will resiste lo suficiente para ver el destino del monstruo: ¡Se dirige hacia la casa de los Wheeler!",
-                lose: "El trance es demasiado fuerte. Will queda exhausto y la advertencia llega unos minutos vitales más tarde. (+1 Adversidad)"
+                win: "Will resiste lo suficiente para ver hacia dónde se dirige del monstruo: ¡Va hacia la casa de los Wheeler!",
+                lose: "El trance es demasiado fuerte. Will queda exhausto. Pero ve que el monstruo se dirige hacia la casa de los Wheeler. (+1 Adversidad)"
             },
             {
                 img: "images/516.jpg",
                 text: "ACTO 6: EL ASALTO A LOS WHEELER. El techo de la habitación de la pequeña Holly empieza a resquebrajarse. El Demogorgon está a punto de entrar.",
 participantes: ["once5.jpg", "holly5.jpg"],
                 options: [
-                    { label: "Once: Usar poderes a distancia", attr: "Cerebro", dif: 11 },
+                    { label: "Once: Usar poderes a distancia", attr: "Agallas", dif: 11 },
                     { label: "Holly: Esconderse en la bañera", attr: "Evasión", dif: 11 }
                 ],
-                win: "Once lanza un pulso telequinético que frena a la bestia, pero el Demogorgon secuestra a Holly arrastrándola hacia el agujero.",
+                win: "Once lanza un pulso telequinético que frena a la bestia, pero el Demogorgon encuentra a Holly en la bañera y la arrastra hacia el agujero.",
                 lose: "Demasiado tarde. El Demogorgon destroza la habitación y secuestra a Holly arrastrándola hacia el agujero. (+1 Adversidad)"
             }
         ];
@@ -379,7 +383,7 @@ function showEnding() {
         sceneImg.src = "images/516.jpg";
         card.innerHTML = `
             <h2 style="color:#00ff00">FINAL BUENO</h2>
-            <p>Habéis salvado a Holly Wheeler y Hopper sigue oculto en el Upside Down enviando señales. El rastreo ha sido un éxito rotundo.</p>`;
+            <p>Hopper está oculto en el Mundo del Revés enviando señales. El rastreo ha sido un éxito rotundo. Recibís una recompensa.</p>`;
         
         optionsContainer.innerHTML = `
             <button class="btn" style="text-align:center; border-color:var(--gold); color:var(--gold);" onclick="window.location.href='escena_5_2.html'">⏭️ SIGUIENTE CAPÍTULO</button>`;
@@ -389,7 +393,7 @@ function showEnding() {
         sceneImg.src = "images/516.jpg";
         card.innerHTML = `
             <h2 style="color:var(--gold)">FINAL NORMAL</h2>
-            <p>Salváis a Holly en el último segundo, pero Hopper ha perdido contacto en la dimensión oscura. Estáis a ciegas.</p>`;
+            <p>El Demogorgon se ha llevado a Holly y Hopper está oculto en el Mundo del Revés.</p>`;
         
         optionsContainer.innerHTML = `
             <button class="btn" style="text-align:center; border-color:var(--gold); color:var(--gold);" onclick="window.location.href='escena_5_2.html'">⏭️ SIGUIENTE CAPÍTULO</button>`;
@@ -399,7 +403,7 @@ function showEnding() {
         sceneImg.src = "images/gameover.gif"; 
         card.innerHTML = `
             <h2 style="color:var(--vecna-red)">FINAL MALO</h2>
-            <p>El Demogorgon se ha llevado a Holly y Hopper está rodeado. Vecna ha movido sus piezas magistralmente. Debes repetir el capítulo.</p>`;
+            <p>El Demogorgon se ha llevado a Holly y Hopper está perdido en el Mundo del Revés. Debes repetir el capítulo.</p>`;
         
         optionsContainer.innerHTML = `
             <button class="btn" style="text-align:center; border-color:var(--vecna-red);" onclick="location.reload()">🔄 REINICIAR CAPÍTULO</button>`;
