@@ -274,7 +274,7 @@ participantes: ["joyce5.jpg", "once5.jpg", "will5.jpg", "nancy5.jpg", "mike5.jpg
             },
             {
                 text: "ACTO 6: EL SACRIFICIO FINAL. La bomba va a estallar. Once se queda en la puerta para asegurar que el Mundo del Revés desaparezca para siempre.",
-img: "images/586.jpg", // <--- Añade esto
+img: "images/586.webp", // <--- Añade esto
 participantes: ["once5.jpg", "mike5.jpg"],
                 options: [
                     { label: "Mike: Suplicar que Once vuelva", attr: "Encanto", dif: 11 },
@@ -405,7 +405,7 @@ function showEnding() {
     
     // EPÍLOGO 1: ÉXITO TOTAL (5 o más éxitos)
     if (successes >= 5) {
-        sceneImg.src = "images/586b.jpg";
+        sceneImg.src = "images/586b.gif";
         card.innerHTML = `
             <h2 style="color:#00ff00">EPÍLOGO BUENO: LA PROMESA DEL MAÑANA</h2>
             <p>Hawkins comienza a sanar. El grupo se reúne en la colina mientras el sol sale por primera vez sin cenizas. La guerra ha terminado, y aunque hay cicatrices, están juntos.</p>`;
@@ -415,7 +415,7 @@ function showEnding() {
     } 
     // EPÍLOGO 2: VICTORIA AGRIDULCE (3 o 4 éxitos)
     else if (successes >= 3) {
-        sceneImg.src = "images/586b.jpg";
+        sceneImg.src = "images/586b.gif";
         card.innerHTML = `
             <h2 style="color:var(--gold)">EPÍLOGO NORMAL: EL LARGO ADIÓS</h2>
             <p>Vecna ha sido derrotado, pero el coste fue alto. El pueblo está a salvo, aunque algunos de vuestros amigos deben marcharse para siempre. Un nuevo capítulo comienza con una despedida.</p>`;
