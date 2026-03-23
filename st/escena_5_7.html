@@ -138,6 +138,7 @@ text-shadow: 0 0 15px var(--vecna-red);
     <audio id="audioMusic" src="audio/upside.mp3" loop></audio>
     <audio id="audioDice" src="audio/dados.mp3"></audio>
     <audio id="audioTruck" src="audio/truck.mp3"></audio>
+    <audio id="audioClock" src="audio/clock.mp3"></audio>
 
     <header><h1>T5 - E7: EL PUENTE</h1></header>
 
@@ -216,14 +217,14 @@ text-shadow: 0 0 15px var(--vecna-red);
 img: "images/571.jpg", // <--- Añade esto
 participantes: ["holly5.jpg", "steve5.jpg", "dustin5.jpg"],
                 options: [
-                    { label: "Holly: Resistir la gravedad", attr: "Evasión", dif: 11 },
-                    { label: "Steve: Rescatarla del aire", attr: "Agallas", dif: 11 }
+                    { label: "Holly: Resistir la gravedad", attr: "Agallas", dif: 11 },
+                    { label: "Steve: Rescatarla del aire", attr: "Evasión", dif: 11 }
                 ],
                 win: "Steve logra verla caer y, aunque Vecna la arrastra de vuelta, Dustin marca su posición exacta en el Abismo.",
-                lose: "Holly es succionada sin dejar rastro. El grupo pierde su ubicación y Vecna la sella en la aguja de nuevo. (+1 Adversidad)"
+                lose: "Holly es succionada sin dejar rastro. El grupo pierde su ubicación. (+1 Adversidad)"
             },
             {
-                text: "ACTO 2: EL MAPA DEL ABISMO. Dustin explica que el Upside Down es un puente congelado en 1983, y que Vecna planea fusionar 'El Abismo' con el mundo real esta misma noche.",
+                text: "ACTO 2: EL MAPA DEL ABISMO. Dustin explica que el Mundo del Revés es un puente congelado en 1983, y que Vecna planea fusionar 'El Abismo' con el mundo real esta misma noche.",
 img: "images/572.jpg", // <--- Añade esto
 participantes: ["dustin5.jpg"],
                 options: [
@@ -231,7 +232,7 @@ participantes: ["dustin5.jpg"],
                     { label: "Explicar con telemetría", attr: "Encanto", dif: 11 }
                 ],
                 win: "Entendéis que el laboratorio de 1983 es el punto de anclaje. Once podrá usar los tanques de privación originales.",
-                lose: "La explicación es confusa y perdéis tiempo valioso. El ejército de Sullivan se acerca a vuestra posición. (+1 Adversidad)"
+                lose: "Entendéis que el laboratorio de 1983 es el punto de anclaje. Once podrá usar los tanques de privación originales. El ejército de Sullivan se acerca a vuestra posición. (+1 Adversidad)"
             },
             {
                 text: "ACTO 3: EL PLAN DEL CAMIÓN. El grupo decide asaltar la base militar usando el camión de Murray como un caballo de Troya telequinético.",
@@ -241,8 +242,8 @@ participantes: ["murray5.jpg", "once5.jpg"],
                     { label: "Murray: Conducir a través de la brecha", attr: "Evasión", dif: 11 },
                     { label: "Once: Levantar el camión", attr: "Agallas", dif: 11 }
                 ],
-                win: "¡El camión vuela sobre las defensas! Entráis en el Upside Down dejando a la Doctora Kay en total derrota.",
-                lose: "El camión encalla. Debéis luchar contra los militares en el mundo real antes de cruzar. (+1 Adversidad)"
+                win: "¡El camión vuela sobre las defensas! Entráis en el Mundo del Revés.",
+                lose: "El camión encalla. Debéis luchar contra los militares en el mundo real antes de cruzar. Pero al final, entráis en el Mundo del Revés. (+1 Adversidad)"
             },
             {
                 text: "ACTO 4: EL SECRETO DE WILL. Vecna usó el miedo de Will para controlarlo. Para romper el vínculo, Will debe confesar su verdad más profunda a sus amigos.",
@@ -253,17 +254,17 @@ participantes: ["will5.jpg", "jonathan5.jpg", "mike5.jpg", "once5.jpg", "lucas5.
                     { label: "Jonathan: Apoyar a su hermano", attr: "Encanto", dif: 11 }
                 ],
                 win: "Will admite que no le gustan las chicas. El grupo lo abraza, fortaleciendo su mente y cegando a Vecna en su propio juego.",
-                lose: "Will se bloquea por el miedo. Vecna aprovecha su duda para susurrarle desde las sombras. (+1 Adversidad)"
+                lose: "Will se bloquea por el miedo pero admite que no le gustan las chicas. El grupo lo abraza. (+1 Adversidad)"
             },
             {
                 text: "ACTO 5: EL PACTO DE KALI. En el vacío mental, Kali le propone a Once una salida radical: quedarse atrás y dejar que el puente colapse para ser libres de la humanidad.",
 img: "images/575.jpg", // <--- Añade esto
 participantes: ["once5.jpg", "kali5.jpg"],
                 options: [
-                    { label: "Once: Rechazar la propuesta de Kali", attr: "Cerebro", dif: 11 },
+                    { label: "Once: Entender la propuesta de Kali", attr: "Cerebro", dif: 11 },
                     { label: "Kali: Convencer a Once de su destino", attr: "Encanto", dif: 11 }
                 ],
-                win: "Once elige a sus amigos. Su voluntad se vuelve inquebrantable para la batalla final que se avecina.",
+                win: "La voluntad de Once se vuelve inquebrantable para la batalla final que se avecina.",
                 lose: "La duda se instala en Once. Su poder fluctúa peligrosamente mientras se prepara para el Abismo. (+1 Adversidad)"
             },
             {
@@ -293,6 +294,11 @@ function renderStep() {
     // --- LÓGICA  ---
     if (step === 2) { 
         const snd = document.getElementById('audioTruck');
+        if (snd) snd.play().catch(() => {}); 
+    }
+    // ----------------------------------
+    if (step === 5) { 
+        const snd = document.getElementById('audioClock');
         if (snd) snd.play().catch(() => {}); 
     }
     // ----------------------------------
@@ -372,7 +378,7 @@ function showEnding() {
         sceneImg.src = "images/576.jpg";
         card.innerHTML = `
             <h2 style="color:#00ff00">FINAL BUENO</h2>
-            <p> Habéis entrado en el Upside Down con el camión de Murray. Will ha liberado su carga mental y Once está lista para el Abismo. ¡A por Vecna! Recibís una recompensa.</p>`;
+            <p> Habéis entrado en el Mundo del Revés con el camión de Murray. Will ha liberado su carga mental y Once está lista para el Abismo. ¡A por Vecna! Recibís una recompensa.</p>`;
         
         optionsContainer.innerHTML = `
             <button class="btn" style="text-align:center; border-color:var(--gold); color:var(--gold);" onclick="window.location.href='escena_5_8.html'">⏭️ SIGUIENTE CAPÍTULO</button>`;

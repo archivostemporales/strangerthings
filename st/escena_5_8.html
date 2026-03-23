@@ -142,6 +142,7 @@ text-shadow: 0 0 15px var(--vecna-red);
     <audio id="audioAxe" src="audio/axe.mp3"></audio>
     <audio id="audioWeird" src="audio/weird.mp3"></audio>
     <audio id="audioVecna" src="audio/vecna_final.mp3"></audio>
+    <audio id="audioPurplerain" src="audio/purplerain.mp3"></audio>
 
     <header><h1>T5 - E8: EL MUNDO DEL DERECHO</h1></header>
 
@@ -174,7 +175,9 @@ text-shadow: 0 0 15px var(--vecna-red);
             <img id="scene-img" src="images/580.jpg" class="scene-frame">
             <div class="narrative-text">
                 <div id="text-content">
-                    El Abismo se cierra sobre Hawkins. Once, Will y el grupo se enfrentan a la forma física del Mind Flayer mientras Hopper lucha contra los fantasmas de su pasado en el Laboratorio. Es el fin del juego.
+
+                    El Abismo se cierra sobre Hawkins. Once, Will y el grupo se enfrentan a la forma física del Azotamentes mientras Hopper lucha contra los fantasmas de su pasado en el Laboratorio. Es el fin del juego.
+
                 </div>
                 <div id="options-container">
                     <button class="btn" style="text-align:center" onclick="renderStep()">COMENZAR CAPÍTULO</button>
@@ -219,7 +222,7 @@ text-shadow: 0 0 15px var(--vecna-red);
 img: "images/581.jpg", // <--- Añade esto
 participantes: ["hopper5.jpg", "murray5.jpg"],
                 options: [
-                    { label: "Hopper: Disparar a los soldados de Akers", attr: "Pelea", dif: 11 },
+                    { label: "Hopper: Disparar a los soldados", attr: "Pelea", dif: 11 },
                     { label: "Murray: Usar dinamita contra el helicóptero", attr: "Cerebro", dif: 11 }
                 ],
                 win: "Logran derribar el helicóptero. Once recupera sus poderes y acaba con Akers, aunque Kali queda herida de muerte.",
@@ -230,10 +233,10 @@ participantes: ["hopper5.jpg", "murray5.jpg"],
 img: "images/582.jpg", // <--- Añade esto
 participantes: ["holly5.jpg", "derek5.jpg"],
                 options: [
-                    { label: "Derek: Confrontar al Henry del pasado", attr: "Encanto", dif: 11 },
+                    { label: "Derek: Confrontar al Henry del pasado", attr: "Pelea", dif: 11 },
                     { label: "Holly: Atacar con el atizador de fuego", attr: "Pelea", dif: 11 }
                 ],
-                win: "Will ofrece compasión a Henry, debilitando su control sobre la mente colmena. Los niños logran escapar al desierto.",
+                win: "Los niños logran escapar al desierto.",
                 lose: "Henry se enfurece y ataca a Holly. El trauma de Henry se vuelve una explosión psíquica que sacude el Abismo. (+1 Adversidad)"
             },
             {
@@ -255,7 +258,7 @@ participantes: ["once5.jpg", "will5.jpg", "nancy5.jpg", "mike5.jpg", "lucas5.jpg
                     { label: "Will: Arrancar el brazo de Vecna", attr: "Agallas", dif: 20 },
                     { label: "Once: Atravesar a Vecna en la pica", attr: "Agallas", dif: 20 }
                 ],
-                win: "¡Victoria! Will rompe el mando de Vecna y Once lo empala. El cuerpo del Azotamentes colapsa definitivamente.",
+                win: "¡Victoria! Will rompe el brazo de Vecna y Once lo empala. El cuerpo del Azotamentes colapsa definitivamente.",
                 lose: "Vecna hiere a Once antes de caer. Vecna y el Azotamentes mueren, pero el coste es casi insoportable. (+1 Adversidad)"
             },
             {
@@ -266,11 +269,11 @@ participantes: ["joyce5.jpg", "once5.jpg", "will5.jpg", "nancy5.jpg", "mike5.jpg
                     { label: "Joyce: Ejecutar a Vecna", attr: "Agallas", dif: 11 },
                     { label: "Dustin: Coordinar la bomba", attr: "Cerebro", dif: 11 }
                 ],
-                win: "Joyce decapita al villano. Dustin da la señal a Hopper para activar la bomba de 'materia exótica' con la música de Prince.",
-                lose: "Vecna intenta un último ataque mental. Joyce logra matarlo, pero queda marcada por sus visiones de Bob y Karen. (+1 Adversidad)"
+                win: "Joyce decapita al villano. Dustin da la señal a Hopper para activar la bomba de 'materia exótica'.",
+                lose: "Vecna intenta un último ataque mental. Joyce logra matarlo, pero queda marcada por sus visiones. Dustin da la señal a Hopper para activar la bomba de 'materia exótica'. (+1 Adversidad)"
             },
             {
-                text: "ACTO 6: EL SACRIFICIO FINAL. La bomba va a estallar. Once se queda en la puerta para asegurar que el Upside Down desaparezca para siempre.",
+                text: "ACTO 6: EL SACRIFICIO FINAL. La bomba va a estallar. Once se queda en la puerta para asegurar que el Mundo del Revés desaparezca para siempre.",
 img: "images/586.jpg", // <--- Añade esto
 participantes: ["once5.jpg", "mike5.jpg"],
                 options: [
@@ -309,11 +312,20 @@ function renderStep() {
         if (snd) snd.play().catch(() => {}); 
     }
     // ----------------------------------
+// --- CAMBIO PARA EL ACTO 6 (Paso 5) ---
     if (step === 5) { 
-        const snd = document.getElementById('audioWeird');
-        if (snd) snd.play().catch(() => {}); 
+        // 1. Apagamos la música de fondo
+        const musicaFondo = document.getElementById('audioMusic');
+        if (musicaFondo) musicaFondo.pause();
+        
+        // 2. Reproducimos Purple Rain
+        const purple = document.getElementById('audioPurplerain');
+        if (purple) purple.play().catch(() => {});
+
+        // El sonido 'audioWeird' podrías quitarlo o dejarlo si quieres que suenen ambos
+        const weird = document.getElementById('audioWeird');
+        if (weird) weird.play().catch(() => {}); 
     }
-    // ----------------------------------
     
     document.getElementById('scene-img').src = data.img;
     document.getElementById('text-content').innerText = data.text;
@@ -406,7 +418,7 @@ function showEnding() {
         sceneImg.src = "images/586b.jpg";
         card.innerHTML = `
             <h2 style="color:var(--gold)">EPÍLOGO NORMAL: EL LARGO ADIÓS</h2>
-            <p>Vecna ha sido derrotado, pero el costo fue alto. El pueblo está a salvo, pero algunos de vuestros amigos deben marcharse para siempre. Un nuevo capítulo comienza con una despedida.</p>`;
+            <p>Vecna ha sido derrotado, pero el coste fue alto. El pueblo está a salvo, aunque algunos de vuestros amigos deben marcharse para siempre. Un nuevo capítulo comienza con una despedida.</p>`;
         
         optionsContainer.innerHTML = `
             <button class="btn" style="text-align:center; border-color:var(--gold); color:var(--gold);" onclick="window.location.href='menu.html'">🏠 VOLVER AL MENÚ PRINCIPAL</button>`;
@@ -416,7 +428,7 @@ function showEnding() {
         sceneImg.src = "images/gameover.gif"; 
         card.innerHTML = `
             <h2 style="color:var(--vecna-red)">EPÍLOGO MALO: LA SOMBRA PERMANECE</h2>
-            <p>La victoria es incompleta. El Mundo del Revés no se ha cerrado del todo y el sacrificio parece haber sido en vano. Hawkins sigue atrapado en una pesadilla eterna.</p>`;
+            <p>La victoria es incompleta. El Mundo del Revés no se ha cerrado del todo y el sacrificio parece haber sido en vano. Hawkins sigue atrapado en una pesadilla eterna Debéis repetir el capítulo.</p>`;
         
         optionsContainer.innerHTML = `
             <button class="btn" style="text-align:center; border-color:var(--vecna-red);" onclick="location.reload()">🔄 REINICIAR CAPÍTULO</button>`;

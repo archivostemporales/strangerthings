@@ -139,6 +139,7 @@ text-shadow: 0 0 15px var(--vecna-red);
     <audio id="audioThunder" src="audio/thunder.mp3"></audio>
     <audio id="audioExplosion" src="audio/explosion.mp3"></audio>
     <audio id="audioRays" src="audio/rays.mp3"></audio>
+    <audio id="audioEvery" src="audio/every.mp3"></audio>
 
     <header><h1>T2 - E6: EL PORTAL</h1></header>
      <div class="main-wrapper">
@@ -322,6 +323,11 @@ function renderStep() {
         if (tlf) tlf.play().catch(() => {}); 
     }
     // ----------------------------------
+    if (step === 6) { 
+        const tlf = document.getElementById('audioExplosion');
+        if (tlf) tlf.play().catch(() => {}); 
+    }
+    // ----------------------------------
     
     document.getElementById('scene-img').src = data.img;
     document.getElementById('text-content').innerText = data.text;
@@ -393,10 +399,18 @@ function avanzarActo() {
 
 
 // ******************************************* FINALES **************************************************************************
-
 function showEnding() {
+    // Detener música de acción
+    const m = document.getElementById('audioMusic');
+    if (m) m.pause();
+    // REPRODUCIR SONIDO DE FINAL
+    const audioFinal = document.getElementById('audioEvery');
+    if (audioFinal) {
+        audioFinal.play().catch(e => console.log("Error al reproducir audio final:", e));
+    }
+
     const card = document.getElementById('final-card');
-    const sceneImg = document.getElementById('scene-img'); // Referencia a la imagen
+    const sceneImg = document.getElementById('scene-img'); 
     card.style.display = "block";
     let title = "", desc = "";
     
