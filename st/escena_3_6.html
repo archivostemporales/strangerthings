@@ -139,6 +139,7 @@ text-shadow: 0 0 15px var(--vecna-red);
     <audio id="audioReactor" src="audio/reactor.mp3"></audio>
     <audio id="audioDemogorgon" src="audio/demogorgon_roar.mp3"></audio>
     <audio id="audioGun" src="audio/gun.mp3"></audio>
+    <audio id="audioHeroes" src="audio/heroes.mp3"></audio>
 
     <header><h1>T3 - E6: LA BATALLA DE STARCOURT</h1></header>
      <div class="main-wrapper">
@@ -333,6 +334,23 @@ function renderStep() {
         if (tlf) tlf.play().catch(() => {}); 
     }
     // ----------------------------------
+// --- CAMBIO PARA EL ACTO 6 (Paso 5) ---
+    if (step === 5) { 
+        // 1. Apagamos la música de fondo
+        const musicaFondo = document.getElementById('audioMusic');
+        if (musicaFondo) musicaFondo.pause();
+        
+        // 2. Reproducimos Heroes
+        const purple = document.getElementById('audioHeroes');
+        if (purple) purple.play().catch(() => {});
+
+    }
+    // ----------------------------------
+
+
+
+
+
     
     document.getElementById('scene-img').src = data.img;
     document.getElementById('text-content').innerText = data.text;

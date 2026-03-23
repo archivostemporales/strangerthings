@@ -136,6 +136,7 @@ text-shadow: 0 0 15px var(--vecna-red);
     <audio id="audioMusic" src="audio/master.mp3" loop></audio>
     <audio id="audioDice" src="audio/dados.mp3"></audio>
     <audio id="audioDemogorgon" src="audio/demogorgon_roar.mp3"></audio>
+    <audio id="audioDream" src="audio/dream.mp3"></audio>
 
     <header><h1>T4 - E9: EL PLAN</h1></header>
      <div class="main-wrapper">
@@ -377,6 +378,15 @@ function avanzarActo() {
 }
 // ******************************************* FINALES **************************************************************************
 function showEnding() {
+    // Detener música de acción
+    const m = document.getElementById('audioMusic');
+    if (m) m.pause();
+    // REPRODUCIR SONIDO DE FINAL
+    const audioFinal = document.getElementById('audioDream');
+    if (audioFinal) {
+        audioFinal.play().catch(e => console.log("Error al reproducir audio final:", e));
+    }
+
     const card = document.getElementById('final-card');
     const sceneImg = document.getElementById('scene-img');
     card.style.display = "block";
