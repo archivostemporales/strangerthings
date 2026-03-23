@@ -169,7 +169,9 @@ text-shadow: 0 0 15px var(--vecna-red);
             <img id="scene-img" src="images/540.jpg" class="scene-frame">
             <div class="narrative-text">
                 <div id="text-content">
-                    El caos se extiende por Hawkins. El ejército captura a los niños como cebo, mientras Max revela los secretos de Henry Creel desde su refugio en el Mindscape. Pero el verdadero poder está a punto de despertar en Will Byers.
+
+                    El caos se extiende por Hawkins. El ejército captura a los niños como cebo. Mientras, Max revela los secretos de Henry Creel desde su refugio en la Guarida Mental.
+
                 </div>
                 <div id="options-container">
                     <button class="btn" style="text-align:center" onclick="renderStep()">COMENZAR CAPÍTULO</button>
@@ -210,18 +212,18 @@ text-shadow: 0 0 15px var(--vecna-red);
 
         const trama = [
             {
-                text: "ACTO 1: ASEDIO EN LA GRANJA. Un Demogorgon ataca la granja McCorkle. Joyce defiende a los niños con un hacha mientras Will sufre una convulsión conectada a la mente colmena.",
+                text: "ACTO 1: ASEDIO EN LA GRANJA. Un Demogorgon ataca la granja McCorkle. Joyce defiende a los niños con un hacha mientras Will sufre una convulsión al estar conectado a la mente colmena.",
 img: "images/541.jpg", // <--- Añade esto
 participantes: ["joyce5.jpg", "steve5.jpg", "robin5.jpg", "derek5.jpg", "will5.jpg"],
                 options: [
-                    { label: "Defender con el hacha", attr: "Pelea", dif: 11 },
-                    { label: "Embestir con el BMW", attr: "Evasión", dif: 11 }
+                    { label: "Encararte con el Demogorgon", attr: "Agallas", dif: 11 },
+                    { label: "Embestir con el coche", attr: "Evasión", dif: 11 }
                 ],
                 win: "Acabáis con el monstruo justo a tiempo. Will vislumbra a Holly y a los otros niños capturados antes de volver en sí.",
-                lose: "El Demogorgon hiere a Joyce y logra huir por el silo. Will queda profundamente perturbado por la visión. (+1 Adversidad)"
+                lose: "El Demogorgon hiere a Joyce, pero acabáis con él. Will vislumbra a Holly y a los otros niños capturados antes de volver en sí. (+1 Adversidad)"
             },
             {
-                text: "ACTO 2: EL REFUGIO DE MAX. En el Mindscape, Max guía a Holly a las cavernas de roca. Debe ganarse su confianza para explicarle que están dentro de los recuerdos de Vecna.",
+                text: "ACTO 2: EL REFUGIO DE MAX. En la Guarida Mental, Max lleva a Holly a las cavernas. Debe ganarse su confianza para explicarle que están dentro de los recuerdos de Vecna.",
 img: "images/542.jpg", // <--- Añade esto
 participantes: ["holly5.jpg", "max5.jpg"],
                 options: [
@@ -229,7 +231,7 @@ participantes: ["holly5.jpg", "max5.jpg"],
                     { label: "Max: Explicar la verdad de Henry", attr: "Cerebro", dif: 11 }
                 ],
                 win: "Holly confía en Max. Juntas comprenden que las cavernas son el único lugar donde Vecna no puede entrar debido a su propio trauma.",
-                lose: "Holly huye presa del pánico. Max pierde el contacto con ella entre las visiones de la masacre del laboratorio de 1979. (+1 Adversidad)"
+                lose: "Holly aún no confía en Max. Aunque Juntas comprenden que las cavernas son el único lugar donde Vecna no puede entrar debido a su propio trauma. (+1 Adversidad)"
             },
             {
                 text: "ACTO 3: INFILTRACIÓN EN LA ZONA MILITAR. El grupo excava un túnel hasta el baño de los barracones militares. Derek debe convencer a sus compañeros de que lo sigan para escapar.",
@@ -240,28 +242,28 @@ participantes: ["derek5.jpg", "mike5.jpg", "lucas5.jpg"],
                     { label: "Mike o Lucas: Cavar en silencio", attr: "Evasión", dif: 11 }
                 ],
                 win: "Los niños siguen a Derek uno a uno. Lográis evacuar a la primera tanda antes de que los soldados sospechen.",
-                lose: "Una tubería estalla y el ruido alerta a los guardias. El grupo es descubierto, pero salen a tiempo. (+1 Adversidad)"
+                lose: "Una tubería estalla y el ruido alerta a los guardias. El grupo es descubierto, pero logran evacuarlos a tiempo. (+1 Adversidad)"
             },
             {
-                text: "ACTO 4: LA BASE. Hopper y Once irrumpen en la base de Gable Ridge. Tras una lucha brutal contra Akers, encuentran una celda secreta.",
+                text: "ACTO 4: LA BASE. En el Mundo del Revés, Hopper y Once irrumpen en la base de Gable Ridge. Tras una lucha brutal, encuentran una celda secreta.",
 img: "images/544.jpg", // <--- Añade esto
 participantes: ["hopper5.jpg", "once5.jpg"],
                 options: [
                     { label: "Hopper: Luchar cuerpo a cuerpo", attr: "Pelea", dif: 11 },
                     { label: "Once: Desactivar el cierre de seguridad", attr: "Agallas", dif: 11 }
                 ],
-                win: "Hopper noquea a Akers y Once libera a Kali (Ocho). Hopper se queda atrás para cubrir la huida, rodeado de explosivos.",
-                lose: "El sistema de defensa 'Hedgehog' aturde a Once. Kali sigue encerrada y Hopper es capturado por tentáculos. (+1 Estrés)"
+                win: "Hopper noquea al teniente Akers y Once libera a Kali (número Ocho). Hopper se queda atrás para cubrir la huida, cubierto de explosivos.",
+                lose: "El sistema de defensa aturde a Once. Kali está encerrada y Hopper es capturado por tentáculos. (+1 Adversidad)"
             },
             {
-                text: "ACTO 5: LA MASACRE MILITAR. Vecna aparece en la zona militar y desata a los Demogorgons contra los soldados. El caos es total y Lucas queda acorralado en los túneles.",
+                text: "ACTO 5: LA MASACRE MILITAR. Vecna aparece en la zona militar de Hawkins y desata a los Demogorgons contra los soldados. El caos es total y Lucas queda acorralado en los túneles.",
 img: "images/545.jpg", // <--- Añade esto
 participantes: ["lucas5.jpg", "murray5.jpg"],
                 options: [
                     { label: "Lucas: Luchar por los niños", attr: "Pelea", dif: 11 },
                     { label: "Murray: Huida en el camión blindado", attr: "Evasión", dif: 11 }
                 ],
-                win: "Lucas logra poner a salvo a su grupo, pero el camión vuelca y los Demogorgons alcanzan a los niños..",
+                win: "Lucas logra poner a salvo a su grupo, pero el camión vuelca y los Demogorgons alcanzan a los niños.",
                 lose: "Lucas resulta herido. El camión vuelca y los Demogorgons alcanzan a los niños. La situación se vuelve desesperada. (+1 Adversidad)"
             },
             {
@@ -273,7 +275,7 @@ participantes: ["will5.jpg"],
                     { label: "Proyectar el dolor hacia Vecna", attr: "Cerebro", dif: 11 }
                 ],
                 win: "Will congela a los Demogorgons en el aire. Con un gesto, retuerce sus extremidades como si fueran víctimas de Vecna. Su poder ha despertado.",
-                lose: "Will es sobrepasado. Vecna se lleva a los niños por el portal y Joyce queda inconsciente intentando protegerlo. Aunque Will despierta su poder. (+1 Adversidad)"
+                lose: "Will es sobrepasado. Vecna se lleva a los niños por el portal y Joyce queda inconsciente intentando protegerlo. Aunque Will despierta su poder y acaba con los Demogorgons. (+1 Adversidad)"
             }
         ];
 

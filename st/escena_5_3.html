@@ -170,7 +170,9 @@ text-shadow: 0 0 15px var(--vecna-red);
 		<img id="scene-img" src="images/530.jpg" class="scene-frame">
             <div class="narrative-text">
                 <div id="text-content">
-                    El plan para salvar a Derek Turnbow está en marcha. Mientras el grupo se divide entre la granja McCorkle y la casa de los Turnbow, Hopper y Once enfrentan una nueva amenaza militar en el Upside Down: el "Hedgehog".
+
+                    El plan para salvar a Derek Turnbow está en marcha. Mientras el grupo se divide entre la granja McCorkle y la casa de los Turnbow, Hopper y Once enfrentan una nueva amenaza militar en el Mundo del Revés.
+
                 </div>
                 <div id="options-container">
                     <button class="btn" style="text-align:center" onclick="renderStep()">COMENZAR CAPÍTULO</button>
@@ -218,11 +220,11 @@ participantes: ["hopper5.jpg", "once5.jpg"],
                     { label: "Hopper: Fuego de cobertura y granadas", attr: "Pelea", dif: 11 },
                     { label: "Once: Resistir las ondas sónicas", attr: "Agallas", dif: 11 }
                 ],
-                win: "Hopper destruye el Hedgehog. Once recupera el control y noquea al Teniente Akers lanzando su propio camión contra él.",
-                lose: "El arma sónica deja a Once herida y los militares capturan vuestro equipo. Debéis huir al desguace. (+1 Adversidad)"
+                win: "Hopper destruye el arma sónica. Once recupera el control y noquea al Teniente Akers lanzando su propio camión contra él.",
+                lose: "El arma sónica deja a Once herida. Debéis huir. (+1 Adversidad)"
             },
             {
-                text: "ACTO 2: EL PASTEL DE ERICA. Erica se infiltra en casa de los Turnbow con un pastel cargado de benzodiacepinas. Debe convencer a Tina de que la deje entrar.",
+                text: "ACTO 2: EL PASTEL DE ERICA. Erica se infiltra en casa de los Turnbow con un pastel cargado de tranquilizantes. Debe convencer a Tina de que la deje entrar.",
 img: "images/532.jpg", // <--- Añade esto
 participantes: ["erica5.jpg"],
                 options: [
@@ -230,29 +232,29 @@ participantes: ["erica5.jpg"],
                     { label: "Inyectar a Tina rápidamente", attr: "Evasión", dif: 11 }
                 ],
                 win: "La familia cae dormida. Erica reduce a Tina con una jeringuilla y abre el garaje para que el equipo entre a preparar las trampas.",
-                lose: "Tina sospecha y el pastel se desperdicia. El equipo debe entrar por la fuerza, alertando a los vecinos. (+1 Estrés)"
+                lose: "Tina sospecha. El equipo debe entrar por la fuerza, alertando a los vecinos. (+1 Adversidad)"
             },
             {
-                text: "ACTO 3: INTERROGATORIO EN EL BUS. Hopper y Once tienen a Akers atado en un autobús escolar del revés. Necesitan saber qué hay tras la puerta misteriosa de la base.",
+                text: "ACTO 3: INTERROGATORIO EN EL AUTOBÚS. Hopper y Once tienen a Akers atado en un autobús escolar en el Mundo del Revés. Necesitan saber qué hay tras la puerta misteriosa de la base.",
 img: "images/533.jpg", // <--- Añade esto
 participantes: ["hopper5.jpg", "once5.jpg"],
                 options: [
                     { label: "Hopper: Interrogatorio de 'viejo soldado'", attr: "Músculo", dif: 11 },
                     { label: "Once: Sondear la mente de Akers", attr: "Agallas", dif: 11 }
                 ],
-                win: "Once descubre la ubicación de la base en Gable Ridge Road. Siente que su 'Kriptonita' y el poder de Vecna emanan de allí.",
-                lose: "Akers se resiste y Once sufre un colapso mental al ver los traumas del soldado. No obtenéis la ubicación exacta. (+1 Adversidad)"
+                win: "Descubrís la ubicación de la base en Gable Ridge Road. Once siente que su 'kriptonita' y el poder de Vecna emanan de allí.",
+                lose: "Akers se resiste y Once sufre un colapso mental al ver los traumas del soldado. Aunque obtenéis la ubicación de la base. (+1 Adversidad)"
             },
             {
-                text: "ACTO 4: LA TRAMPA PARA EL DEMOGORGON. En casa de los Turnbow, Mike, Lucas y Nancy instalan un foso oculto y trampas de clavos para recibir al monstruo.",
+                text: "ACTO 4: LA TRAMPA PARA EL DEMOGORGON. En casa de los Turnbow, el grupo instala un foso oculto y trampas de clavos para recibir al monstruo.",
 img: "images/534.jpg", // <--- Añade esto
 participantes: ["nancy5.jpg", "lucas5.jpg", "mike5.jpg", "jonathan5.jpg", "steve5.jpg", "dustin5.jpg"],
                 options: [
-                    { label: "Preparar el foso con clavos", attr: "Cerebro", dif: 11 },
-                    { label: "Provocación con globos de acetona", attr: "Evasión", dif: 11 }
+                    { label: "Preparar el foso con clavos", attr: "Músculo", dif: 11 },
+                    { label: "Provocación con globos de acetona", attr: "Cerebro", dif: 11 }
                 ],
                 win: "El Demogorgon cae en el foso. Nancy logra dispararle el rastreador de telemetría mientras Jonathan lo envuelve en llamas.",
-                lose: "El monstruo es más rápido de lo esperado. Rompe el foso y casi hiere a Mike antes de escapar por una brecha. (+1 Estrés)"
+                lose: "El monstruo es más rápido de lo esperado. Rompe el foso y casi hiere a Mike antes de escapar por una brecha. Pero le colocan el rastreador. (+1 Adversidad)"
             },
             {
                 text: "ACTO 5: LA PERSECUCIÓN DEL BMW. Dustin rastrea la señal del Demogorgon desde el coche de Steve, pero el monstruo cambia de rumbo repentinamente.",
@@ -260,21 +262,21 @@ img: "images/535.jpg", // <--- Añade esto
 participantes: ["dustin5.jpg", "steve5.jpg"],
                 options: [
                     { label: "Dustin: Calibrar la antena del techo", attr: "Cerebro", dif: 11 },
-                    { label: "Steve: Conducción extrema", attr: "Sigilo", dif: 11 }
+                    { label: "Steve: Conducción extrema", attr: "Evasión", dif: 11 }
                 ],
-                win: "Confirmáis que el Demogorgon se dirige a la granja McCorkle. Vecna sabe dónde están los prisioneros.",
-                lose: "La señal se pierde debido a las interferencias del Upside Down. El grupo en la granja queda vulnerable. (+1 Adversidad)"
+                win: "Confirmáis que el Demogorgon se dirige a la granja McCorkle. Vecna sabe dónde están.",
+                lose: "La señal se pierde debido a las interferencias del Mundo del Revés. El grupo en la granja queda expuesto. (+1 Adversidad)"
             },
             {
-                text: "ACTO 6: EL BOSQUE DE HENRY. En la Guarida Mental, Holly Wheeler sigue el mapa hacia las cuevas. Una figura encapuchada la persigue entre las rocas.",
+                text: "ACTO 6: EL BOSQUE DE HENRY. En la Guarida Mental, Holly Wheeler sigue un mapa hacia las cuevas. Una figura encapuchada la persigue entre las rocas.",
 img: "images/536.jpg", // <--- Añade esto
 participantes: ["holly5.jpg"],
                 options: [
                     { label: "Huir", attr: "Evasión", dif: 11 },
                     { label: "Usar el catalejo", attr: "Cerebro", dif: 11 }
                 ],
-                win: "Holly tropieza, pero al encarar a su perseguidor, descubre que no es un monstruo. Es Max Mayfield.",
-                lose: "Holly huye aterrorizada y se pierde en la espesura, tropieza y se hace daño. pero al encarar a su perseguidor, descubre que no es un monstruo. Es Max Mayfield. (+1 Adversidad)"
+                win: "Holly tropieza, pero al encarar a su perseguidor, descubre que no es un monstruo. Es Max.",
+                lose: "Holly huye aterrorizada y se pierde en la espesura, tropieza y se hace daño. pero al encarar a su perseguidor, descubre que no es un monstruo. Es Max. (+1 Adversidad)"
             }
         ];
 
@@ -388,19 +390,19 @@ function showEnding() {
     if(successes >= 5) {
         sceneImg.src = "images/536b.jpg"; 
         title = "FINAL BUENO: EL PLAN TURNBOW FUNCIONA";
-        desc = "Habéis marcado al Demogorgon y Once conoce la ubicación de la base militar. Lo más importante: Holly ha encontrado a Max en Guarida Mental de Vecna. Recibís una recompensa.";
+        desc = "Habéis marcado al Demogorgon y Once conoce la ubicación de la base militar. Y lo más importante: Holly ha encontrado a Max en Guarida Mental de Vecna. Recibís una recompensa.";
     } 
     // Condición 2: Final Normal
     else if(successes === 3 || successes === 4) {
         sceneImg.src = "images/536b.jpg";
         title = "FINAL NORMAL: UNA VICTORIA AMARGA";
-        desc = "El Demogorgon sabe dónde estáis y el grupo de la granja corre peligro. Sin embargo, el encuentro entre Holly y Max ofrece una última oportunidad.";
+        desc = "Habéis marcado al Demogorgon, pero el grupo de la granja corre mucho peligro. El encuentro entre Holly y Max ofrece una última oportunidad.";
     } 
     // Condición 3: Final Malo
     else {
         sceneImg.src = "images/gameover.gif";
         title = "FINAL MALO: LA TRAMPA SE CIERRA SOBRE VOSOTROS";
-        desc = "Todo ha salido mal. Turnbow es ahora un cementerio de esperanzas. Debéis repetir el capítulo.";
+        desc = "Todo ha salido mal. Debéis repetir el capítulo.";
     }
 
     document.getElementById('text-content').innerHTML = `<strong>${title}</strong><br>Éxitos: ${successes} | Fallos: ${failures}`;
