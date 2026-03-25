@@ -481,6 +481,16 @@ function showEnding() {
         function speak(t) { if(!voiceEnabled) return; window.speechSynthesis.cancel(); const m = new SpeechSynthesisUtterance(t); m.lang = 'es-ES'; window.speechSynthesis.speak(m); }
         function checkAutoStart() { if(!started) { started = true; document.getElementById('audioMusic').play().catch(()=>{}); speak(document.getElementById('text-content').innerText); } }
         function goBack() { if(confirm("¿Volver al menú principal?")) window.location.href = "menu.html"; }
+
+function playClick() {
+    const clickSfx = document.getElementById('audioClick');
+    if (clickSfx) {
+        clickSfx.currentTime = 0; // Reinicia el sonido para que suene en cada clic rápido
+        clickSfx.play().catch(() => {}); // El catch evita errores si el navegador bloquea el audio
+    }
+}
+document.addEventListener('click', playClick);
+
     </script>
 </body>
 </html>

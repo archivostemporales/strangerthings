@@ -453,6 +453,16 @@ function showEnding() {
 
 
         function goBack() { if(confirm("¿Volver al menú?")) window.location.href = "menu.html"; }
+
+function playClick() {
+    const clickSfx = document.getElementById('audioClick');
+    if (clickSfx) {
+        clickSfx.currentTime = 0; // Reinicia el sonido para que suene en cada clic rápido
+        clickSfx.play().catch(() => {}); // El catch evita errores si el navegador bloquea el audio
+    }
+}
+document.addEventListener('click', playClick);
+
     </script>
 </body>
 </html>
