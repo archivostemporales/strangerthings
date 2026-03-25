@@ -136,6 +136,7 @@ text-shadow: 0 0 15px var(--vecna-red);
     <audio id="audioMusic" src="audio/pool.mp3" loop></audio>
     <audio id="audioClick" src="audio/clic.mp3"></audio>
     <audio id="audioDice" src="audio/dados.mp3"></audio>
+    <audio id="audioGlass" src="audio/glass.mp3"></audio>
     <audio id="audioAk47" src="audio/ak47.mp3"></audio>
 
     <header><h1>T3 - E3: LA PRUEBA DE LA SAUNA</h1></header>
@@ -305,7 +306,11 @@ function renderStep() {
     const data = trama[step];
 
     // --- LÓGICA DEL TELÉFONO (NUEVO) ---
-    // El Acto 6 es la posición 5 (porque empezamos a contar desde 0)
+    if (step === 4) { 
+        const tlf = document.getElementById('audioGlass');
+        if (tlf) tlf.play().catch(() => {}); 
+    }
+    // ----------------------------------
     if (step === 5) { 
         const tlf = document.getElementById('audioAk47');
         if (tlf) tlf.play().catch(() => {}); 
